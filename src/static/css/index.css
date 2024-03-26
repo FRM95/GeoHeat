@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+}
+.container-features{
+    margin-top: 2%;
+    color: white;
+    width: 20%;
+    padding: 10px;
+}
+#container-selector{
+    border: 1px solid red;
+    float: left;
+    margin-left: 10px;
+}
+#container-canvas{
+    position:fixed; 
+    top:0;
+    left:0;
+    z-index: -1;
+}
+#container-information{
+    border: 1px solid blue;
+    float: right;
+    margin-right: 10px;
+}
