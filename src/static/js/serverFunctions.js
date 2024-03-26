@@ -1,6 +1,6 @@
 async function getLocation(location){
   try{
-    const response = await fetch("/activeFires/getLocation", 
+    const response = await fetch("/active-fires/getLocation", 
       {
         method : "POST",
         headers: {
