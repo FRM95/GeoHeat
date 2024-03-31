@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 function createRenderer(w, h){
     let renderer = new THREE.WebGLRenderer({antialias:true});
@@ -8,11 +9,11 @@ function createRenderer(w, h){
     return renderer
 }
 
-function setCamera(fov, aspect, near, far){
+function setCamera(fov, aspect, near, far, initial_x, initial_y, initial_z){
     let camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 3;
+    camera.position.x = initial_x; 
+    camera.position.y = initial_y; 
+    camera.position.z = initial_z;
     return camera
 }
 
@@ -31,33 +32,24 @@ function Earth(radius = 1.0, widthSegments = 64, heightSegments = 32, material =
         material.map = texture;
     }
     let sphere = new THREE.Mesh(geometry, material);
-
     let wireMat = new THREE.MeshBasicMaterial({color: 0xc0cccc, wireframe: true});
     let wireMesh = new THREE.Mesh(geometry, wireMat);
     sphere.add(wireMesh);
     return sphere
 }
 
-// Marker
-function createMark(latitude, longitude, earth_radius){
-
-    // Convert latitude and longitude to spherical coordinates
-    var phi = (90-latitude)*(Math.PI/180);
-    var theta = (longitude+180)*(Math.PI/180);
-    let x = -(earth_radius * Math.sin(phi)*Math.cos(theta));
-    let y = (earth_radius * Math.cos(phi));
-    let z = (earth_radius * Math.sin(phi)*Math.sin(theta));
-    
-    //Geometry
-    const vertices = [];
-    vertices.push(x, y, z);
-    var geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    var material = new THREE.PointsMaterial({size: 0.01, color: 0xFF0000});
-    const points = new THREE.Points(geometry, material);
-    return points
+function coordToCartesian(coordinates, earth_radius){
+    let latitude = coordinates.lat;
+    let longitude = coordinates.long;
+    let phi = (90-latitude)*(Math.PI/180);
+    let theta = (longitude+180)*(Math.PI/180);
+    let x_point = -(earth_radius * Math.sin(phi)*Math.cos(theta));
+    let y_point = (earth_radius * Math.cos(phi));
+    let z_point = (earth_radius * Math.sin(phi)*Math.sin(theta));
+    return {x:x_point,
+            y:y_point,
+            z:z_point}
 }
 
-
-export {createRenderer, setCamera, setControls, Earth, createMark, THREE};
+export {createRenderer, setCamera, setControls, Earth, coordToCartesian, THREE, CSS2DRenderer, CSS2DObject};
 

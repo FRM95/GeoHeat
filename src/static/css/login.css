@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+}
+#container-submit{
+    color: white;
+    margin-left: 10%;
+    margin-top: 10%;
+    background-color: rgba(71, 71, 71, 0.486);
+    width: fit-content;
+    border: 1px solid red;
+    padding: 15px;
+    font-size: 20px;
+}
+#container-canvas{
+    position:fixed; 
+    top:0;
+    left:0;
+    z-index: -1;
+}
+.url-ref{
+    color: #2997ff;
+}

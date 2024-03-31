@@ -13,8 +13,16 @@
         <input type="text" placeholder="Search for active fires"></input>
         <button>Search</button>
       </div>
-      <div id="container-canvas"></div>
-      <div class="container-features" id="container-information">example</div>
+      <div id="container-canvas">
+      </div>
+      <div class="container-features" id="container-information">example
+        <div id="markerLabel" class="hidden">
+          <button id="closeButton">X</button>
+          <div class="text" id="idNum">a</div>
+          <div class="text" id="magnitude">b</div>
+          <div class="text" id="coordinates">c</div>
+        </div>
+      </div>
     </div>
     <script type="importmap">
       {
@@ -24,7 +32,6 @@
         }
       }
     </script>
-    <script>var nasa_data = {{ data|tojson }};</script> 
     <script type="module" src="static/js/main.js"></script>
 	</body>
 </html>

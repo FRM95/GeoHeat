@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>NASA FIRMS Active fires</title>
+    <link rel="stylesheet" href="static/css/login.css">
+  </head>
+	<body>
+    <div id="container-submit">
+      <div id="container-login">
+        <h1>WORLD ACTIVE FIRES</h1>
+        <h2>Powered by <a class="url-ref" target="_blank" href="https://www.nasa.gov/">NASA</a> and <a class="url-ref" target="_blank" href="https://threejs.org/">Three.JS</a></h1>
+        <p>A web app to display near real-time active fires across the world</p>
+        <p>Register in <a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/api/map_key/">NASA FIRMS</a> to obtain your API key</p>
+        <form action="/login" method="post">
+          <input id="nasa-FIRMS-value" name="nasa-FIRMS-value" type="text" placeholder="Enter your NASA FIRMS API Key"></input>
+          <button id="nasa-FIRMS-submit" type="submit">GO!</button>
+        </form>
+        {% with err_messages = get_flashed_messages()%}
+        {% if err_messages %}
+        {% for error in err_messages %}
+          <label id="login-error">{{ error }}</label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+      </div>
+      <div id="container-contact">
+        <p>Contact <a class="url-ref" target="_blank" href="https://github.com/FRM95">GitHub</a> <a class="url-ref" target="_blank" href="https://www.linkedin.com/in/miguelm25m/">LinkedIn</a></p>
+      </div>
+      <div id="container-info">
+        <span>Information</span>
+        <span>Privacy</span>
+        <span>Technologies</span>
+      </div>
+    </div>
+    <div id="container-canvas"></div>
+    <script type="importmap">
+    {
+        "imports": {
+        "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="static/js/login.js"></script>
+	</body>
+</html>

@@ -1,4 +1,4 @@
-import {createRenderer, setCamera, setControls, Earth, createMark, THREE} from './threeJSFunctions.js';
+import {createRenderer, setCamera, setControls, Earth, coordToCartesian, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
 
 function main(){
 
@@ -10,7 +10,7 @@ function main(){
     container.appendChild(renderer.domElement);
 
     // Camera creation
-    const camera = setCamera(75, width/height, 0.1, 10);
+    const camera = setCamera(75, width/height, 0.1, 10, 0, 0, 3);
 
     // Scene creation
     const scene = new THREE.Scene();
@@ -20,19 +20,47 @@ function main(){
 
     // Earth creation
     const material = new THREE.MeshBasicMaterial({color: 0xffffff});
-    const earth_radius = 1.5;
+    const earth_radius = 1;
     const earth = Earth(earth_radius, 32, 32, material, "./static/textures/earthmap10k.jpg");
-    earth.rotateX(+0.5);
-
-    // Add point
-    const point_mark = createMark(40.416775, -3.703790, earth_radius);
-    const point_mark2 = createMark(48.864716, 2.349014, earth_radius);
-    const point_mark3 = createMark(40.730610, -73.935242, earth_radius);
-
-    earth.add(point_mark, point_mark2, point_mark3);
 
     // Add earth to scene
     scene.add(earth);
+
+    // Create point
+    let coordinates = {
+        lat : 40.416775,
+        long : -3.703790
+    }
+
+    // Add point to scene
+    let geom2 = new THREE.SphereGeometry(0.005, 32, 32);
+    let mesh = new THREE.Mesh(geom2, new THREE.MeshBasicMaterial({color: 0xffffff}))
+    let point = coordToCartesian(coordinates, earth_radius);
+    mesh.position.set(point.x,point.y,point.z);
+    console.log(mesh);
+    earth.add(mesh);
+
+    // Intersect point with raycast
+    let pointer = new THREE.Vector2();
+    let raycaster = new THREE.Raycaster();
+    let intersections;
+    window.addEventListener("pointerdown", event => {
+        pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        intersections = raycaster.intersectObject(mesh, false);
+        if (intersections.length > 0) {
+            console.log(intersections);
+        }
+    });
+
+
+    const onWindowResize=() => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+    }
+    window.addEventListener("resize", onWindowResize);
     
     function animate(){
         requestAnimationFrame(animate);
@@ -40,13 +68,9 @@ function main(){
         renderer.render(scene, camera);
         orbitControls.update();
     }
-
-    console.log(nasa_data);
     animate();
 }
 
 window.addEventListener("load", function () {
-
     main();
-
 });

@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import geopandas as gpd
+import json
 from shapely.geometry import MultiPoint, Point
 
 class firmsAPI():
@@ -58,6 +59,25 @@ class firmsAPI():
             return f'Error: {ex} has occurred!'
         else:
             return api_response
+        
+
+    # Function that checks the status of the API KEY
+    def checkAPIKey(self, api_key):
+        if api_key == None:
+            return 'Invalid NASA FIRMS API-Key, current value is null'
+        else:
+            url = f'https://firms.modaps.eosdis.nasa.gov/mapserver/mapkey_status/?MAP_KEY={api_key}'
+            result = self.__requestURL(url)
+            if not isinstance(result, str):
+                try:
+                    result = result.json()
+                except json.JSONDecodeError:
+                    result = result.text
+                except Exception as e:
+                    result = f'NASA FIRMS API-Key check error: {e}'
+                else:
+                    self.__api_key = api_key
+            return result
 
 
     # Function that returns country box as dictionary
