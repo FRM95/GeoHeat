@@ -1,3 +1,8 @@
+function processData(data){
+  data.latitude = parseFloat(data.latitude)
+}
+
+
 async function sendApiKey(api_value){
   try{
     const response = await fetch("/active-fires/checkApikey", 

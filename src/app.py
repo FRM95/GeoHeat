@@ -1,6 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from modules.nasa_firms import firmsAPI
+from modules.nasa_config import ADMINISTRATIVE_REGIONS
+from datetime import datetime
 import secrets
+import pickle
+
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -14,9 +18,12 @@ def init():
 def login():
     if request.method == 'POST':
         input_key = request.form.get('nasa-FIRMS-value')
+        if input_key in session:
+            return redirect(url_for('home'))
         verified_key = api.checkAPIKey(input_key)
         if isinstance(verified_key, dict):
-            session['username'] = input_key
+            session[input_key] = {'Connection': datetime.now()}
+            print(session)
             return redirect(url_for('home'))
         else:
             flash(verified_key)
@@ -26,8 +33,15 @@ def login():
 
 @app.route('/home', methods=['GET'])
 def home():
-    coordinates = {'fire1' : [40.416775, -3.703790],
-                    'fire2' : [48.864716, 2.349014], 
-                    'fire3' : [40.730610, -73.935242]
-                    } 
-    return render_template('index.html')
+    # active_fires = api.getAreaFire('World')
+    with open("./world_active_fires.pkl", 'rb') as fp:
+        active_fires = pickle.load(fp)
+
+    # available_countries = api.getCountriesBox()
+    with open("./available_countries.pkl", 'rb') as fp1:
+        available_countries = pickle.load(fp1)
+
+    with open("./available_subRegions.pkl", 'rb') as fp2:
+        available_subRegions = pickle.load(fp2)
+
+    return render_template('index.html', data = active_fires, areas = available_subRegions, countries = available_countries)
