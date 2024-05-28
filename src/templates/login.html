@@ -11,15 +11,15 @@
         <h1>WORLD ACTIVE FIRES</h1>
         <h2>Powered by <a class="url-ref" target="_blank" href="https://www.nasa.gov/">NASA</a> and <a class="url-ref" target="_blank" href="https://threejs.org/">Three.JS</a></h1>
         <p>A web app to display near real-time active fires across the world</p>
-        <p>Register in <a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/api/map_key/">NASA FIRMS</a> to obtain your API key</p>
+        <p>Register in <a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/api/map_key/">NASA FIRMS</a> to obtain your MAP_KEY</p>
         <form action="/login" method="post">
-          <input id="nasa-FIRMS-value" name="nasa-FIRMS-value" type="text" placeholder="Enter your NASA FIRMS API Key"></input>
+          <input id="nasa-FIRMS-value" name="nasa-FIRMS-value" type="text" placeholder="Enter your MAP_KEY here"></input>
           <button id="nasa-FIRMS-submit" type="submit">GO!</button>
         </form>
         {% with err_messages = get_flashed_messages()%}
         {% if err_messages %}
         {% for error in err_messages %}
-          <label id="login-error">{{ error }}</label>
+        <p id="login-error">{{ error }}</p>
         {% endfor %}
         {% endif %}
         {% endwith %}

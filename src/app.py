@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
-from modules.nasa_firms import firmsAPI
-from modules.nasa_config import ADMINISTRATIVE_REGIONS
+from modules.class_api_firms import Firms
 from datetime import datetime
 import secrets
 import pickle
@@ -8,7 +7,7 @@ import pickle
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
-api = firmsAPI()
+api = Firms()
 
 @app.route("/")
 def init():
@@ -20,9 +19,10 @@ def login():
         input_key = request.form.get('nasa-FIRMS-value')
         if input_key in session:
             return redirect(url_for('home'))
-        verified_key = api.checkAPIKey(input_key)
+        verified_key = api.checkKey(input_key)
         if isinstance(verified_key, dict):
-            session[input_key] = {'Connection': datetime.now()}
+            verified_key['connection'] = datetime.now()
+            session[input_key] = verified_key
             print(session)
             return redirect(url_for('home'))
         else:
