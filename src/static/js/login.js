@@ -1,4 +1,4 @@
-import {createRenderer, setCamera, Earth, THREE} from './threeJSFunctions.js';
+import {createRenderer, setCamera, Earth, THREE, addCartesian, createMarkers} from './threeJSFunctions.js';
 
 function main(){
 
@@ -10,33 +10,30 @@ function main(){
     container.appendChild(renderer.domElement);
 
     // Camera creation
-    const camera = setCamera(75, width/height, 0.1, 10, 0, 0, 3);
-    // camera.rotateZ(-0.3);
+    const camera = setCamera(75, width/height, 0.1, 10, -0.4, 0, 1.5);
+    camera.rotation.z = -0.15;
 
     // Scene creation
-    const scene = new THREE.Scene();
+    const scene = new THREE.Scene();   
 
     // Earth creation
     const material = new THREE.MeshBasicMaterial({color: 0xffffff});
-    const earth_radius = 1.5;
-    const earth = Earth(earth_radius, 32, 32, material, "./static/textures/earthmap10k.jpg");
-    // earth.rotateX(+0.65);
-    // earth.rotateY(-2.2);
+    const earth_radius = 1.0;
+    const earth = Earth(earth_radius, 64, 32, material, "./static/textures/earthmap10k.jpg");
+    earth.rotation.y = -1.5;
+    earth.rotation.z = -0.65;
 
     // Add earth to scene
     scene.add(earth);
 
-    const onWindowResize=() => {
-        camera.aspect = innerWidth / innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(innerWidth, innerHeight);
-    }
+    // Add mock data
+    addCartesian(mock_data, earth_radius);
+    const current_marks_mesh = createMarkers(mock_data, []);
+    earth.add(current_marks_mesh);
 
-    window.addEventListener("resize", onWindowResize);
-    
-    const animate=()=>{
+    function animate(){
         requestAnimationFrame(animate);
-        earth.rotation.y -= 0.0015;
+        earth.rotation.y -= 0.0009;
         renderer.render(scene, camera);
     }
 

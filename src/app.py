@@ -3,6 +3,7 @@ from modules.class_api_firms import Firms
 from datetime import datetime
 import secrets
 import pickle
+import json
 
 
 app = Flask(__name__)
@@ -11,7 +12,9 @@ api = Firms()
 
 @app.route("/")
 def init():
-    return render_template('login.html')
+    with open('../data/mock_data.json', 'r') as f:
+        mock_data = json.load(f)
+    return render_template('login.html', data = mock_data)
 
 @app.route("/login", methods = ['GET','POST'])
 def login():
@@ -29,19 +32,20 @@ def login():
             flash(verified_key)
             return redirect(url_for('login'))
     else:
-        return render_template('login.html')
+        with open('../data/mock_data.json', 'r') as f:
+            mock_data = json.load(f)
+        return render_template('login.html', data = mock_data)
 
 @app.route('/home', methods=['GET'])
 def home():
-    # active_fires = api.getAreaFire('World')
-    with open("./world_active_fires.pkl", 'rb') as fp:
+    
+    with open('../data/fires_aux_data.pkl', 'rb') as fp:
         active_fires = pickle.load(fp)
 
-    # available_countries = api.getCountriesBox()
-    with open("./available_countries.pkl", 'rb') as fp1:
-        available_countries = pickle.load(fp1)
+    with open("../data/countries_data.json", 'r') as fp1:
+        available_countries = json.load(fp1)
 
-    with open("./available_subRegions.pkl", 'rb') as fp2:
-        available_subRegions = pickle.load(fp2)
+    with open("../data/regions_data.json", 'r') as fp2:
+        available_subRegions = json.load(fp2)
 
-    return render_template('index.html', data = active_fires, areas = available_subRegions, countries = available_countries)
+    return render_template('index.html', data = active_fires,  countries = available_countries, areas = available_subRegions)

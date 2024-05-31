@@ -19,31 +19,31 @@
             <div class="div-filter">
               <div class="div-filter-geographic">
                 <details id="details-area">
-                  <summary class="summary-description">Area <input type="checkbox" id="area-filter" class="main-area-checkbox"></summary>
+                  <summary class="summary-description">Area <input type="checkbox" id="area-filter" class="main-checkbox" checked="true"></summary>
                   <div name="areas" class="div-filter-data" id="available-areas"></div>
                 </details>
                 <details id="details-country">
-                  <summary class="summary-description">Country <input type="checkbox" id="country-filter" class="main-country-checkbox"></summary>
+                  <summary class="summary-description">Country <input type="checkbox" id="country-filter" class="main-checkbox" checked="true"></summary>
                   <div name="countries" class="div-filter-data" id="available-countries"></div>
                 </details>
               </div>
               <div class="div-filter-datetime">
                 <details id="details-date">
-                  <summary class="summary-description">Date <input type="checkbox" id="date-filter" class="main-date-checkbox"></summary>
+                  <summary class="summary-description">Date <input type="checkbox" id="date-filter" class="main-checkbox" checked="true"></summary>
                   <div name="dates" class="div-filter-data" id="available-dates"></div>
                 </details>
                 <details id="details-time">
-                  <summary class="summary-description">Time <input type="checkbox" id="time-filter" class="main-time-checkbox"></summary>
+                  <summary class="summary-description">Time <input type="checkbox" id="time-filter" class="main-checkbox" checked="true"></summary>
                   <div name="times" class="div-filter-data" id="available-times"></div>
                 </details>
               </div>
               <div class="div-filter-features">
                 <details id="details-source">
-                  <summary class="summary-description">Source <input type="checkbox" id="source-filter" class="main-source-checkbox"></summary>
+                  <summary class="summary-description">Source <input type="checkbox" id="source-filter" class="main-checkbox" checked="true"></summary>
                   <div name="sources" class="div-filter-data" id="available-sources"></div>
                 </details>
                 <details id="details-confidence">
-                  <summary class="summary-description">Confidence <input type="checkbox" id="confidence-filter" class="main-confidence-checkbox"></summary>
+                  <summary class="summary-description">Confidence <input type="checkbox" id="confidence-filter" class="main-checkbox" checked="true"></summary>
                   <div name="confidence-levels" class="div-filter-data" id="available-confidence-levels"></div>
                 </details>
               </div>
@@ -67,14 +67,13 @@
             <div class="primary-info" id="markerLongitude"></div>
             <div class="primary-info" id="markerCountryName"></div>
             <div class="primary-info" id="markerCountryISOA3"></div>
-            <div class="secondary-info hidden" id="markerCountryFormalName"></div>
-            <div class="secondary-info hidden" id="markerCountryISOA2"></div>
-            <div class="primary-info" id="markerRegion"></div>
+            <div class="secondary-info hidden" id="markerAffiliated_country"></div>
+            <div class="primary-info" id="markerNASARegion"></div>
             <div class="primary-info" id="markerSubRegion"></div>
-            <div class="primary-info" id="markerContinent"></div>
-            <div class="primary-info" id="markerType"></div>
           </div>
           <div id="markerNASAInformation">
+            <div class="primary-info" id="markerAcq_Date"></div>
+            <div class="primary-info" id="markerInstrument"></div>
             <div class="primary-info" id="markerdayNight"></div>
             <div class="primary-info" id="markerSatellite"></div>
             <div class="primary-info" id="markerConfidence"></div>
@@ -82,6 +81,7 @@
             <div class="primary-info" id="markerBright_ti5"></div>
             <div class="primary-info" id="markerScan"></div>
             <div class="primary-info" id="markerTrack"></div>
+            <div class="primary-info" id="markerFrp"></div>
           </div>
         </div>
 
@@ -105,8 +105,8 @@
     </script>
     <script id="data"> 
       var initial_data = {{ data | tojson }};
-      var available_areas = {{ areas | safe }};
-      var available_countries = {{ countries | safe }};
+      var available_areas = {{ areas | tojson }};
+      var available_countries = {{ countries | tojson }};
     </script>
     <script type="module" src="static/js/main.js"></script>
 	</body>

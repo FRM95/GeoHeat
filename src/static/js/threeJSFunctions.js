@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
-// import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
 
 function createRenderer(w, h){
     let renderer = new THREE.WebGLRenderer({antialias:true});
@@ -49,54 +48,66 @@ function coordToCartesian(coordinates, earth_radius){
 }
 
 function addCartesian(dataObject, earth_radius){
-    for(const [key, value] of Object.entries(dataObject)){
+    for(const value of Object.values(dataObject)){
         let pointObject = coordToCartesian(value, earth_radius);
         value.earth_cartesian = pointObject;
     }
 }
 
-function createMarkers(dataObject, dataIds){
-    let common_geo = new THREE.CircleGeometry(0.0015, 32);
-    let common_mat = new THREE.MeshBasicMaterial({color:0xff0000});
+function createMarkers(dataObject){
+    const common_geo = new THREE.CircleGeometry(0.0015, 32);
+    const common_mat = new THREE.MeshBasicMaterial({color:0xff0000});
     let dummy = new THREE.Object3D();
-    let inputSize = dataIds.length;
-    var meshCount = 0;
-    var userData = {};
-
-    if (inputSize == 0){ 
-        meshCount = Object.keys(dataObject).length; 
+    let userData = {};
+    let markMesh = new THREE.InstancedMesh(common_geo, common_mat, dataObject.length);
+    for(let i = 0; i < dataObject.length; i++){
+        dummy.position.x = dataObject[i].earth_cartesian.x;
+        dummy.position.y = dataObject[i].earth_cartesian.y;
+        dummy.position.z = dataObject[i].earth_cartesian.z;
+        dummy.lookAt(dummy.position.clone().setLength(1.5));
+        dummy.updateMatrix();
+        markMesh.setMatrixAt(i, dummy.matrix);
+        userData[i] = i;
     }
-    else{
-        meshCount = inputSize;
-    }
-
-    var markMesh = new THREE.InstancedMesh(common_geo, common_mat, meshCount);
-    if (inputSize == 0) {
-        for(let i = 0; i < meshCount; i++){
-            dummy.position.x = dataObject[i].earth_cartesian.x;
-            dummy.position.y = dataObject[i].earth_cartesian.y;
-            dummy.position.z = dataObject[i].earth_cartesian.z;
-            dummy.lookAt(dummy.position.clone().setLength(1.5));
-            dummy.updateMatrix();
-            markMesh.setMatrixAt(i, dummy.matrix);
-            userData[i] = i;
-        }
-    }
-    else{
-        for(let i = 0; i < meshCount; i++){
-            const uniqueId = dataIds[i];
-            dummy.position.x = dataObject[uniqueId].earth_cartesian.x;
-            dummy.position.y = dataObject[uniqueId].earth_cartesian.y;
-            dummy.position.z = dataObject[uniqueId].earth_cartesian.z;
-            dummy.lookAt(dummy.position.clone().setLength(1.5));
-            dummy.updateMatrix();
-            markMesh.setMatrixAt(i, dummy.matrix);
-            userData[i] = uniqueId;
-        }
-    }
-
     markMesh.userData = userData;
     return markMesh
+
+
+
+    // if (filterObject.length == 0){ 
+    //     meshCount = Object.keys(dataObject).length; 
+    // }
+    // else{
+    //     meshCount = inputSize;
+    // }
+
+    // var markMesh = new THREE.InstancedMesh(common_geo, common_mat, meshCount);
+    // if (inputSize == 0) {
+    //     for(let i = 0; i < meshCount; i++){
+    //         dummy.position.x = dataObject[i].earth_cartesian.x;
+    //         dummy.position.y = dataObject[i].earth_cartesian.y;
+    //         dummy.position.z = dataObject[i].earth_cartesian.z;
+    //         dummy.lookAt(dummy.position.clone().setLength(1.5));
+    //         dummy.updateMatrix();
+    //         markMesh.setMatrixAt(i, dummy.matrix);
+    //         userData[i] = i;
+    //     }
+    // }
+    // else{
+    //     for(let i = 0; i < meshCount; i++){
+    //         const uniqueId = dataIds[i];
+    //         dummy.position.x = dataObject[uniqueId].earth_cartesian.x;
+    //         dummy.position.y = dataObject[uniqueId].earth_cartesian.y;
+    //         dummy.position.z = dataObject[uniqueId].earth_cartesian.z;
+    //         dummy.lookAt(dummy.position.clone().setLength(1.5));
+    //         dummy.updateMatrix();
+    //         markMesh.setMatrixAt(i, dummy.matrix);
+    //         userData[i] = uniqueId;
+    //     }
+    // }
+
+    // markMesh.userData = userData;
+    // return markMesh
 }
 
 function setLabelAttributes(label, earth, camera){

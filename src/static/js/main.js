@@ -1,5 +1,5 @@
 import {createRenderer, setCamera, setControls, Earth, addCartesian, createMarkers, setLabelAttributes, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
-import {applyAreaFilter, applyCountryFilter, getCountries} from './clientFunctions.js';
+import {setCheckbox, resetDefault, filteredOptions, applyFilter} from './filterFunctions.js';
 
 function main(){
 
@@ -40,14 +40,15 @@ function main(){
     const earth_radius = 1;
     const earth = Earth(earth_radius, 64, 32, material, "./static/textures/earthmap10k.jpg");
     scene.add(earth);
+    
 
     // Add cartesian points based on earth radius
-    addCartesian(initial_data, earth_radius);
+    let currentData = [...initial_data];
+    console.log(currentData);
+    addCartesian(currentData, earth_radius);
 
     // Add points to scene
-    var filteredIds = [];
-    var filterObject = {};
-    var current_marks_mesh = createMarkers(initial_data, filteredIds);
+    var current_marks_mesh = createMarkers(currentData);
     scene.add(current_marks_mesh);
 
     // Mark information functionality
@@ -65,100 +66,28 @@ function main(){
     scene.add(label);
 
     // Filters creation
-    applyAreaFilter(available_areas, available_countries);
-    applyCountryFilter(available_countries);
+    setCheckbox(available_areas, 'area-filter', 'available-areas', 'nasa_region', 'nasa_region');
+    setCheckbox(available_countries, 'country-filter', 'available-countries', 'nasa_abreviation', 'nasa_name');
+    setCheckbox(initial_data.slice(0,1), 'date-filter', 'available-dates', 'acq_date', 'acq_date');
+    setCheckbox(initial_data.slice(0,1), 'time-filter', 'available-times', 'daynight', 'daynight');
+    setCheckbox(initial_data.slice(0,1), 'source-filter', 'available-sources', 'instrument', 'instrument');
+    setCheckbox(initial_data.slice(0,1), 'confidence-filter', 'available-confidence-levels', 'confidence', 'confidence');
+    resetDefault('reset-filter', 'main-checkbox');
 
+    // Apply filter
     let saveFilter = document.getElementById("save-filter");
+    let boxes = document.getElementsByClassName("main-checkbox");
     saveFilter.addEventListener("click", event => {
-        filterObject["countries"] = getCountries("area-filter", "country-filter");
+        let filtersToApply = filteredOptions(boxes);
+        currentData = applyFilter(initial_data, filtersToApply);
+        console.log(currentData);
+        current_marks_mesh.dispose();
+        scene.remove(current_marks_mesh);
+        current_marks_mesh = createMarkers(currentData);
+        scene.add(current_marks_mesh);
+        labelDiv.classList.add("hidden");
+        labelDivInfo.classList.add("hidden");
     });
-
-    // // autofilter country
-    // let filteredArea = document.getElementById("available-areas");
-    // let filteredCountry = document.getElementById("available-countries");
-    // let initialCountry = filteredCountry.value;
-    // filteredArea.addEventListener("change", event => {
-    //     let current_value = filteredArea.value;
-    //     let new_value = null;
-    //     if(current_value === "World"){
-    //         for(let i = 0; i < filteredCountry.length; i++){
-    //             filteredCountry[i].setAttribute("visible", "true");
-    //         }
-    //         filteredCountry.value = initialCountry;
-    //     } else {
-    //         for(let i = 1; i < filteredCountry.length; i++){
-    //             if(filteredCountry[i].getAttribute('subregion') != filteredArea.value) {
-    //                 filteredCountry[i].setAttribute("visible", "false");
-    //             }
-    //             else {
-    //                 if(new_value==null){
-    //                     new_value = filteredCountry[i].value;
-    //                 }
-    //                 filteredCountry[i].setAttribute("visible", "true");
-    //             }
-    //         }
-    //         filteredCountry.value = new_value;
-    //     }
-    // });
-
-    // filteredCountry.addEventListener("change", event => {
-    //     let currentCountry = filteredCountry.value;
-    //     if(currentCountry != "All"){
-    //         let options = filteredCountry.querySelectorAll(`option[value="${currentCountry}"]`)
-    //         filteredArea.value = options[0].getAttribute('subregion');
-    //     }
-    // });
-
-    
-
-        // let areaFilter = document.getElementById("area-filter");
-        // let countryFilter = document.getElementById("country-filter");
-        // let dateFilter = document.getElementById("date-filter");
-        // let timeFilter = document.getElementById("time-filter");
-        // let sourceFilter = document.getElementById("source-filter");
-        // let confidenceFilter = document.getElementById("confidence-filter");
-        
-        // if (newArea!='World'){
-        //     if (newCountry === 'All'){
-        //         Object.values(initial_data).forEach(
-        //             value => {
-        //                 if (value.SUBREGION === newArea){
-        //                     filteredIds.push(iterator);
-        //                     }
-        //                 iterator++;
-        //             }
-        //         );
-        //     } else {
-        //         Object.values(initial_data).forEach(
-        //             value => {
-        //                 if (value.SUBREGION === newArea && value.WB_NAME === newCountry){
-        //                     filteredIds.push(iterator);
-        //                     }
-        //                 iterator++;
-        //             }
-        //         );
-        //     }
-        //     if(filteredIds.length > 0){
-        //         current_marks_mesh.dispose();
-        //         scene.remove(current_marks_mesh);
-        //         labelDiv.classList.add("hidden");
-        //         labelDivInfo.classList.add("hidden");
-        //         current_marks_mesh = createMarkers(initial_data, filteredIds);
-        //         scene.add(current_marks_mesh);
-        //     }
-        // }
-
-    // let defaultButton = document.getElementById("default-filter");
-    // defaultButton.addEventListener("click", event => {
-    //     selectedFilters.innerHTML = "";
-    //     current_marks_mesh.dispose();
-    //     scene.remove(current_marks_mesh);
-    //     labelDiv.classList.add("hidden");
-    //     labelDivInfo.classList.add("hidden");
-    //     filteredIds = [];
-    //     current_marks_mesh = createMarkers(initial_data, filteredIds);
-    //     scene.add(current_marks_mesh);
-    // });
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
@@ -173,24 +102,25 @@ function main(){
     // Marker Country information
     let markerId = document.getElementById("markerId");
     let markerCountryName= document.getElementById("markerCountryName");
-    let markerCountryFormalName = document.getElementById("markerCountryFormalName");
     let markerLatitude = document.getElementById("markerLatitude");
     let markerLongitude = document.getElementById("markerLongitude");
     let markerCountryISOA3= document.getElementById("markerCountryISOA3");
-    let markerCountryISOA2= document.getElementById("markerCountryISOA2");
-    let markerRegion = document.getElementById("markerRegion");
+    let markerNASARegion = document.getElementById("markerNASARegion");
     let markerSubRegion = document.getElementById("markerSubRegion");
-    let markerContinent = document.getElementById("markerContinent");
-    let markerType = document.getElementById("markerType");
+
 
     // Marker NASA information
-    let markerdayNight= document.getElementById("markerdayNight");
-    let markerSatellite= document.getElementById("markerSatellite");
+    let markerAcq_Date = document.getElementById("markerAcq_Date");
+    let markerInstrument = document.getElementById("markerInstrument");
+
+    let markerdayNight = document.getElementById("markerdayNight");
+    let markerSatellite = document.getElementById("markerSatellite");
     let markerConfidence = document.getElementById("markerConfidence");
     let markerBright_ti4 = document.getElementById("markerBright_ti4");
     let markerBright_ti5 = document.getElementById("markerBright_ti5");
     let markerScan = document.getElementById("markerScan");
     let markerTrack = document.getElementById("markerTrack");
+    let markerFrp = document.getElementById("markerFrp");
 
     labelRenderer.domElement.addEventListener("pointerdown", event => {
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -198,33 +128,35 @@ function main(){
         raycaster.setFromCamera(pointer, camera);
         intersections = raycaster.intersectObject(current_marks_mesh, true);
         if (intersections.length > 0){
+
             let meshId = intersections[0].instanceId;
             let dataId = intersections[0].object.userData[meshId];
-            let markInformation = initial_data[dataId];
-
+            let markInformation = currentData[dataId];
+            
+            // Earth label information
             markerIDAux.innerHTML = `ID: <b>${dataId}</b>`;
             markerLatAux.innerHTML = `Latitude: <b>${markInformation.latitude}</b>`;
             markerLongAux.innerHTML = `Longitude: <b>${markInformation.longitude}</b>`;
 
+            // Right side information
             markerId.innerHTML = `ID: <b>${dataId}</b>`;
             markerLatitude.innerHTML = `Latitude: <b>${markInformation.latitude}</b>`;
             markerLongitude.innerHTML = `Longitude: <b>${markInformation.longitude}</b>`;
-            markerCountryName.innerHTML = `Country name: <b>${markInformation.WB_NAME}</b>`;
-            markerCountryFormalName.innerHTML = `Formal name: <b>${markInformation.FORMAL_EN}</b>`;
-            markerCountryISOA3.innerHTML = `Country ISO-A3: <b>${markInformation.ISO_A3}</b>`;
-            markerCountryISOA2.innerHTML = `Country ISO-A2: <b>${markInformation.ISO_A2}</b>`;
-            markerRegion.innerHTML = `Region: <b>${markInformation.REGION_UN}</b>`;
-            markerSubRegion.innerHTML = `Sub-Region: <b>${markInformation.SUBREGION}</b>`;
-            markerContinent.innerHTML = `Continent: <b>${markInformation.CONTINENT}</b>`;
-            markerType.innerHTML = `Type: <b>${markInformation.TYPE}</b>`;
-
+            markerCountryName.innerHTML = `Country name: <b>${markInformation.country}</b>`;
+            markerCountryISOA3.innerHTML = `Country ISO-A3: <b>${markInformation.iso_country_a3}</b>`;
+            markerAffiliated_country.innerHTML = `Affiliated country: <b>${markInformation.affiliated_country}</b>`;
+            markerNASARegion.innerHTML = `NASA Region: <b>${markInformation.nasa_region}</b>`;
+            markerSubRegion.innerHTML = `Sub-Region: <b>${markInformation.subregion}</b>`;
+            markerAcq_Date.innerHTML = `Date adquisiton: <b>${markInformation.acq_date}</b>`;
+            markerInstrument.innerHTML = `Source: <b>${markInformation.instrument}</b>`;
             markerdayNight.innerHTML = `Time adquisiton: <b>${markInformation.daynight}</b>`;
             markerSatellite.innerHTML = `Satellite: <b>${markInformation.satellite}</b>`;
-            markerConfidence.innerHTML = `Confidence: <b>${markInformation.confidence}</b>`;
+            markerConfidence.innerHTML = `Confidence level: <b>${markInformation.confidence}</b>`;
             markerBright_ti4.innerHTML = `Bright Ti 4: <b>${markInformation.bright_ti4}</b>`;
             markerBright_ti5.innerHTML = `Bright Ti 5: <b>${markInformation.bright_ti5}</b>`;
             markerScan.innerHTML = `Scan: <b>${markInformation.scan}</b>`;
-            markerTrack.innerHTML = `Scan: <b>${markInformation.track}</b>`;
+            markerTrack.innerHTML = `Track: <b>${markInformation.track}</b>`;
+            markerFrp.innerHTML = `FRP: <b>${markInformation.frp}</b>`;
 
             label.position.set(intersections[0].point.x, intersections[0].point.y, intersections[0].point.z);
             label.element.classList.remove("hidden");

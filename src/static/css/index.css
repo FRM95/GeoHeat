@@ -48,7 +48,10 @@ body{
 
 
 /* FILTER DIV */
-.div-filter, .div-apply{
+.div-filter{
+    margin-left: 20px;
+}
+.div-subfilter{
     margin-left: 20px;
 }
 .div-filter-data{

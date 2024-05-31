@@ -1,6 +1,6 @@
 from requests import exceptions, Response, get, post, JSONDecodeError
 from pandas import DataFrame
-from config.nasa_config import NASA_TYPES
+from modules.nasa_config import NASA_TYPES
 from geopandas import GeoDataFrame, points_from_xy, sjoin, read_file
 
 class APIOperations():
@@ -66,6 +66,8 @@ class APIOperations():
     def processTXT(self, response: Response) -> (list|str):
         try:
             txt = response.text.splitlines()
+            if len(txt) <= 1:
+                return 'Text Decode exception: No data available'
             keys = txt[0].split(',')
             response_processed = []
             for elem in txt[1:]:
@@ -104,6 +106,7 @@ class APIOperations():
                 geodataframe = GeoDataFrame(area_data, geometry=points_from_xy(area_data.longitude, area_data.latitude), crs="EPSG:4326")
                 world_data = read_file('../../data/world_data.geojson', driver='GeoJSON')
                 geodataframe = sjoin(geodataframe, world_data, how='left')
+                geodataframe = geodataframe.drop(columns=['index_right', 'geometry'])
                 geodataframe = geodataframe.reset_index(drop=True)
             except Exception as e:
                 return f'Geodataframe Merge exception: {e}'

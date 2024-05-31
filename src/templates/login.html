@@ -34,6 +34,14 @@
       </div>
     </div>
     <div id="container-canvas"></div>
+    <div id="markerLabel" class="hidden">
+      <button id="closeButton">X</button>
+      <div id="markerAux">
+        <div class="text" id="markerIdAux"></div>
+        <div class="text" id="markerLatitudeAux"></div>
+        <div class="text" id="markerLongitudeAux"></div>
+      </div>
+    </div>
     <script type="importmap">
     {
         "imports": {
@@ -41,6 +49,9 @@
         "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
         }
     }
+    </script>
+    <script id="data"> 
+      var mock_data = {{ data | tojson }};
     </script>
     <script type="module" src="static/js/login.js"></script>
 	</body>
