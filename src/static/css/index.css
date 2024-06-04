@@ -12,22 +12,22 @@ body{
     float: left;
     margin-left: 10px;
 }
+#container-right-sidebar{
+    border: 1px solid blue;
+    float: right;
+    margin-right: 10px;
+}
 .container-filter{
     max-height: 500px;
     overflow-y: auto;
     scroll-behavior: smooth;
     padding-right: 10px;
 }
-#container-canvas{
+.container-canvas{
     position:fixed; 
     top:0;
     left:0;
     z-index: -1;
-}
-#container-right-sidebar{
-    border: 1px solid blue;
-    float: right;
-    margin-right: 10px;
 }
 #markerLabel{
     padding: 4px;
@@ -35,9 +35,8 @@ body{
     background-color: rgba(255, 255, 255, 0.753);
     left: 5%;
 }
-#markerInformation{
-    float: left;
-    margin-right: 10px;
+#markerInformation, #markerLabelInformation{
+    display: grid;
 }
 #closeButton{
     float: right;
@@ -48,7 +47,7 @@ body{
 
 
 /* FILTER DIV */
-.div-filter{
+.div-filter, .div-newdata,.div-apply{
     margin-left: 20px;
 }
 .div-subfilter{

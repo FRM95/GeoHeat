@@ -3,16 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Active fires</title>
-    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="/static/css/index.css">
   </head>
 	<body>
     <div class="container">
-
       <div class="container-features" id="container-left-sidebar">
-
         <h1>Example title</h1>
         <h2>Example description</h2>
-
         <div class="container-filter">
           <details class="details-filter">
             <summary class="summary-description">Filter</summary>
@@ -42,56 +39,72 @@
                   <summary class="summary-description">Source <input type="checkbox" id="source-filter" class="main-checkbox" checked="true"></summary>
                   <div name="sources" class="div-filter-data" id="available-sources"></div>
                 </details>
-                <details id="details-confidence">
-                  <summary class="summary-description">Confidence <input type="checkbox" id="confidence-filter" class="main-checkbox" checked="true"></summary>
-                  <div name="confidence-levels" class="div-filter-data" id="available-confidence-levels"></div>
-                </details>
               </div>
             </div>
             <div class="div-apply">
-              <button class="filter-button" id="reset-filter">Reset Default</button>
-              <button class="filter-button" id="save-filter">Save</button>
+              <button class="action-button" id="reset-button">Reset Default</button>
+              <button class="action-button" id="save-button">Save</button>
+            </div>
+          </details>
+        </div>
+        <div class="container-newdata">
+          <details class="details-newdata">
+            <summary class="summary-description">Request</summary>
+            <div class="div-newdata">
+              <label>Delimiter</label>
+              <select id="new-delimiter" class="request-parameter"></select>
+              <label>Zone</label>
+              <select id="new-area" class="request-parameter"></select>
+              <select id="new-country" class="request-parameter hidden"></select>
+              <label>Source</label>
+              <select id="new-source" class="request-parameter"></select>
+              <label>Range</label>
+              <select id="new-range" class="request-parameter"></select>
+              <!-- <label>Date</label>
+              <select id="date" style="display: inline-block;"></select> -->
+            </div>
+            <div class="div-apply">
+              <button class="action-button" id="request-button">Obtain</button>
             </div>
           </details>
         </div>
       </div>
-
-      <div id="container-canvas" id="container-center"></div>
-
+      <div class="container-canvas" id="container-center"></div>
       <div class="container-features" id="container-right-sidebar">
-
         <div id="markerInformation" class="hidden">
-          <div id="markerCountryInformation">
-            <div class="primary-info" id="markerId"></div>
-            <div class="primary-info" id="markerLatitude"></div>
-            <div class="primary-info" id="markerLongitude"></div>
-            <div class="primary-info" id="markerCountryName"></div>
-            <div class="primary-info" id="markerCountryISOA3"></div>
-            <div class="secondary-info hidden" id="markerAffiliated_country"></div>
-            <div class="primary-info" id="markerNASARegion"></div>
-            <div class="primary-info" id="markerSubRegion"></div>
-          </div>
-          <div id="markerNASAInformation">
-            <div class="primary-info" id="markerAcq_Date"></div>
-            <div class="primary-info" id="markerInstrument"></div>
-            <div class="primary-info" id="markerdayNight"></div>
-            <div class="primary-info" id="markerSatellite"></div>
-            <div class="primary-info" id="markerConfidence"></div>
-            <div class="primary-info" id="markerBright_ti4"></div>
-            <div class="primary-info" id="markerBright_ti5"></div>
-            <div class="primary-info" id="markerScan"></div>
-            <div class="primary-info" id="markerTrack"></div>
-            <div class="primary-info" id="markerFrp"></div>
-          </div>
+            <label id="markerId"></label>
+            <label class="marker-info" id="latitude"></label>
+            <label class="marker-info" id="longitude"></label>
+            <label class="marker-info" id="country"></label>
+            <label class="marker-info" id="nasa_abreviation"></label>
+            <label class="marker-info" id="affiliated_iso_country"></label>
+            <label class="marker-info" id="nasa_region"></label>
+            <label class="marker-info" id="subregion"></label>    
+            <label class="marker-info" id="acq_date"></label>
+            <label class="marker-info" id="acq_time"></label>
+            <label class="marker-info" id="instrument"></label>
+            <label class="marker-info" id="satellite"></label>
+            <label class="marker-info" id="version"></label>
+            <label class="marker-info" id="daynight"></label>
+            <label class="marker-info" id="path"></label>
+            <label class="marker-info" id="row"></label>
+            <label class="marker-info" id="bright_ti4"></label>
+            <label class="marker-info" id="bright_ti5"></label>
+            <label class="marker-info" id="bright_ti31"></label>
+            <label class="marker-info" id="brightness"></label>
+            <label class="marker-info" id="confidence"></label>
+            <label class="marker-info" id="scan"></label>
+            <label class="marker-info" id="track"></label>
+            <label class="marker-info" id="frp"></label>
         </div>
+      </div>
 
-      </div>        
       <div id="markerLabel" class="hidden">
         <button id="closeButton">X</button>
-        <div id="markerAux">
-          <div class="text" id="markerIdAux"></div>
-          <div class="text" id="markerLatitudeAux"></div>
-          <div class="text" id="markerLongitudeAux"></div>
+        <div id="markerLabelInformation">
+          <label id="markerIdAux"></label>
+          <label id="markerLatitudeAux"></label>
+          <label id="markerLongitudeAux"></label>
         </div>
       </div>
     </div>
@@ -107,8 +120,10 @@
       var initial_data = {{ data | tojson }};
       var available_areas = {{ areas | tojson }};
       var available_countries = {{ countries | tojson }};
+      var available_filters = {{ filters | tojson }};
+      var curr_key = "{{curr_key}}";
     </script>
-    <script type="module" src="static/js/main.js"></script>
+    <script type="module" src="/static/js/main.js"></script>
 	</body>
 </html>
 

@@ -94,7 +94,9 @@ class APIOperations():
         try: 
             dataframe = DataFrame(area_data)
             dataframe['acq_date'] = dataframe['acq_date'].apply(lambda x: "/".join(x.split('-')[::-1]))
-            dataframe = dataframe.astype(NASA_TYPES)
+            for key, value in NASA_TYPES.items():
+                if key in dataframe:
+                    dataframe = dataframe.astype({key:value})
         except Exception as e:
             return f'Dataframe Encode exception: {e}'
         else:

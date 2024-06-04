@@ -68,24 +68,32 @@ const filteredOptions = (checkboxes) => {
     return result
 }
 
+/* Returns filtered data based on options array */
 const applyFilter = (data, options) =>{
     let result = [];
+    if (Object.keys(options).length < 1){
+        return result
+    }
     for(let i = 0; i<data.length; i++){
         let obj = data[i];
+        let flag = true;
         for(const[key, value] of Object.entries(obj)){
             if(key in options){
                 let filterValues = options[key];
-                if (filterValues.has(value)){
-                    result.push(obj);
+                if (!filterValues.has(value)){
+                    flag = false;
                     break;
                 }
             }
+        }
+        if(flag){
+            result.push(obj);
         }
     }
     return result
 }
 
-
+/* Creates checkbox filters data */
 const setCheckbox = (data, parentElem, domElement, valueProp, labelProp) => {
     const htmlElm = document.getElementById(domElement);
     if(htmlElm != null && parentElem != null){
