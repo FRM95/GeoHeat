@@ -99,6 +99,9 @@ const setCheckbox = (data, parentElem, domElement, valueProp, labelProp) => {
     if(htmlElm != null && parentElem != null){
         forwardEvent(parentElem);
         for (let i = 0; i<data.length; i++){
+            if(data[i][valueProp] === "World"){
+                continue
+            }
             const nodeDiv = document.createElement("div");
             nodeDiv.id = data[i][valueProp] + '-div';
             const node = document.createElement("input");

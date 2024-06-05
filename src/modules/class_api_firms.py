@@ -44,7 +44,6 @@ class Firms(APIOperations):
             fires_data = self.processTXT(fires_result)
             if isinstance(fires_data, str):
                 return fires_data
-            if kwargs.get('delimiter') == 'area':
-                fires_data = self.toDataframe(fires_data)
-                fires_data = self.mergeCountry(fires_data)
+            fires_data = self.toDataframe(fires_data)
+            fires_data = self.mergeCountry(fires_data)
             return fires_data

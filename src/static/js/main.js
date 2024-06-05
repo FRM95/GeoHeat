@@ -1,6 +1,6 @@
 import {createRenderer, setCamera, setControls, Earth, addCartesian, createMarkers, setLabelAttributes, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
 import {setCheckbox, resetDefault, filteredOptions, applyFilter} from './filterFunctions.js';
-import {setOption} from './clientFunctions.js';
+import {setOption, requestedData, getData} from './clientFunctions.js';
 
 function main(){
 
@@ -46,7 +46,6 @@ function main(){
     
     // Add cartesian points based on earth radius
     let currentData = [...initial_data];
-    console.log(currentData);
     addCartesian(currentData, earth_radius);
 
     // Add points to scene
@@ -68,15 +67,15 @@ function main(){
     scene.add(label);
 
     // Filters creation
-    setCheckbox(available_areas, 'area-filter', 'available-areas', 'nasa_region', 'nasa_region');
-    setCheckbox(available_countries, 'country-filter', 'available-countries', 'nasa_abreviation', 'nasa_name');
+    setCheckbox(available_areas, 'area-filter', 'available-areas', 'region', 'region');
+    setCheckbox(available_countries, 'country-filter', 'available-countries', 'nasa_abreviation', 'country');
     setCheckbox(initial_data.slice(0,1), 'date-filter', 'available-dates', 'acq_date', 'acq_date');
     setCheckbox(available_filters.timefilter, 'time-filter', 'available-times', 'daynight', 'daynight');
     setCheckbox(available_filters.sourcefilter, 'source-filter', 'available-sources', 'instrument', 'instrument');
     resetDefault('reset-button', 'main-checkbox');
 
     // Applies filter
-    let saveFilter = document.getElementById("save-button");
+    const saveFilter = document.getElementById("save-button");
     let boxes = document.getElementsByClassName("main-checkbox");
     saveFilter.addEventListener("click", _ => {
         let filtersToApply = filteredOptions(boxes);
@@ -90,12 +89,23 @@ function main(){
     });
 
     // Request Data creation
-    setOption(available_filters.delimiterData, 'new-delimiter', 'delimiter', 'delimiter');
-    setOption(available_areas, 'new-area', 'nasa_region', 'nasa_region');
-    setOption(available_countries, 'new-country', 'nasa_abreviation', 'nasa_name');
-    setOption(available_filters.sourceData, 'new-source', 'source', 'source');
-    setOption(available_filters.rangeData, 'new-range', 'dayrange', 'dayrange');
-    
+    setOption(available_request_data.delimiterData, 'select-delimiter', 'nasa_delimiter', 'delimiter');
+    setOption(available_areas, 'select-area', 'coordinates', 'region');
+    setOption(available_countries, 'select-country', 'nasa_abreviation', 'country');
+    setOption(available_request_data.sourceData, 'select-source', 'source', 'source');
+    setOption(available_request_data.rangeData, 'select-range', 'dayrange', 'dayrange');
+    const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+    document.getElementById('select-date').max = currDay;
+    document.getElementById('select-date').value = currDay;
+
+    // Get data
+    const requestData = document.getElementById("request-button");
+    let selectors = document.getElementsByClassName("request-parameter");
+    requestData.addEventListener("click", async _ => {
+        let data = requestedData(selectors);
+        const newData = await getData(data, curr_key);
+        console.log(newData)
+    });
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();

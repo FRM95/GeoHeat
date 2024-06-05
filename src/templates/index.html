@@ -42,29 +42,29 @@
               </div>
             </div>
             <div class="div-apply">
-              <button class="action-button" id="reset-button">Reset Default</button>
+              <button class="action-button" id="reset-button">Reset default</button>
               <button class="action-button" id="save-button">Save</button>
             </div>
           </details>
         </div>
-        <div class="container-newdata">
-          <details class="details-newdata">
+        <div class="container-request">
+          <details class="details-request">
             <summary class="summary-description">Request</summary>
-            <div class="div-newdata">
+            <div class="div-request">
               <label>Delimiter</label>
-              <select id="new-delimiter" class="request-parameter"></select>
+              <select id="select-delimiter" class="request-parameter"></select>
               <label>Zone</label>
-              <select id="new-area" class="request-parameter"></select>
-              <select id="new-country" class="request-parameter hidden"></select>
+              <select id="select-area" class="request-parameter"></select>
+              <select id="select-country" class="request-parameter hidden"></select>
               <label>Source</label>
-              <select id="new-source" class="request-parameter"></select>
+              <select id="select-source" class="request-parameter"></select>
               <label>Range</label>
-              <select id="new-range" class="request-parameter"></select>
-              <!-- <label>Date</label>
-              <select id="date" style="display: inline-block;"></select> -->
+              <select id="select-range" class="request-parameter"></select>
+              <label>Date</label>
+              <input id="select-date" type="date" placeholder="YYYY-MM-DD" class="request-parameter">
             </div>
             <div class="div-apply">
-              <button class="action-button" id="request-button">Obtain</button>
+              <button class="action-button" id="request-button">Get data</button>
             </div>
           </details>
         </div>
@@ -121,6 +121,7 @@
       var available_areas = {{ areas | tojson }};
       var available_countries = {{ countries | tojson }};
       var available_filters = {{ filters | tojson }};
+      var available_request_data = {{ request_data | tojson }};
       var curr_key = "{{curr_key}}";
     </script>
     <script type="module" src="/static/js/main.js"></script>

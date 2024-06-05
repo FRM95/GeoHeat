@@ -2,6 +2,7 @@ from requests import exceptions, Response, get, post, JSONDecodeError
 from pandas import DataFrame
 from modules.nasa_config import NASA_TYPES
 from geopandas import GeoDataFrame, points_from_xy, sjoin, read_file
+from datetime import datetime
 
 class APIOperations():
 
@@ -108,7 +109,7 @@ class APIOperations():
                 geodataframe = GeoDataFrame(area_data, geometry=points_from_xy(area_data.longitude, area_data.latitude), crs="EPSG:4326")
                 world_data = read_file('../../data/world_data.geojson', driver='GeoJSON')
                 geodataframe = sjoin(geodataframe, world_data, how='left')
-                geodataframe = geodataframe.drop(columns=['index_right', 'geometry'])
+                geodataframe = geodataframe.drop(columns=['country_id','index_right', 'geometry'], errors = 'ignore')
                 geodataframe = geodataframe.reset_index(drop=True)
             except Exception as e:
                 return f'Geodataframe Merge exception: {e}'
@@ -116,6 +117,48 @@ class APIOperations():
                 return geodataframe.to_dict('records')
         else:
             return area_data
+        
+    def isvalidRequest(self, data:dict) -> (dict|str):
+        result_data = {}
+        for key, value in data.items():
+            match key:
+                case 'select-delimiter':
+                    if(value!='country' and value!='area'):
+                        return f'Invalid delimiter value: {value}'
+                    else:
+                        result_data['delimiter'] = value
+                case 'select-country':
+                    if(not isinstance(value, str) or len(value) != 3):
+                        return f'Invalid country value: {value}'
+                    result_data['zone'] = value
+                case 'select-area':
+                    if(not isinstance(value, str)):
+                        return f'Invalid area value: {value}'
+                    result_data['zone'] = value
+                case 'select-source':
+                    if(not isinstance(value, str)):
+                        return f'Invalid source value: {value}'
+                    result_data['source'] = value
+                case 'select-range':
+                    if(not isinstance(value, str) or not value.isnumeric()):
+                        return f'Invalid range value: {value}'
+                    try:
+                        updated_val = int(value)
+                    except:
+                        return f'Invalid range value: {value}'
+                    else:
+                        if updated_val < 1 or updated_val > 10:
+                            return f'Invalid range value: {value}'
+                    result_data['dayrange'] = updated_val
+                case 'select-date':
+                    if(not isinstance(value, str)):
+                        return f'Invalid date value: {value}'
+                    try:
+                        bool(datetime.strptime(value, "%Y-%m-%d"))
+                    except:
+                        return f'Invalid date value: {value}'
+                    result_data['date'] = value
+        return result_data
 
 
     

@@ -1,6 +1,8 @@
 body{
     margin: 0;
 }
+
+/* CONTANIER CSS */
 .container-features{
     margin-top: 2%;
     color: white;
@@ -29,25 +31,23 @@ body{
     left:0;
     z-index: -1;
 }
+
+/* MARKER LABEL EARTH AND MARKER LABEL INFORMATION CSS */
 #markerLabel{
     padding: 4px;
     border: 1px solid red;
     background-color: rgba(255, 255, 255, 0.753);
     left: 5%;
 }
-#markerInformation, #markerLabelInformation{
+#markerLabelInformation{
     display: grid;
 }
 #closeButton{
     float: right;
 }
-.hidden{
-    display: none;
-}
 
-
-/* FILTER DIV */
-.div-filter, .div-newdata,.div-apply{
+/* FILTER DIV CSS*/
+.div-filter, .div-request, .div-apply{
     margin-left: 20px;
 }
 .div-subfilter{
@@ -58,4 +58,14 @@ body{
     max-height: 400px;
     scroll-behavior: smooth;
     overflow-y: auto;
+}
+
+/* REQUEST DIV CSS*/
+.request-parameter{
+    display: inline;
+}
+
+/* HIDDEN CLASS */
+.hidden{
+    display: none;
 }
