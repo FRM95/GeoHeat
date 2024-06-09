@@ -1,10 +1,9 @@
-import {createRenderer, setCamera, setControls, Earth, addCartesian, createMarkers, setLabelAttributes, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
-import {setCheckbox, resetDefault, filteredOptions, applyFilter} from './filterFunctions.js';
+import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
+import {setCheckbox, setDateCheckbox, resetDefault, filteredOptions} from './filterFunctions.js';
+import {processFireData, displayFireData} from './globeFunctions.js';
 import {setOption, requestedData, getData} from './clientFunctions.js';
 
 function main(){
-
-    console.log(curr_key)
 
     // Renderer creation and DOM append
     const width = window.innerWidth;
@@ -13,9 +12,9 @@ function main(){
     const container = document.getElementById('container-center');
     container.appendChild(renderer.domElement);
 
-    // Label Render
+    // Label Render creation
     const labelRenderer = new CSS2DRenderer();
-    labelRenderer.setSize(width,height);
+    labelRenderer.setSize(width, height);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
     container.appendChild(labelRenderer.domElement);
@@ -28,10 +27,6 @@ function main(){
 
     // Controls creation
     const orbitControls = setControls(camera, labelRenderer.domElement, true, 0.03, false);
-    orbitControls.autoRotate = true;
-    orbitControls.autoRotateSpeed = 1.75;
-    orbitControls.minDistance = 1.15;
-    orbitControls.maxDistance = 3;
 
     // Auto rotate speed functionality
     labelRenderer.domElement.addEventListener("click", _ => {
@@ -44,108 +39,84 @@ function main(){
     const earth = Earth(earth_radius, 64, 32, material, "/static/textures/earthmap10k.jpg");
     scene.add(earth);
     
-    // Add cartesian points based on earth radius
-    let currentData = [...initial_data];
-    addCartesian(currentData, earth_radius);
-
+    // Add cartesian points based to user data and return each mesh object created
+    let meshPointers = processFireData(user_data, earth_radius);
+ 
     // Add points to scene
-    var current_marks_mesh = createMarkers(currentData);
-    scene.add(current_marks_mesh);
+    addMesh(scene, meshPointers);
 
     // Mark information functionality
-    let labelDivInfo = document.getElementById("markerInformation");
-    let closeBtn = document.getElementById("closeButton");
+    const labelDivInfo = document.getElementById("markerInformation");
+    const closeBtn = document.getElementById("closeButton");
     closeBtn.addEventListener("pointerdown", _ => {
       labelDiv.classList.add("hidden");
       labelDivInfo.classList.add("hidden");
     })
 
     // Globe mark label functionality
-    let labelDiv = document.getElementById("markerLabel");
-    let label = new CSS2DObject(labelDiv);
+    const labelDiv = document.getElementById("markerLabel");
+    const label = new CSS2DObject(labelDiv);
     setLabelAttributes(label, earth, camera)
     scene.add(label);
 
-    // Filters creation
-    setCheckbox(available_areas, 'area-filter', 'available-areas', 'region', 'region');
-    setCheckbox(available_countries, 'country-filter', 'available-countries', 'nasa_abreviation', 'country');
-    setCheckbox(initial_data.slice(0,1), 'date-filter', 'available-dates', 'acq_date', 'acq_date');
-    setCheckbox(available_filters.timefilter, 'time-filter', 'available-times', 'daynight', 'daynight');
-    setCheckbox(available_filters.sourcefilter, 'source-filter', 'available-sources', 'instrument', 'instrument');
-    resetDefault('reset-button', 'main-checkbox');
+    // Creates filter data and request data options
+    for(const[key, value] of Object.entries(options_data)){
+        setCheckbox(key, value); 
+        setOption(key, value);
+    }
+
+    // Request date creation
+    const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+    document.getElementById('requestDate').max = currDay;
+    document.getElementById('requestDate').value = currDay;
+
+    // Date filter creation
+    setDateCheckbox(user_data, 'availableDate', 'filterDate');
 
     // Applies filter
     const saveFilter = document.getElementById("save-button");
     let boxes = document.getElementsByClassName("main-checkbox");
     saveFilter.addEventListener("click", _ => {
         let filtersToApply = filteredOptions(boxes);
-        currentData = applyFilter(initial_data, filtersToApply);
-        current_marks_mesh.dispose();
-        scene.remove(current_marks_mesh);
-        current_marks_mesh = createMarkers(currentData);
-        scene.add(current_marks_mesh);
+        removeMesh(scene, meshPointers)
+        meshPointers = processFireData(user_data, earth_radius, filtersToApply);
+        addMesh(scene, meshPointers);
         labelDiv.classList.add("hidden");
         labelDivInfo.classList.add("hidden");
     });
 
-    // Request Data creation
-    setOption(available_request_data.delimiterData, 'select-delimiter', 'nasa_delimiter', 'delimiter');
-    setOption(available_areas, 'select-area', 'coordinates', 'region');
-    setOption(available_countries, 'select-country', 'nasa_abreviation', 'country');
-    setOption(available_request_data.sourceData, 'select-source', 'source', 'source');
-    setOption(available_request_data.rangeData, 'select-range', 'dayrange', 'dayrange');
-    const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-    document.getElementById('select-date').max = currDay;
-    document.getElementById('select-date').value = currDay;
-
     // Get data
     const requestData = document.getElementById("request-button");
-    let selectors = document.getElementsByClassName("request-parameter");
+    const selectors = document.getElementsByClassName("request-parameter");
     requestData.addEventListener("click", async _ => {
-        let data = requestedData(selectors);
-        const newData = await getData(data, curr_key);
-        console.log(newData)
+        const data = requestedData(selectors);
+        console.log(data)
+        // const newData = await getData(data, user_key);
+        // console.log(newData)
     });
+
+    // Reset filters
+    resetDefault('reset-button', 'main-checkbox');
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
     let raycaster = new THREE.Raycaster();
-    let intersections = null;
 
     labelRenderer.domElement.addEventListener("pointerdown", event => {
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
         raycaster.setFromCamera(pointer, camera);
-        intersections = raycaster.intersectObject(current_marks_mesh, true);
-        if(intersections.length > 0){
-            let intersectionData = intersections[0];
-            let meshId = intersectionData.instanceId;
-            let dataId = intersectionData.object.userData[meshId];
-            let fireInformation = currentData[dataId];
-            let htmlLabels = document.getElementsByClassName("marker-info");
-            for(let i = 0; i < htmlLabels.length; i++){
-                let currLabel = htmlLabels[i];
-                if(currLabel.id in fireInformation){
-                    let strLabel = String(currLabel.id);
-                    currLabel.innerHTML = `<b>${strLabel.charAt(0).toUpperCase() + strLabel.slice(1).replace("_", " ")}:</b> ${fireInformation[currLabel.id]}`;
-                    currLabel.classList.remove("hidden");
-                    if(strLabel == 'latitude'){
-                        document.getElementById('markerLatitudeAux').innerHTML = currLabel.innerHTML;
-                    }
-                    else if(strLabel == 'longitude'){
-                        document.getElementById('markerLongitudeAux').innerHTML = currLabel.innerHTML;
-                    }
-                }
-                else{
-                    currLabel.innerHTML = "";
-                    currLabel.classList.add("hidden");
-                }
+        for(let i = 0; i < meshPointers.length; i++){
+            let intersections = raycaster.intersectObject(meshPointers[i], true);
+            if(intersections.length > 0){
+                let currIntersection = intersections[0];
+                let meshId = currIntersection.instanceId;
+                let fireInformation = currIntersection.object.userData[meshId];
+                displayFireData(fireInformation, meshId);
+                label.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
+                label.element.classList.remove("hidden");
+                labelDivInfo.classList.remove("hidden")
             }
-            document.getElementById('markerId').innerHTML = `<b>Id</b>: ${dataId}`;
-            document.getElementById('markerIdAux').innerHTML = `<b>Id</b>: ${dataId}`;
-            label.position.set(intersectionData.point.x, intersectionData.point.y, intersectionData.point.z);
-            label.element.classList.remove("hidden");
-            labelDivInfo.classList.remove("hidden");
         }
     });
 

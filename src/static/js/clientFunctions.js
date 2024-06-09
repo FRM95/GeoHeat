@@ -4,33 +4,47 @@ const hideOptions = (htmlElm) =>{
         htmlElm.addEventListener("change", _ =>{
             let showElement = htmlElm.value;
             if (showElement == 'area'){
-                document.getElementById("select-area").classList.remove("hidden");
-                document.getElementById("select-country").classList.add("hidden");
+                document.getElementById("requestArea").classList.remove("hidden");
+                document.getElementById("requestCountry").classList.add("hidden");
             }
             else{
-                document.getElementById("select-country").classList.remove("hidden");
-                document.getElementById("select-area").classList.add("hidden");
+                document.getElementById("requestCountry").classList.remove("hidden");
+                document.getElementById("requestArea").classList.add("hidden");
             }
         })
     }
 }
 
 /* Appends options to existing collection */
-const setOption = (data, domElement, valueProp, labelProp) =>{
-    const htmlElm = document.getElementById(domElement);
-    if(htmlElm != null && data != null){
-        if (htmlElm.id == 'select-delimiter'){
-            hideOptions(htmlElm);
-        }
-        for (let i = 0; i<data.length; i++){
+const setOption = (optKey, optValue) => {
+    const htmlElm = document.getElementById('request' + optKey);
+    if(htmlElm!=null){
+        const arrValues = optValue;
+        if(htmlElm.id === 'requestDelimiter'){ hideOptions(htmlElm); }
+        for(let i = 0; i < arrValues.length; i++){
             const newOpt = document.createElement("option");
-            if(data[i][valueProp] != null){
-                const value = data[i][valueProp];
-                const text = data[i][labelProp];
-                newOpt.value = value;
-                newOpt.text = text;
-                htmlElm.add(newOpt, null);
+            const currOpt = arrValues[i];
+            if('area' in currOpt){
+                newOpt.value = currOpt['area'];
+                newOpt.text = currOpt['name'];
             }
+            else if('country' in currOpt){
+                newOpt.value = currOpt['country'];
+                newOpt.text = currOpt['name'];
+            }
+            else if('delimiter' in currOpt){
+                newOpt.value = currOpt['delimiter'];
+                newOpt.text = currOpt['delimiter'][0].toUpperCase() + currOpt['delimiter'].substring(1);
+            }
+            else if('source' in currOpt){
+                newOpt.value = currOpt['source'];
+                newOpt.text = currOpt['source'].replace(/_/g, " ");
+            }
+            else if('dayrange' in currOpt){
+                newOpt.value = currOpt['dayrange'];
+                newOpt.text = currOpt['dayrange'];
+            }
+            if(newOpt.value != ""){ htmlElm.add(newOpt, null); }
         }
     }
 }

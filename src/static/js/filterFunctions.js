@@ -68,60 +68,85 @@ const filteredOptions = (checkboxes) => {
     return result
 }
 
-/* Returns filtered data based on options array */
-const applyFilter = (data, options) =>{
-    let result = [];
-    if (Object.keys(options).length < 1){
-        return result
+/* Creates checkbox filters data (date) */
+const setDateCheckbox = (data, domElement, parentName) =>{
+    const htmlElm = document.getElementById(domElement);
+    if(htmlElm != null){
+        const dataArr = Object.values(data);
+        for(let i = 0; i < dataArr.length; i++){
+            const currData = dataArr[i][0];
+            const newNode = document.createElement("input");
+            newNode.setAttribute('type', 'checkbox');
+            newNode.checked = true;
+            newNode.setAttribute('property', 'date');
+            newNode.value = currData['date'];
+            newNode.className = parentName;
+            backwardEvent(newNode, parentName);
+            const label = document.createElement("label");
+            const dateUpdated = currData['date'].split("-");
+            label.innerHTML = dateUpdated[2] + "/" + dateUpdated[1] + "/" + dateUpdated[0];
+            const nodeDiv = document.createElement("div");
+            nodeDiv.appendChild(label);
+            nodeDiv.appendChild(newNode);
+            htmlElm.appendChild(nodeDiv);
+            forwardEvent(parentName);
+        }
     }
-    for(let i = 0; i<data.length; i++){
-        let obj = data[i];
-        let flag = true;
-        for(const[key, value] of Object.entries(obj)){
-            if(key in options){
-                let filterValues = options[key];
-                if (!filterValues.has(value)){
-                    flag = false;
-                    break;
+}
+
+/* Creates checkbox filters data (source, area, and country) */
+const setCheckbox = (boxKey, boxValue) => {
+    const htmlElm = document.getElementById('available' + boxKey);
+    if(htmlElm != null){
+        const arrValues = boxValue;
+        for(let i = 0; i < arrValues.length; i++){
+
+            const currOpt = arrValues[i];
+            const newNode = document.createElement("input");
+            newNode.setAttribute('type', 'checkbox');
+            newNode.checked = true;
+            const label = document.createElement("label");
+            const nodeDiv = document.createElement("div");
+
+            if('area' in currOpt){
+                if(currOpt['name'] != "World"){
+                    newNode.value = currOpt['name'];
+                    newNode.setAttribute('property', 'region');
+                    newNode.className = 'filter' + boxKey;
+                    forwardEvent('filter' + boxKey);
+                    backwardEvent(newNode, 'filter' + boxKey);
+                    label.innerHTML = currOpt['name'];
+                    nodeDiv.appendChild(label);
+                    nodeDiv.appendChild(newNode);
+                    htmlElm.appendChild(nodeDiv); 
                 }
             }
-        }
-        if(flag){
-            result.push(obj);
-        }
-    }
-    return result
-}
 
-/* Creates checkbox filters data */
-const setCheckbox = (data, parentElem, domElement, valueProp, labelProp) => {
-    const htmlElm = document.getElementById(domElement);
-    if(htmlElm != null && parentElem != null){
-        forwardEvent(parentElem);
-        for (let i = 0; i<data.length; i++){
-            if(data[i][valueProp] === "World"){
-                continue
+            else if('country' in currOpt){
+                newNode.value = currOpt['country'];
+                newNode.setAttribute('property', 'nasa_abreviation');
+                newNode.className = 'filter' + boxKey;
+                forwardEvent('filter' + boxKey);
+                backwardEvent(newNode, 'filter' + boxKey);
+                label.innerHTML = currOpt['name'];
+                nodeDiv.appendChild(label);
+                nodeDiv.appendChild(newNode);
+                htmlElm.appendChild(nodeDiv); 
             }
-            const nodeDiv = document.createElement("div");
-            nodeDiv.id = data[i][valueProp] + '-div';
-            const node = document.createElement("input");
-            node.setAttribute('type', 'checkbox');
-            node.name = data[i][valueProp] + '-checkbox';
-            node.value = data[i][valueProp];
-            node.checked = true;
-            node.id = data[i][valueProp] + '-checkbox';
-            node.className = parentElem;
-            node.setAttribute('property', valueProp);
-            const label = document.createElement("label");
-            label.innerHTML = data[i][labelProp];
-            label.setAttribute('for', node.name);
-            label.id = data[i][valueProp] + '-label';
-            nodeDiv.appendChild(label);
-            nodeDiv.appendChild(node);
-            htmlElm.appendChild(nodeDiv);     
-            backwardEvent(node, parentElem); 
+
+            else if('source' in currOpt){
+                newNode.value = currOpt['source'];
+                newNode.setAttribute('property', 'source');
+                newNode.className = 'filter' + boxKey;
+                forwardEvent('filter' + boxKey);
+                backwardEvent(newNode, 'filter' + boxKey);
+                label.innerHTML = currOpt['source'].replace(/_/g, " ");
+                nodeDiv.appendChild(label);
+                nodeDiv.appendChild(newNode);
+                htmlElm.appendChild(nodeDiv); 
+            }
         }
     }
 }
 
-export {setCheckbox, resetDefault, filteredOptions, applyFilter};
+export {setCheckbox, setDateCheckbox, filteredOptions, resetDefault};

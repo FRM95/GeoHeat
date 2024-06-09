@@ -94,7 +94,6 @@ class APIOperations():
     def toDataframe(self, area_data:list) -> (DataFrame|str):
         try: 
             dataframe = DataFrame(area_data)
-            dataframe['acq_date'] = dataframe['acq_date'].apply(lambda x: "/".join(x.split('-')[::-1]))
             for key, value in NASA_TYPES.items():
                 if key in dataframe:
                     dataframe = dataframe.astype({key:value})
@@ -127,18 +126,22 @@ class APIOperations():
                         return f'Invalid delimiter value: {value}'
                     else:
                         result_data['delimiter'] = value
+
                 case 'select-country':
                     if(not isinstance(value, str) or len(value) != 3):
                         return f'Invalid country value: {value}'
                     result_data['zone'] = value
+
                 case 'select-area':
                     if(not isinstance(value, str)):
                         return f'Invalid area value: {value}'
                     result_data['zone'] = value
+
                 case 'select-source':
                     if(not isinstance(value, str)):
                         return f'Invalid source value: {value}'
                     result_data['source'] = value
+
                 case 'select-range':
                     if(not isinstance(value, str) or not value.isnumeric()):
                         return f'Invalid range value: {value}'
@@ -150,6 +153,7 @@ class APIOperations():
                         if updated_val < 1 or updated_val > 10:
                             return f'Invalid range value: {value}'
                     result_data['dayrange'] = updated_val
+
                 case 'select-date':
                     if(not isinstance(value, str)):
                         return f'Invalid date value: {value}'
@@ -158,7 +162,24 @@ class APIOperations():
                     except:
                         return f'Invalid date value: {value}'
                     result_data['date'] = value
+
         return result_data
+    
+    def createJSON(self, userKey, fireData, **kwargs):
+        try:
+            json_data = {userKey : [
+                    {"date":kwargs.get('date'),
+                    "source":kwargs.get('source'),
+                    "delimiter":kwargs.get('delimiter'),
+                    "zone":kwargs.get('zone'),
+                    "dayrange":kwargs.get('dayrange'),
+                    "firedata":fireData}
+                    ]
+                }
+        except Exception as e:
+            return f'JSON creation exception: {e}'
+        else:
+            return json_data
 
 
     

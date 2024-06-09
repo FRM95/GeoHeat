@@ -40,10 +40,12 @@ class Firms(APIOperations):
         fires_result = self.getRequest(fires_url)
         if isinstance(fires_result, str):
             return fires_result
+        fires_list = self.processTXT(fires_result)
+        if isinstance(fires_list, str):
+            return fires_list
         else:
-            fires_data = self.processTXT(fires_result)
-            if isinstance(fires_data, str):
-                return fires_data
-            fires_data = self.toDataframe(fires_data)
-            fires_data = self.mergeCountry(fires_data)
+            fires_df = self.toDataframe(fires_list)
+            fires_data = self.mergeCountry(fires_df)
+            if isinstance(fires_data, list):
+                fires_data = self.createJSON(key, fires_data, **kwargs)
             return fires_data

@@ -2,12 +2,14 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
 
+/* Creates scene render */
 function createRenderer(w, h){
     let renderer = new THREE.WebGLRenderer({antialias:true});
     renderer.setSize(w,h);
     return renderer
 }
 
+/* Creates camera */
 function setCamera(fov, aspect, near, far, initial_x, initial_y, initial_z){
     let camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.x = initial_x; 
@@ -16,14 +18,20 @@ function setCamera(fov, aspect, near, far, initial_x, initial_y, initial_z){
     return camera
 }
 
+/* Set camera controls */
 function setControls(camera, domElem, damping = true, dampFactor = 0.03, pan = false){
     let controls = new OrbitControls(camera, domElem);
     controls.enableDamping = damping;
     controls.dampingFactor = dampFactor;
     controls.enablePan = pan;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 1.75;
+    controls.minDistance = 1.15;
+    controls.maxDistance = 3;
     return controls
 }
 
+/* Creates earth geometry */
 function Earth(radius = 1.0, widthSegments = 64, heightSegments = 32, material = null, texture_path = null){
     let geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
     if (texture_path != null){
@@ -34,82 +42,7 @@ function Earth(radius = 1.0, widthSegments = 64, heightSegments = 32, material =
     return sphere
 }
 
-function coordToCartesian(coordinates, earth_radius){
-    let latitude = coordinates.latitude;
-    let longitude = coordinates.longitude;
-    let phi = (90-latitude)*(Math.PI/180);
-    let theta = (longitude+180)*(Math.PI/180);
-    let x_point = -(earth_radius * Math.sin(phi)*Math.cos(theta));
-    let y_point = (earth_radius * Math.cos(phi));
-    let z_point = (earth_radius * Math.sin(phi)*Math.sin(theta));
-    return {x:x_point,
-            y:y_point,
-            z:z_point}
-}
-
-function addCartesian(dataObject, earth_radius){
-    for(const value of Object.values(dataObject)){
-        let pointObject = coordToCartesian(value, earth_radius);
-        value.earth_cartesian = pointObject;
-    }
-}
-
-function createMarkers(dataObject){
-    const common_geo = new THREE.CircleGeometry(0.0015, 32);
-    const common_mat = new THREE.MeshBasicMaterial({color:0xff0000});
-    let dummy = new THREE.Object3D();
-    let userData = {};
-    let markMesh = new THREE.InstancedMesh(common_geo, common_mat, dataObject.length);
-    for(let i = 0; i < dataObject.length; i++){
-        dummy.position.x = dataObject[i].earth_cartesian.x;
-        dummy.position.y = dataObject[i].earth_cartesian.y;
-        dummy.position.z = dataObject[i].earth_cartesian.z;
-        dummy.lookAt(dummy.position.clone().setLength(1.5));
-        dummy.updateMatrix();
-        markMesh.setMatrixAt(i, dummy.matrix);
-        userData[i] = i;
-    }
-    markMesh.userData = userData;
-    return markMesh
-
-
-
-    // if (filterObject.length == 0){ 
-    //     meshCount = Object.keys(dataObject).length; 
-    // }
-    // else{
-    //     meshCount = inputSize;
-    // }
-
-    // var markMesh = new THREE.InstancedMesh(common_geo, common_mat, meshCount);
-    // if (inputSize == 0) {
-    //     for(let i = 0; i < meshCount; i++){
-    //         dummy.position.x = dataObject[i].earth_cartesian.x;
-    //         dummy.position.y = dataObject[i].earth_cartesian.y;
-    //         dummy.position.z = dataObject[i].earth_cartesian.z;
-    //         dummy.lookAt(dummy.position.clone().setLength(1.5));
-    //         dummy.updateMatrix();
-    //         markMesh.setMatrixAt(i, dummy.matrix);
-    //         userData[i] = i;
-    //     }
-    // }
-    // else{
-    //     for(let i = 0; i < meshCount; i++){
-    //         const uniqueId = dataIds[i];
-    //         dummy.position.x = dataObject[uniqueId].earth_cartesian.x;
-    //         dummy.position.y = dataObject[uniqueId].earth_cartesian.y;
-    //         dummy.position.z = dataObject[uniqueId].earth_cartesian.z;
-    //         dummy.lookAt(dummy.position.clone().setLength(1.5));
-    //         dummy.updateMatrix();
-    //         markMesh.setMatrixAt(i, dummy.matrix);
-    //         userData[i] = uniqueId;
-    //     }
-    // }
-
-    // markMesh.userData = userData;
-    // return markMesh
-}
-
+/* Add Earth label functionality */
 function setLabelAttributes(label, earth, camera){
     label.userData = {
         cNormal: new THREE.Vector3(),
@@ -130,5 +63,31 @@ function setLabelAttributes(label, earth, camera){
     };
 }
 
-export {createRenderer, setCamera, setControls, Earth, addCartesian, createMarkers, setLabelAttributes, THREE, CSS2DRenderer, CSS2DObject};
+/* Remove mesh from scene */
+function removeMesh(sceneObject, meshArray){
+    for(let i= 0; i < meshArray.length; i++){
+        meshArray[i].dispose();
+        sceneObject.remove(meshArray[i]);
+    }
+}
+
+/* Add mesh to scene */
+function addMesh(sceneObject, meshArray){
+    for(let j= 0; j<meshArray.length;j++){
+        sceneObject.add(meshArray[j]);
+    }
+}
+
+export {
+    createRenderer, 
+    setCamera, 
+    setControls, 
+    Earth,
+    setLabelAttributes,
+    removeMesh,
+    addMesh,
+    THREE, 
+    CSS2DRenderer, 
+    CSS2DObject
+};
 

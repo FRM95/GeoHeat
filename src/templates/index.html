@@ -14,30 +14,26 @@
           <details class="details-filter">
             <summary class="summary-description">Filter</summary>
             <div class="div-filter">
-              <div class="div-filter-geographic">
-                <details id="details-area">
-                  <summary class="summary-description">Area <input type="checkbox" id="area-filter" class="main-checkbox" checked="true"></summary>
-                  <div name="areas" class="div-filter-data" id="available-areas"></div>
-                </details>
-                <details id="details-country">
-                  <summary class="summary-description">Country <input type="checkbox" id="country-filter" class="main-checkbox" checked="true"></summary>
-                  <div name="countries" class="div-filter-data" id="available-countries"></div>
-                </details>
-              </div>
               <div class="div-filter-datetime">
                 <details id="details-date">
-                  <summary class="summary-description">Date <input type="checkbox" id="date-filter" class="main-checkbox" checked="true"></summary>
-                  <div name="dates" class="div-filter-data" id="available-dates"></div>
-                </details>
-                <details id="details-time">
-                  <summary class="summary-description">Time <input type="checkbox" id="time-filter" class="main-checkbox" checked="true"></summary>
-                  <div name="times" class="div-filter-data" id="available-times"></div>
+                  <summary class="summary-description">Date <input type="checkbox" id="filterDate" class="main-checkbox" checked="true"></summary>
+                  <div name="dates" class="div-filter-data" id="availableDate"></div>
                 </details>
               </div>
-              <div class="div-filter-features">
+              <div class="div-filter-source">
                 <details id="details-source">
-                  <summary class="summary-description">Source <input type="checkbox" id="source-filter" class="main-checkbox" checked="true"></summary>
-                  <div name="sources" class="div-filter-data" id="available-sources"></div>
+                  <summary class="summary-description">Source <input type="checkbox" id="filterSource" class="main-checkbox" checked="true"></summary>
+                  <div name="sources" class="div-filter-data" id="availableSource"></div>
+                </details>
+              </div>
+              <div class="div-filter-geographic">
+                <details id="details-area">
+                  <summary class="summary-description">Area <input type="checkbox" id="filterArea" class="main-checkbox" checked="true"></summary>
+                  <div name="areas" class="div-filter-data" id="availableArea"></div>
+                </details>
+                <details id="details-country">
+                  <summary class="summary-description">Country <input type="checkbox" id="filterCountry" class="main-checkbox" checked="true"></summary>
+                  <div name="countries" class="div-filter-data" id="availableCountry"></div>
                 </details>
               </div>
             </div>
@@ -52,16 +48,16 @@
             <summary class="summary-description">Request</summary>
             <div class="div-request">
               <label>Delimiter</label>
-              <select id="select-delimiter" class="request-parameter"></select>
+              <select id="requestDelimiter" class="request-parameter"></select>
               <label>Zone</label>
-              <select id="select-area" class="request-parameter"></select>
-              <select id="select-country" class="request-parameter hidden"></select>
+              <select id="requestArea" class="request-parameter"></select>
+              <select id="requestCountry" class="request-parameter hidden"></select>
               <label>Source</label>
-              <select id="select-source" class="request-parameter"></select>
+              <select id="requestSource" class="request-parameter"></select>
               <label>Range</label>
-              <select id="select-range" class="request-parameter"></select>
+              <select id="requestRange" class="request-parameter"></select>
               <label>Date</label>
-              <input id="select-date" type="date" placeholder="YYYY-MM-DD" class="request-parameter">
+              <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter">
             </div>
             <div class="div-apply">
               <button class="action-button" id="request-button">Get data</button>
@@ -72,7 +68,7 @@
       <div class="container-canvas" id="container-center"></div>
       <div class="container-features" id="container-right-sidebar">
         <div id="markerInformation" class="hidden">
-            <label id="markerId"></label>
+            <label class="marker-info" id="id"></label>
             <label class="marker-info" id="latitude"></label>
             <label class="marker-info" id="longitude"></label>
             <label class="marker-info" id="country"></label>
@@ -102,9 +98,9 @@
       <div id="markerLabel" class="hidden">
         <button id="closeButton">X</button>
         <div id="markerLabelInformation">
-          <label id="markerIdAux"></label>
-          <label id="markerLatitudeAux"></label>
-          <label id="markerLongitudeAux"></label>
+          <label id="idLabel"></label>
+          <label id="latitudeLabel"></label>
+          <label id="longitudeLabel"></label>
         </div>
       </div>
     </div>
@@ -117,12 +113,9 @@
       }
     </script>
     <script id="data"> 
-      var initial_data = {{ data | tojson }};
-      var available_areas = {{ areas | tojson }};
-      var available_countries = {{ countries | tojson }};
-      var available_filters = {{ filters | tojson }};
-      var available_request_data = {{ request_data | tojson }};
-      var curr_key = "{{curr_key}}";
+      var user_data = {{ user_data | tojson }};
+      var options_data = {{ options_data | tojson }};
+      var user_key = "{{user_key}}";
     </script>
     <script type="module" src="/static/js/main.js"></script>
 	</body>
