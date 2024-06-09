@@ -1,7 +1,7 @@
 import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
 import {setCheckbox, setDateCheckbox, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
-import {setOption, requestedData, getData} from './clientFunctions.js';
+import {setOption, requestedData, allowRequest, getData} from './clientFunctions.js';
 
 function main(){
 
@@ -90,7 +90,8 @@ function main(){
     const selectors = document.getElementsByClassName("request-parameter");
     requestData.addEventListener("click", async _ => {
         const data = requestedData(selectors);
-        console.log(data)
+        const option = allowRequest(user_key, user_data, data);
+        console.log(option);
         // const newData = await getData(data, user_key);
         // console.log(newData)
     });
@@ -101,7 +102,6 @@ function main(){
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
     let raycaster = new THREE.Raycaster();
-
     labelRenderer.domElement.addEventListener("pointerdown", event => {
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
@@ -120,6 +120,7 @@ function main(){
         }
     });
 
+    // Camera, render and label render window resize
     const onWindowResize=() => {
         camera.aspect = innerWidth / innerHeight;
         camera.updateProjectionMatrix();
@@ -129,6 +130,7 @@ function main(){
 
     window.addEventListener("resize", onWindowResize);
     
+    // Animate function to start render
     function animate(){
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
@@ -140,6 +142,7 @@ function main(){
     animate();
 }
 
+// Executes main method after window load
 window.addEventListener("load", function () {
     main();
     const data_processed = document.getElementById("data");

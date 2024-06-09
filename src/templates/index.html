@@ -48,16 +48,16 @@
             <summary class="summary-description">Request</summary>
             <div class="div-request">
               <label>Delimiter</label>
-              <select id="requestDelimiter" class="request-parameter"></select>
+              <select id="requestDelimiter" class="request-parameter" property = "delimiter"></select>
               <label>Zone</label>
-              <select id="requestArea" class="request-parameter"></select>
-              <select id="requestCountry" class="request-parameter hidden"></select>
+              <select id="requestArea" class="request-parameter" property = "zone"></select>
+              <select id="requestCountry" class="request-parameter hidden" property = "zone"></select>
               <label>Source</label>
-              <select id="requestSource" class="request-parameter"></select>
+              <select id="requestSource" class="request-parameter" property = "source"></select>
               <label>Range</label>
-              <select id="requestRange" class="request-parameter"></select>
+              <select id="requestRange" class="request-parameter" property = "dayrange"></select>
               <label>Date</label>
-              <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter">
+              <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter" property = "date">
             </div>
             <div class="div-apply">
               <button class="action-button" id="request-button">Get data</button>

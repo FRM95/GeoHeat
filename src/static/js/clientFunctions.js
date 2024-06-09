@@ -54,11 +54,62 @@ const requestedData = (selectors) => {
     let result = {};
     for(let i = 0; i<selectors.length; i++){
         if (!selectors[i].classList.contains("hidden")){
-            result[selectors[i].id] = selectors[i].value
+            result[selectors[i].getAttribute('property')] = selectors[i].value;
         }
     }
     return result
 }
+
+/* Checks filtered options */
+const allowRequest = (userKey, currentData, selectedData) => {
+    const userData = currentData[userKey];
+    let result = "request"; /* request, not request, add */
+    for(let i = 0; i < userData.length; i++){
+        const data = userData[i];
+        if(data['date'] == selectedData['date']){
+            if(data['source'] == selectedData['source']){
+                if(data['delimiter'] == 'country'){
+                    if(data['zone'] == selectedData['zone']){
+                        if(String(data['dayrange']) == selectedData['dayrange']){
+                            result = "not request"
+                            break
+                        }
+                        else{
+                            result = "add"
+                            break
+                        }
+                    }
+                }
+                else{
+                    if(data['zone'] == "-180,-90,180,90"){
+                        if(String(data['dayrange']) == selectedData['dayrange']){
+                            result = "not request"
+                            break
+                        }
+                        else{
+                            result = "add"
+                            break
+                        }
+                    }
+                    else{
+                        if(data['zone'] == selectedData['zone']){
+                            if(String(data['dayrange']) == selectedData['dayrange']){
+                                result = "not request"
+                                break
+                            }
+                            else{
+                                result = "add"
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return result
+}
+
 
 /* Hide options based on value */
 async function getData(data, key){
@@ -77,4 +128,4 @@ async function getData(data, key){
     }
 }
 
-export {setOption, getData, requestedData};
+export {setOption, getData, requestedData, allowRequest};
