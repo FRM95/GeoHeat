@@ -43,14 +43,14 @@ function createMarkers(dataObject){
 }
 
 /* Process user fire data, adds cartesian and mesh to each value */
-function processFireData(dataObject, earth_radius, filterOptions = null){
-    if(filterOptions != null && Object.keys(filterOptions).length < 1){
+function processFireData(userKey, dataObject, earth_radius, filterOptions = null){
+    if(dataObject[userKey] == [] || (filterOptions != null && Object.keys(filterOptions).length < 1)){
         return []
     }
     let meshPointers = [];
-    let dataArr = Object.values(dataObject);
+    let dataArr = dataObject[userKey];
     for(let i = 0; i < dataArr.length; i++){
-        let currData = dataArr[i][0];
+        let currData = dataArr[i];
         let firedata = currData['firedata'];
         if(filterOptions != null){
             let acceptedFires = [];
@@ -104,4 +104,4 @@ function displayFireData(dataObject, identifier){
     document.getElementById('idLabel').innerHTML = `<b>Id</b>: ${identifier}`;
 }
 
-export {processFireData, displayFireData}
+export {processFireData, displayFireData, addCartesian, createMarkers}

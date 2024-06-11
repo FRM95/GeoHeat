@@ -1,7 +1,7 @@
 import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
 import {setCheckbox, setDateCheckbox, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
-import {setOption, requestedData, allowRequest, getData} from './clientFunctions.js';
+import {setOption, requestedData, allowRequest, putData, getData} from './clientFunctions.js';
 
 function main(){
 
@@ -38,12 +38,9 @@ function main(){
     const earth_radius = 1;
     const earth = Earth(earth_radius, 64, 32, material, "/static/textures/earthmap10k.jpg");
     scene.add(earth);
-    
-    // Add cartesian points based to user data and return each mesh object created
-    let meshPointers = processFireData(user_data, earth_radius);
- 
-    // Add points to scene
-    addMesh(scene, meshPointers);
+
+    // Default data
+    let meshPointers = [];
 
     // Mark information functionality
     const labelDivInfo = document.getElementById("markerInformation");
@@ -70,30 +67,34 @@ function main(){
     document.getElementById('requestDate').max = currDay;
     document.getElementById('requestDate').value = currDay;
 
-    // Date filter creation
-    setDateCheckbox(user_data, 'availableDate', 'filterDate');
-
     // Applies filter
     const saveFilter = document.getElementById("save-button");
     let boxes = document.getElementsByClassName("main-checkbox");
     saveFilter.addEventListener("click", _ => {
         let filtersToApply = filteredOptions(boxes);
         removeMesh(scene, meshPointers)
-        meshPointers = processFireData(user_data, earth_radius, filtersToApply);
+        meshPointers = processFireData(user_key, user_data, earth_radius, filtersToApply);
         addMesh(scene, meshPointers);
         labelDiv.classList.add("hidden");
         labelDivInfo.classList.add("hidden");
     });
 
-    // Get data
+    // Get and update user data
     const requestData = document.getElementById("request-button");
     const selectors = document.getElementsByClassName("request-parameter");
     requestData.addEventListener("click", async _ => {
-        const data = requestedData(selectors);
-        const option = allowRequest(user_key, user_data, data);
-        console.log(option);
-        // const newData = await getData(data, user_key);
-        // console.log(newData)
+        const selectedOptions = requestedData(selectors);
+        const flagRequest = allowRequest(user_key, user_data, selectedOptions);
+        const flagResult = await getData(user_key, user_data, flagRequest, selectedOptions);
+        if(flagResult){
+            removeMesh(scene, meshPointers);
+            meshPointers = processFireData(user_key, user_data, earth_radius);
+            addMesh(scene, meshPointers);
+            setDateCheckbox(user_key, user_data, 'availableDate', 'filterDate');
+            labelDiv.classList.add("hidden");
+            labelDivInfo.classList.add("hidden");
+            const updatedData = await putData(user_data);
+        }
     });
 
     // Reset filters

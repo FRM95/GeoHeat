@@ -1,4 +1,5 @@
-import {createRenderer, setCamera, Earth, THREE, addCartesian, createMarkers} from './threeJSFunctions.js';
+import {createRenderer, setCamera, Earth, THREE} from './threeJSFunctions.js';
+import {addCartesian, createMarkers} from './globeFunctions.js';
 
 function main(){
 
@@ -20,20 +21,22 @@ function main(){
     const material = new THREE.MeshBasicMaterial({color: 0xffffff});
     const earth_radius = 1.0;
     const earth = Earth(earth_radius, 64, 32, material, "./static/textures/earthmap10k.jpg");
-    earth.rotation.y = -1.5;
+    earth.rotation.y = -2;
     earth.rotation.z = -0.65;
 
     // Add earth to scene
     scene.add(earth);
 
     // Add mock data
-    addCartesian(mock_data, earth_radius);
-    const current_marks_mesh = createMarkers(mock_data, []);
+    for(let i=0; i<mock_data.length; i++){
+        addCartesian(mock_data[i], earth_radius);
+    }
+    const current_marks_mesh = createMarkers(mock_data);
     earth.add(current_marks_mesh);
 
     function animate(){
         requestAnimationFrame(animate);
-        earth.rotation.y -= 0.0009;
+        earth.rotation.y += 0.0009;
         renderer.render(scene, camera);
     }
 

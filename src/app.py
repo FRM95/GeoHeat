@@ -2,9 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 from modules.class_api_firms import Firms
 from datetime import datetime
 import secrets
-import pickle
 import json
-
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -21,31 +19,71 @@ def login():
     if request.method == 'POST':
         input_key = request.form.get('nasa-FIRMS-value')
         if input_key in session:
-            return redirect(url_for('home'))
-        verified_key = api.checkKey(input_key)
-        if isinstance(verified_key, dict):
-            verified_key['connection'] = datetime.now()
-            session[input_key] = verified_key
-            print(session)
-            return redirect(url_for('home'))
+            return redirect(url_for('home', key = input_key))
+        
         else:
-            flash(verified_key)
-            return redirect(url_for('login'))
+            verified_key = api.checkKey(input_key)
+            if isinstance(verified_key, dict):
+                verified_key['connection'] = datetime.now()
+                session[input_key] = verified_key
+                return redirect(url_for('home', key = input_key))
+            else:
+                flash(verified_key)
+                return redirect(url_for('login'))
+        
     else:
         with open('../data/mock_data.json', 'r') as f:
             mock_data = json.load(f)
         return render_template('login.html', data = mock_data)
-
-@app.route('/home', methods=['GET'])
-def home():
     
-    with open('../data/fires_aux_data.pkl', 'rb') as fp:
-        active_fires = pickle.load(fp)
+@app.route('/home/<key>', methods=['GET'])
+def home(key):
 
-    with open("../data/countries_data.json", 'r') as fp1:
-        available_countries = json.load(fp1)
+    if key in session:
+        # If user key exists, Try to get active fires from mongodb
+        active_fires = {key: []}
+        with open("../data/request_data.json", 'r') as fp1:
+            available_request_data = json.load(fp1)
+        return render_template('index.html', user_data = active_fires, user_key = key, options_data = available_request_data)
+    
+    else:
+        return redirect(url_for('login'))
 
-    with open("../data/regions_data.json", 'r') as fp2:
-        available_subRegions = json.load(fp2)
-
-    return render_template('index.html', data = active_fires,  countries = available_countries, areas = available_subRegions)
+@app.route("/updateData", methods = ['POST','PUT'])
+def updateData():
+    if request.method == 'POST':
+        request_data = request.json
+        request_key = request_data.get('key')
+        if request_key in session:
+            validated_data = api.isvalidRequest(request_data)
+            if isinstance(validated_data, str):
+                return {'error': f'Unable to request new data, {validated_data}'}
+            else:
+                api_result = api.getFires(request_key, **validated_data)
+                if isinstance(api_result, str):
+                    return {'error': f'Unable to request new data, {api_result}'}
+                else:
+                    try:
+                        json_result = json.dumps(api_result)
+                    except Exception as e:
+                        return {'error': f'Unable to parse JSON new data, {e}'}
+                    else:
+                        return json_result
+        else:
+            return {'error': f'Unable to request new data, invalid MAP_KEY {request_key}'}
+    
+    elif request.method == 'PUT':
+        request_data = request.json
+        request_key = [*request_data][0]
+        if request_key in session:
+            try:
+                newData = json.dumps(request.json)
+                with open("../data/fires_data.json", "w") as newFile:
+                    newFile.write(newData)
+            except Exception as e:
+                return f'Unable to update data, {e}'
+            else:
+                return f'Data was successfully updated'
+        else:
+            return f'Unable to update data, invalid MAP_KEY {request_key}'
+        

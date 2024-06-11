@@ -69,12 +69,15 @@ const filteredOptions = (checkboxes) => {
 }
 
 /* Creates checkbox filters data (date) */
-const setDateCheckbox = (data, domElement, parentName) =>{
+const setDateCheckbox = (userKey, data, domElement, parentName) =>{
     const htmlElm = document.getElementById(domElement);
     if(htmlElm != null){
-        const dataArr = Object.values(data);
+        const dataArr = data[userKey];
         for(let i = 0; i < dataArr.length; i++){
-            const currData = dataArr[i][0];
+            const currData = dataArr[i];
+            if(document.getElementById("divFilter-" + currData['date'])){
+                continue
+            }
             const newNode = document.createElement("input");
             newNode.setAttribute('type', 'checkbox');
             newNode.checked = true;
@@ -86,10 +89,12 @@ const setDateCheckbox = (data, domElement, parentName) =>{
             const dateUpdated = currData['date'].split("-");
             label.innerHTML = dateUpdated[2] + "/" + dateUpdated[1] + "/" + dateUpdated[0];
             const nodeDiv = document.createElement("div");
+            nodeDiv.id = "divFilter-" + currData['date'];
             nodeDiv.appendChild(label);
             nodeDiv.appendChild(newNode);
             htmlElm.appendChild(nodeDiv);
             forwardEvent(parentName);
+     
         }
     }
 }

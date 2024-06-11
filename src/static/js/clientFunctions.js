@@ -60,45 +60,45 @@ const requestedData = (selectors) => {
     return result
 }
 
-/* Checks filtered options */
+/* Decides to allow the new request, not to allow, or add aditional data based on dayrange */
 const allowRequest = (userKey, currentData, selectedData) => {
+    let result = true;
     const userData = currentData[userKey];
-    let result = "request"; /* request, not request, add */
     for(let i = 0; i < userData.length; i++){
         const data = userData[i];
         if(data['date'] == selectedData['date']){
             if(data['source'] == selectedData['source']){
                 if(data['delimiter'] == 'country'){
                     if(data['zone'] == selectedData['zone']){
-                        if(String(data['dayrange']) == selectedData['dayrange']){
-                            result = "not request"
+                        if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
+                            result = false
                             break
                         }
-                        else{
-                            result = "add"
+                        else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
+                            result = data
                             break
                         }
                     }
                 }
                 else{
                     if(data['zone'] == "-180,-90,180,90"){
-                        if(String(data['dayrange']) == selectedData['dayrange']){
-                            result = "not request"
+                        if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
+                            result = false
                             break
                         }
-                        else{
-                            result = "add"
+                        else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
+                            result = data
                             break
                         }
                     }
                     else{
                         if(data['zone'] == selectedData['zone']){
-                            if(String(data['dayrange']) == selectedData['dayrange']){
-                                result = "not request"
+                            if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
+                                result = false
                                 break
                             }
-                            else{
-                                result = "add"
+                            else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
+                                result = data
                                 break
                             }
                         }
@@ -110,22 +110,63 @@ const allowRequest = (userKey, currentData, selectedData) => {
     return result
 }
 
+/* Adds requested data to user data */
+function addData(userKey, userData, flagOption, newData){
+    if('error' in newData){
+        console.log(newData);
+        return false 
+    }
+    else{
+        if(flagOption == true){
+            userData[userKey].push(newData[userKey][0]);
+            console.log(userData);
+        }
+        else{
+            flagOption['firedata'] = newData[userKey][0]['firedata'];
+            flagOption['dayrange'] = newData[userKey][0]['dayrange'];
+            console.log(userData);
+        }
+        return true
+    }
+}
 
-/* Hide options based on value */
-async function getData(data, key){
+/* Fetch new NASA FIRMS DATA based on options */
+async function getData(userKey, userData, flagOption, selectedData){
+    if(flagOption == false){
+        return flagOption // flash message of data is already downloaded
+    }
     try {
-        data["key"] = key;
-        const response = await fetch('/getData', {
+        selectedData["key"] = userKey;
+        const response = await fetch('/updateData', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(selectedData),
             headers: {
               'Content-Type': 'application/json',
             },
         });
-        return await response.json();
+        const newData = await response.json();
+        return addData(userKey, userData, flagOption, newData);
     } catch (error) {
-        console.error(error)
+        console.error(error) // flash message of fetch error
     }
 }
 
-export {setOption, getData, requestedData, allowRequest};
+/* Saves NASA FIRMS DATA in backend*/
+async function putData(userData){
+    try {
+        const response = await fetch('/updateData', {
+            method: 'PUT',
+            body: JSON.stringify(userData),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        });
+        return await response.text();
+    } catch (error) {
+        console.error(error) // flash message of fetch error
+    }
+}
+
+
+
+export {setOption, getData, putData, requestedData, allowRequest};
