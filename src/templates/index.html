@@ -10,6 +10,27 @@
       <div class="container-features" id="container-left-sidebar">
         <h1>Example title</h1>
         <h2>Example description</h2>
+        <div class="container-request">
+          <details class="details-request">
+            <summary class="summary-description">Request</summary>
+            <div class="div-request">
+              <label>Delimiter</label>
+              <select id="requestDelimiter" class="request-parameter" property = "delimiter"></select>
+              <label>Zone</label>
+              <select id="requestArea" class="request-parameter" property = "zone"></select>
+              <select id="requestCountry" class="request-parameter hidden" property = "zone"></select>
+              <label>Source</label>
+              <select id="requestSource" class="request-parameter" property = "source"></select>
+              <label>Range</label>
+              <select id="requestRange" class="request-parameter" property = "dayrange"></select>
+              <label>Date</label>
+              <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter" property = "date">
+            </div>
+            <div class="div-apply">
+              <button class="action-button" id="request-button">Get data</button>
+            </div>
+          </details>
+        </div>
         <div class="container-filter">
           <details class="details-filter">
             <summary class="summary-description">Filter</summary>
@@ -43,27 +64,6 @@
             </div>
           </details>
         </div>
-        <div class="container-request">
-          <details class="details-request">
-            <summary class="summary-description">Request</summary>
-            <div class="div-request">
-              <label>Delimiter</label>
-              <select id="requestDelimiter" class="request-parameter" property = "delimiter"></select>
-              <label>Zone</label>
-              <select id="requestArea" class="request-parameter" property = "zone"></select>
-              <select id="requestCountry" class="request-parameter hidden" property = "zone"></select>
-              <label>Source</label>
-              <select id="requestSource" class="request-parameter" property = "source"></select>
-              <label>Range</label>
-              <select id="requestRange" class="request-parameter" property = "dayrange"></select>
-              <label>Date</label>
-              <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter" property = "date">
-            </div>
-            <div class="div-apply">
-              <button class="action-button" id="request-button">Get data</button>
-            </div>
-          </details>
-        </div>
       </div>
       <div class="container-canvas" id="container-center"></div>
       <div class="container-features" id="container-right-sidebar">
@@ -94,7 +94,6 @@
             <label class="marker-info" id="frp"></label>
         </div>
       </div>
-
       <div id="markerLabel" class="hidden">
         <button id="closeButton">X</button>
         <div id="markerLabelInformation">
