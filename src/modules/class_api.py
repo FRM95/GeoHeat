@@ -106,9 +106,10 @@ class APIOperations():
         if isinstance(area_data, DataFrame):
             try:
                 geodataframe = GeoDataFrame(area_data, geometry=points_from_xy(area_data.longitude, area_data.latitude), crs="EPSG:4326")
-                world_data = read_file('../../data/world_data.geojson', driver='GeoJSON')
+                world_data = read_file('../data/world_data.geojson', driver='GeoJSON')
                 geodataframe = sjoin(geodataframe, world_data, how='left')
                 geodataframe = geodataframe.drop(columns=['country_id','index_right', 'geometry'], errors = 'ignore')
+                geodataframe = geodataframe.fillna('unknown')
                 geodataframe = geodataframe.reset_index(drop=True)
             except Exception as e:
                 return f'Geodataframe Merge exception: {e}'
@@ -121,28 +122,23 @@ class APIOperations():
         result_data = {}
         for key, value in data.items():
             match key:
-                case 'select-delimiter':
+                case 'delimiter':
                     if(value!='country' and value!='area'):
                         return f'Invalid delimiter value: {value}'
                     else:
                         result_data['delimiter'] = value
 
-                case 'select-country':
-                    if(not isinstance(value, str) or len(value) != 3):
-                        return f'Invalid country value: {value}'
-                    result_data['zone'] = value
-
-                case 'select-area':
+                case 'zone':
                     if(not isinstance(value, str)):
-                        return f'Invalid area value: {value}'
+                        return f'Invalid zone value: {value}'
                     result_data['zone'] = value
 
-                case 'select-source':
+                case 'source':
                     if(not isinstance(value, str)):
                         return f'Invalid source value: {value}'
                     result_data['source'] = value
 
-                case 'select-range':
+                case 'dayrange':
                     if(not isinstance(value, str) or not value.isnumeric()):
                         return f'Invalid range value: {value}'
                     try:
@@ -154,7 +150,7 @@ class APIOperations():
                             return f'Invalid range value: {value}'
                     result_data['dayrange'] = updated_val
 
-                case 'select-date':
+                case 'date':
                     if(not isinstance(value, str)):
                         return f'Invalid date value: {value}'
                     try:
