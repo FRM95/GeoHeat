@@ -1,0 +1,11 @@
+FROM mongo:latest
+
+USER root
+RUN mkdir /seed_data
+COPY ./src/data/request_data.json /seed_data/
+COPY ./src/data/world_data.geojson /seed_data/
+COPY ./src/data/mock_data.json /seed_data/
+
+CMD mongoimport --host ${HOST} -u=${MONGO_INITDB_ROOT_USERNAME} -p=${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase=${AUTHENTICATION_DB} -d=${MONGO_INITDB_DATABASE} --collection=request_data --drop --file=/seed_data/request_data.json && \
+mongoimport --host ${HOST} -u=${MONGO_INITDB_ROOT_USERNAME} -p=${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase=${AUTHENTICATION_DB} -d=${MONGO_INITDB_DATABASE} --collection=world_data --drop --file=/seed_data/world_data.geojson && \
+mongoimport --host ${HOST} -u=${MONGO_INITDB_ROOT_USERNAME} -p=${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase=${AUTHENTICATION_DB} -d=${MONGO_INITDB_DATABASE} --jsonArray --collection=mock_data --drop --file=/seed_data/mock_data.json

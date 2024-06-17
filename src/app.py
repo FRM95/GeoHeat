@@ -1,21 +1,38 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from modules.class_api_firms import Firms
 from datetime import datetime
+from pymongo import MongoClient
+from os import getenv
 import secrets
 import json
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
+logger  = logging.getLogger(__name__)
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 api = Firms()
 
+# def mongoDB():
+   
+#     client = MongoClient(
+#             host = getenv('HOST'),
+#             port = 27017, 
+#             username = getenv('MONGO_INITDB_ROOT_USERNAME'), 
+#             password = getenv('MONGO_INITDB_ROOT_PASSWORD'),
+#             authSource = getenv('AUTHENTICATION_DB'))
+    
+#     db = client[getenv('MONGO_INITDB_DATABASE')]
+
+#     return db
+
 @app.route("/")
 def init():
-    with open('../data/mock_data.json', 'r') as f:
-        mock_data = json.load(f)
-    return render_template('login.html', data = mock_data)
+    return redirect(url_for('login'))
 
 @app.route("/login", methods = ['GET','POST'])
 def login():
+   
     if request.method == 'POST':
         input_key = request.form.get('nasa-FIRMS-value')
         if input_key in session:
@@ -30,9 +47,9 @@ def login():
             else:
                 flash(verified_key)
                 return redirect(url_for('login'))
-        
+
     else:
-        with open('../data/mock_data.json', 'r') as f:
+        with open('./data/mock_data.json', 'r') as f:
             mock_data = json.load(f)
         return render_template('login.html', data = mock_data)
     
@@ -40,10 +57,15 @@ def login():
 def home(key):
 
     if key in session:
+
         # If user key exists, Try to get active fires from mongodb
         active_fires = {key: []}
-        with open("../data/request_data.json", 'r') as fp1:
+        with open("./data/request_data.json", 'r') as fp1:
             available_request_data = json.load(fp1)
+        
+        # db = mongoDB()
+        # logger.info(list(db.request_data.find({})))
+
         return render_template('index.html', user_data = active_fires, user_key = key, options_data = available_request_data)
     
     else:
@@ -78,7 +100,7 @@ def updateData():
         if request_key in session:
             try:
                 newData = json.dumps(request.json)
-                with open("../data/fires_data.json", "w") as newFile:
+                with open("./data/fires_data.json", "w") as newFile:
                     newFile.write(newData)
             except Exception as e:
                 return f'Unable to update data, {e}'

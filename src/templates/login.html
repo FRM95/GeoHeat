@@ -6,41 +6,67 @@
     <link rel="stylesheet" href="static/css/login.css">
   </head>
 	<body>
-    <div id="container-submit">
-      <div id="container-login">
-        <h1>WORLD ACTIVE FIRES</h1>
-        <h2>Powered by <a class="url-ref" target="_blank" href="https://www.nasa.gov/">NASA</a> and <a class="url-ref" target="_blank" href="https://threejs.org/">Three.JS</a></h1>
-        <p>A web app to display near real-time active fires across the world</p>
-        <p>Register in <a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/api/map_key/">NASA FIRMS</a> to obtain your MAP_KEY</p>
-        <form action="/login" method="post">
-          <input id="nasa-FIRMS-value" name="nasa-FIRMS-value" type="text" placeholder="Enter your MAP_KEY here"></input>
-          <button id="nasa-FIRMS-submit" type="submit">GO!</button>
+    <div class="container left-fit mt-10">
+      <h1 class="title-margin">Earth satellite active fires</h1>
+      <h3 class="subtitle-margin">The platform to observe active fires across the world.</h3>
+      <div class="subcontainer">
+        <p class="paragraph-margin p-title">How to access?</p>
+        <p class="paragraph-margin p-text">1. Sign up and request your key in <a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/api/map_key/">FIRMS.</a></p>
+        <p class="paragraph-margin p-text">2. Open your inbox and enter your key below.</p>
+        <form class="paragraph-margin" id="submit-form" action="/login" method="post">
+          <input id="nasa-FIRMS-value" name="nasa-FIRMS-value" type="text" placeholder="Enter your FIRMS key"></input><button id="nasa-FIRMS-submit" type="submit">Submit key</button>
         </form>
         {% with err_messages = get_flashed_messages()%}
         {% if err_messages %}
         {% for error in err_messages %}
-        <p id="login-error">{{ error }}</p>
+        <p id="login-error" class="paragraph-margin p-text">{{ error }}</p>
         {% endfor %}
         {% endif %}
         {% endwith %}
       </div>
-      <div id="container-contact">
-        <p>Contact <a class="url-ref" target="_blank" href="https://github.com/FRM95">GitHub</a> <a class="url-ref" target="_blank" href="https://www.linkedin.com/in/miguelm25m/">LinkedIn</a></p>
+      <div class="subcontainer aligned" style="width: 17%;">
+        <span class="p-text" style="color: rgb(223, 223, 223);">Contact: </span>
+        <a class="url-ref" target="_blank" href="https://github.com/FRM95"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-github icon-30" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></a>
+        <a class="url-ref" target="_blank" href="https://www.linkedin.com/in/miguelm25m/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-linkedin icon-30" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg></a>
       </div>
-      <div id="container-info">
-        <span>Information</span>
-        <span>Privacy</span>
-        <span>Technologies</span>
+      <div class="subcontainer aligned" style="width: 40%;">
+        <a class="intern-url-ref p-text" target="_blank" href="https://github.com/FRM95">Information</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-info-circle icon-20" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg>
+        <a class="intern-url-ref p-text" target="_blank" href="https://github.com/FRM95">Privacy</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-shield-lock-fill icon-20" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.8 11.8 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7 7 0 0 0 1.048-.625 11.8 11.8 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 63 63 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5"/></svg>
+        <a class="intern-url-ref p-text" target="_blank" href="https://github.com/FRM95">Technologies</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-code-slash icon-20" viewBox="0 0 16 16"><path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0"/></svg>
       </div>
     </div>
-    <div id="container-canvas"></div>
-    <div id="markerLabel" class="hidden">
-      <button id="closeButton">X</button>
-      <div id="markerAux">
-        <div class="text" id="markerIdAux"></div>
-        <div class="text" id="markerLatitudeAux"></div>
-        <div class="text" id="markerLongitudeAux"></div>
+    <div class="container-canvas" id="threejs-canvas"></div>
+    <div class="container center-fit mt-15">
+      <h2 class="title-margin">How it works?</h2>
+      <h3 class="subtitle-margin">Obtain fire spots around the globe. <br>At any time, any date and anywhere you want.</h3>
+      <div class="subcontainer aligned-flex">
+        <div style="width: 20%; padding-right: 5%;">
+          <p class="p-text">Access to <a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/api/map_key/">FIRMS</a> and use your MAP_KEY to request data, <a class="url-ref" target="_blank" href="https://threejs.org/">Three.JS</a> will render and display active fires in a 3D earth representation.</p>
+          <p class="intern-url-ref p-title aligned" style="justify-content: flex-start;">Explore</p>
+        </div>
+        <p class="p-text" style="width: 20%; padding-right: 5%;">Filter your data by Area, Country, Date and many more attributes.</p>
+        <p class="p-text" style="width: 20%; padding-right: 5%;">Click at any spot and obtain unique information.</p>
+        <!-- <p class="p-text"><a class="url-ref" target="_blank" href="https://firms.modaps.eosdis.nasa.gov/">FIRMS</a> provides information from multiple NASA satellites, it offers a large amount of data related to RT (real-time) and NRT (near-real-time) active fires. In addition to maintaining such information, this service enrichs these data with additional information that may be valuable to the user.</p> -->
+        <!-- <p class="p-text" style="width: 30%;">This platforms has no commercial purpose, it aims to ease the process of request and visualize information. With an intuitive UI, it performs the same process you could do yourself using the official FIRMS API.</p> -->
       </div>
+    </div>
+    <div class="container center-fit mt-15">
+      <h2 class="title-margin">A web service without user information</h2>
+      <h3 class="subtitle-margin">A web service without user information.</h3>
+      <div class="subcontainer">
+        <p class="p-text">There is no need to hold any private data, if FIRMS services does not request any user information, why would this platform ask for more?</p>
+        <p class="p-text">This platform does not have access to your submittion email, we just need to ask for your MAP_KEY in order to request your fire data.</p>
+      </div>
+    </div>
+    <div class="container center-fit mt-15 mb-10">
+      <h2 class="title-margin">Development tools</h2>
+      <h3 class="subtitle-margin">Vanilla JS + Three.JS for frontend</h3>
+      <h3 class="subtitle-margin">Python for backend</h3>
+      <h3 class="subtitle-margin">MongoDB to hold your request</h3>
+      <h3 class="subtitle-margin">Containers, containers and containers</h3>
     </div>
     <script type="importmap">
     {
