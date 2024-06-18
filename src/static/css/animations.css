@@ -1,0 +1,16 @@
+/*ANIMATIONS*/
+@keyframes fade-in{
+    0% {
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+
+/*NO ANIMATIONS/TRANSITIONS*/
+@media (prefers-reduced-motion: reduce){
+    button{
+        transition: none;
+    }
+}
