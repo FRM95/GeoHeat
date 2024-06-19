@@ -1,35 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root{
+    --custom-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --area-bg: rgba(40, 50, 63, 0.65);
+    --bt-bg: rgb(21, 84, 221);
+    --txt-bg1: rgb(255, 255, 255);
+    --txt-bg2: rgb(223, 223, 223);
+    --txt-bg-hover: #2997ff;
+    --area-pad: 0.75em;
+    --footer-pad: 0.2em;
+    --area-rad: 10px;
+}
 body{
     margin: 0;
+    padding: 0;
+    font-family: var(--custom-font);
+    overflow: hidden;
 }
 
-/* CONTANIER CSS */
-.container-features{
-    margin-top: 2%;
-    color: white;
-    width: 20%;
-    padding: 10px;
-}
-#container-left-sidebar{
+
+
+/*CONTAINER*/
+.container{
     border: 1px solid red;
-    float: left;
-    margin-left: 10px;
+    background-color: white;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
-#container-right-sidebar{
-    border: 1px solid blue;
-    float: right;
-    margin-right: 10px;
-}
-.container-filter{
-    max-height: 500px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    padding-right: 10px;
-}
-.container-canvas{
-    position:fixed; 
-    top:0;
-    left:0;
+.canvas{
+    position: fixed; 
+    top: 0;
+    left: 0;
     z-index: -1;
+}
+
+.fl-1{
+    float: left;
+}
+.fr-1{
+    float: right;
+}
+
+.d-grid{
+    display: grid;
 }
 
 /* MARKER LABEL EARTH AND MARKER LABEL INFORMATION CSS */
@@ -37,33 +50,16 @@ body{
     padding: 4px;
     border: 1px solid red;
     background-color: rgba(255, 255, 255, 0.753);
-    left: 5%;
+}
+#markerLabel button{
+    float: right;
 }
 #markerLabelInformation{
     display: grid;
 }
-#closeButton{
-    float: right;
-}
 
-/* FILTER DIV CSS*/
-.div-filter, .div-request, .div-apply{
-    margin-left: 20px;
-}
-.div-subfilter{
-    margin-left: 20px;
-}
-.div-filter-data{
-    margin-left: 20px;
-    max-height: 400px;
-    scroll-behavior: smooth;
-    overflow-y: auto;
-}
 
-/* REQUEST DIV CSS*/
-.request-parameter{
-    display: inline;
-}
+
 
 /* HIDDEN CLASS */
 .hidden{

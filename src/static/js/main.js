@@ -1,5 +1,5 @@
 import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
-import {setCheckbox, setDateCheckbox, resetDefault, filteredOptions} from './filterFunctions.js';
+import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
 import {setOption, requestedData, allowRequest, putData, getData} from './clientFunctions.js';
 
@@ -9,7 +9,7 @@ function main(){
     const width = window.innerWidth;
     const height = window.innerHeight;
     const renderer = createRenderer(width, height);
-    const container = document.getElementById('container-center');
+    const container = document.getElementById('threejs-canvas');
     container.appendChild(renderer.domElement);
 
     // Label Render creation
@@ -90,7 +90,7 @@ function main(){
             removeMesh(scene, meshPointers);
             meshPointers = processFireData(user_key, user_data, earth_radius);
             addMesh(scene, meshPointers);
-            setDateCheckbox(user_key, user_data, 'availableDate', 'filterDate');
+            setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
             labelDiv.classList.add("hidden");
             labelDivInfo.classList.add("hidden");
             const updatedData = await putData(user_data);

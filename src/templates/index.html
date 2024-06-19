@@ -1,108 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="utf-8" name="viewport" content="width=device-width">
 		<title>Active fires</title>
     <link rel="stylesheet" href="/static/css/index.css">
   </head>
 	<body>
-    <div class="container">
-      <div class="container-features" id="container-left-sidebar">
-        <h1>Active fires</h1>
-        <h2>Example description</h2>
-        <div class="container-request">
-          <details class="details-request">
-            <summary class="summary-description">Request</summary>
-            <div class="div-request">
-              <label>Delimiter</label>
-              <select id="requestDelimiter" class="request-parameter" property = "delimiter"></select>
-              <label>Zone</label>
-              <select id="requestArea" class="request-parameter" property = "zone"></select>
-              <select id="requestCountry" class="request-parameter hidden" property = "zone"></select>
-              <label>Source</label>
-              <select id="requestSource" class="request-parameter" property = "source"></select>
-              <label>Range</label>
-              <select id="requestRange" class="request-parameter" property = "dayrange"></select>
-              <label>Date</label>
-              <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter" property = "date">
-            </div>
-            <div class="div-apply">
-              <button class="action-button" id="request-button">Get data</button>
-            </div>
-          </details>
-        </div>
-        <div class="container-filter">
-          <details class="details-filter">
-            <summary class="summary-description">Filter</summary>
-            <div class="div-filter">
-              <div class="div-filter-datetime">
-                <details id="details-date">
-                  <summary class="summary-description">Date <input type="checkbox" id="filterDate" class="main-checkbox" checked="true"></summary>
-                  <div name="dates" class="div-filter-data" id="availableDate"></div>
+    <main>
+      <div class="application-container">
+        <div class="container fl-1" style="margin-left: 0.5%;">      
+          <div class="area" style="padding: 1em;">            
+            <h1>Active fires</h1>
+            <h2>Example description</h2>   
+            <div style="overflow-y: auto; max-height: 70vh; padding-right: 1em;">
+              <div style="margin-top: 1em; margin-bottom: 1em;">
+                <details>
+                  <summary style="margin-bottom: 0.5em;">Request data</summary>
+                  <div style="margin-left: 2em; margin-right: 2em;">
+                    <div style="display: grid; margin-bottom: 0.5em;">
+                      <span style="margin-bottom: 0.25em;">Delimiter</span>
+                      <select id="requestDelimiter" class="request-parameter" property = "delimiter"></select>
+                    </div>
+                    <div style="display: grid; margin-bottom: 0.5em;">
+                      <span style="margin-bottom: 0.25em;">Zone</span>
+                      <select id="requestArea" class="request-parameter" property = "zone"></select>
+                      <select id="requestCountry" class="request-parameter hidden" property = "zone"></select>
+                    </div>
+                    <div style="display: grid; margin-bottom: 0.5em;">
+                      <span style="margin-bottom: 0.25em;">Source</span>
+                      <select id="requestSource" class="request-parameter" property = "source"></select>
+                    </div>
+                    <div style="display: grid; margin-bottom: 0.5em;">
+                      <span style="margin-bottom: 0.25em;">Range</span>
+                      <select id="requestRange" class="request-parameter" property = "dayrange"></select>                
+                    </div>
+                    <div style="display: grid; margin-bottom: 0.5em;">
+                      <span style="margin-bottom: 0.25em;">Date</span>
+                      <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="request-parameter" property = "date">
+                    </div>
+                    <div>
+                      <button class="action-button" id="request-button">Get data</button>
+                    </div>
+                  </div>
                 </details>
               </div>
-              <div class="div-filter-source">
-                <details id="details-source">
-                  <summary class="summary-description">Source <input type="checkbox" id="filterSource" class="main-checkbox" checked="true"></summary>
-                  <div name="sources" class="div-filter-data" id="availableSource"></div>
+              <div style="margin-top: 1em; margin-bottom: 1em;">
+                <details>
+                  <summary style="margin-bottom: 0.5em;">Filter</summary>
+                  <div style="margin-left: 2em;">
+                    <details id="details-date" style="margin-bottom: 0.5em;">
+                      <summary>Date <input type="checkbox" id="filterDate" class="main-checkbox" checked="true"></summary>
+                      <div name="dates" id="availableDate" style="margin-left: 2em; overflow-y: auto; max-height: 300px; scroll-behavior: smooth;"></div>
+                    </details>
+                    <details id="details-source" style="margin-bottom: 0.5em;">
+                      <summary>Source <input type="checkbox" id="filterSource" class="main-checkbox" checked="true"></summary>
+                      <div name="sources" id="availableSource" style="margin-left: 2em; overflow-y: auto; max-height: 300px; scroll-behavior: smooth;"></div>
+                    </details>
+                    <details id="details-area" style="margin-bottom: 0.5em;">
+                      <summary>Area <input type="checkbox" id="filterArea" class="main-checkbox" checked="true"></summary>
+                      <div name="areas" id="availableArea" style="margin-left: 2em; overflow-y: auto; max-height: 300px; scroll-behavior: smooth;"></div>
+                    </details>
+                    <details id="details-country" style="margin-bottom: 0.5em;">
+                      <summary>Country <input type="checkbox" id="filterCountry" class="main-checkbox" checked="true"></summary>
+                      <div name="countries" id="availableCountry" style="margin-left: 2em; overflow-y: auto; max-height: 300px; scroll-behavior: smooth;"></div>
+                    </details>
+                    <button class="action-button" id="reset-button">Reset default</button>
+                    <button class="action-button" id="save-button">Save</button>
+                  </div>
                 </details>
               </div>
-              <div class="div-filter-geographic">
-                <details id="details-area">
-                  <summary class="summary-description">Area <input type="checkbox" id="filterArea" class="main-checkbox" checked="true"></summary>
-                  <div name="areas" class="div-filter-data" id="availableArea"></div>
-                </details>
-                <details id="details-country">
-                  <summary class="summary-description">Country <input type="checkbox" id="filterCountry" class="main-checkbox" checked="true"></summary>
-                  <div name="countries" class="div-filter-data" id="availableCountry"></div>
-                </details>
-              </div>
+            </div>         
+          </div>
+        </div>
+        <div class="canvas" id="threejs-canvas"></div>
+        <div class="container fr-1" style="margin-right: 0.5%;">
+          <div class="area" style="padding: 1em;">
+            <h2>container-features</h2>
+            <div class="hidden" id="markerInformation" style="display: grid;">
+              <span class="marker-info" id="id"></span>
+              <span class="marker-info" id="latitude"></span>
+              <span class="marker-info" id="longitude"></span>
+              <span class="marker-info" id="country"></span>
+              <span class="marker-info" id="nasa_abreviation"></span>
+              <span class="marker-info" id="affiliated_iso_country"></span>
+              <span class="marker-info" id="nasa_region"></span>
+              <span class="marker-info" id="subregion"></span>    
+              <span class="marker-info" id="acq_date"></span>
+              <span class="marker-info" id="acq_time"></span>
+              <span class="marker-info" id="instrument"></span>
+              <span class="marker-info" id="satellite"></span>
+              <span class="marker-info" id="version"></span>
+              <span class="marker-info" id="daynight"></span>
+              <span class="marker-info" id="path"></span>
+              <span class="marker-info" id="row"></span>
+              <span class="marker-info" id="bright_ti4"></span>
+              <span class="marker-info" id="bright_ti5"></span>
+              <span class="marker-info" id="bright_ti31"></span>
+              <span class="marker-info" id="brightness"></span>
+              <span class="marker-info" id="confidence"></span>
+              <span class="marker-info" id="scan"></span>
+              <span class="marker-info" id="track"></span>
+              <span class="marker-info" id="frp"></span>
             </div>
-            <div class="div-apply">
-              <button class="action-button" id="reset-button">Reset default</button>
-              <button class="action-button" id="save-button">Save</button>
-            </div>
-          </details>
+          </div>
+        </div>
+        <div id="markerLabel" class="hidden">
+          <button id="closeButton">X</button>
+          <div id="markerLabelInformation">
+            <span id="idLabel"></span>
+            <span id="latitudeLabel"></span>
+            <span id="longitudeLabel"></span>
+          </div>
         </div>
       </div>
-      <div class="container-canvas" id="container-center"></div>
-      <div class="container-features" id="container-right-sidebar">
-        <div id="markerInformation" class="hidden">
-            <label class="marker-info" id="id"></label>
-            <label class="marker-info" id="latitude"></label>
-            <label class="marker-info" id="longitude"></label>
-            <label class="marker-info" id="country"></label>
-            <label class="marker-info" id="nasa_abreviation"></label>
-            <label class="marker-info" id="affiliated_iso_country"></label>
-            <label class="marker-info" id="nasa_region"></label>
-            <label class="marker-info" id="subregion"></label>    
-            <label class="marker-info" id="acq_date"></label>
-            <label class="marker-info" id="acq_time"></label>
-            <label class="marker-info" id="instrument"></label>
-            <label class="marker-info" id="satellite"></label>
-            <label class="marker-info" id="version"></label>
-            <label class="marker-info" id="daynight"></label>
-            <label class="marker-info" id="path"></label>
-            <label class="marker-info" id="row"></label>
-            <label class="marker-info" id="bright_ti4"></label>
-            <label class="marker-info" id="bright_ti5"></label>
-            <label class="marker-info" id="bright_ti31"></label>
-            <label class="marker-info" id="brightness"></label>
-            <label class="marker-info" id="confidence"></label>
-            <label class="marker-info" id="scan"></label>
-            <label class="marker-info" id="track"></label>
-            <label class="marker-info" id="frp"></label>
-        </div>
-      </div>
-      <div id="markerLabel" class="hidden">
-        <button id="closeButton">X</button>
-        <div id="markerLabelInformation">
-          <label id="idLabel"></label>
-          <label id="latitudeLabel"></label>
-          <label id="longitudeLabel"></label>
-        </div>
-      </div>
-    </div>
+    </main>
     <script type="importmap">
       {
         "imports": {

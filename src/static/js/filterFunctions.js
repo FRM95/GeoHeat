@@ -68,33 +68,58 @@ const filteredOptions = (checkboxes) => {
     return result
 }
 
-/* Creates checkbox filters data (date) */
-const setDateCheckbox = (userKey, data, domElement, parentName) =>{
+
+/* Insert sorted date node */
+const insertDateAt = (date, refElement, domElement, parentName) =>{
+    const newNode = document.createElement("input");
+    newNode.setAttribute('type', 'checkbox');
+    newNode.checked = true;
+    newNode.setAttribute('property', 'date');
+    newNode.value = date;
+    newNode.className = parentName;
+    backwardEvent(newNode, parentName);
+    const label = document.createElement("label");
+    const dateUpdated = date.split("-");
+    label.innerHTML = dateUpdated[2] + "/" + dateUpdated[1] + "/" + dateUpdated[0];
+    const nodeDiv = document.createElement("div");
+    nodeDiv.id = "divFilter-" + date;
+    nodeDiv.setAttribute('date', date);
+    nodeDiv.appendChild(label);
+    nodeDiv.appendChild(newNode);
+    domElement.insertBefore(nodeDiv, refElement);
+    forwardEvent(parentName);
+}
+
+
+/* Creates a single checkbox date filter from rerquest */
+const setNewDate = (date, domElement, parentName) =>{
+    const htmlElm = document.getElementById(domElement);
+    if(htmlElm != null){
+        if(document.getElementById("divFilter-" + date)){
+            return;
+        }
+        const date2Add = new Date(date);
+        const arr = Object.values(htmlElm.children);
+        let refId = null;
+        for(let i=0; i<arr.length; i++){
+            const currDate = new Date(arr[i].getAttribute('date'));
+            if(date2Add < currDate){
+                refId = arr[i];
+                break
+            }
+        }
+        insertDateAt(date, refId, htmlElm, parentName);
+    }
+}
+
+/* Creates multiple date filter checkboxes from user data */
+const setMultipleDates = (userKey, data, domElement, parentName) =>{
     const htmlElm = document.getElementById(domElement);
     if(htmlElm != null){
         const dataArr = data[userKey];
         for(let i = 0; i < dataArr.length; i++){
             const currData = dataArr[i];
-            if(document.getElementById("divFilter-" + currData['date'])){
-                continue
-            }
-            const newNode = document.createElement("input");
-            newNode.setAttribute('type', 'checkbox');
-            newNode.checked = true;
-            newNode.setAttribute('property', 'date');
-            newNode.value = currData['date'];
-            newNode.className = parentName;
-            backwardEvent(newNode, parentName);
-            const label = document.createElement("label");
-            const dateUpdated = currData['date'].split("-");
-            label.innerHTML = dateUpdated[2] + "/" + dateUpdated[1] + "/" + dateUpdated[0];
-            const nodeDiv = document.createElement("div");
-            nodeDiv.id = "divFilter-" + currData['date'];
-            nodeDiv.appendChild(label);
-            nodeDiv.appendChild(newNode);
-            htmlElm.appendChild(nodeDiv);
-            forwardEvent(parentName);
-     
+            setNewDate(currData['date'], domElement, parentName);
         }
     }
 }
@@ -154,4 +179,4 @@ const setCheckbox = (boxKey, boxValue) => {
     }
 }
 
-export {setCheckbox, setDateCheckbox, filteredOptions, resetDefault};
+export {setCheckbox, setNewDate, setMultipleDates, filteredOptions, resetDefault};
