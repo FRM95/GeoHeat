@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('animations.css');
 
+
 :root{
     --custom-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    --area-bg: rgba(49, 61, 78, 0.65);
+    --area-bg: rgba(40, 50, 63, 0.65);
     --bt-bg: rgb(21, 84, 221);
     --txt-bg1: rgb(255, 255, 255);
     --txt-bg2: rgb(223, 223, 223);
@@ -12,44 +13,55 @@
     --footer-pad: 0.2em;
     --area-rad: 10px;
 }
-
-/*BODY*/
 body{
     margin: 0;
     padding: 0;
     font-family: var(--custom-font);
     min-height: 100vh;
 }
-/*APLICATION CONTAINER*/
+
+
+
 .application-container{
     margin-top: 10%;
     margin-bottom: 10%;
 }
-/*THREEJS CANVAS*/
 .application-canvas{
     position: fixed; 
     top: 0;
     left: 0;
     z-index: -99;
 }
-/*CONTAINER*/
 .container{
+    width: fit-content;
     margin-bottom: 15%;
+}
+.area{
+    background-color: var(--area-bg);
+    padding: var(--area-pad);
+    border-radius: var(--area-rad);
+    backdrop-filter: blur(0.25em);
     animation: fade-in linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
 }
-/*GAP*/
+.section{
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+
+.g2{
+    gap: 2%;
+}
 .g5{
     gap: 5%;
 }
-/*HIDDEN CLASS*/
-.hidden{
-    display: none;
+.g3-4em{
+    gap: 0.75em;
 }
-/*WIDTHS*/
 .w1{
-    max-width: 800px;
+    max-width: 1200px;
     margin-left: 10%;
     margin-right: auto;
 }
@@ -58,25 +70,19 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
-/*DISPLAY*/
 .d-flex{
     display: flex;
 }
 .d-grid{
     display: grid;
 }
-/*AREA*/
-.area{
-    background-color: var(--area-bg);
-    padding: var(--area-pad);
-    border-radius: var(--area-rad);
-    backdrop-filter: blur(0.25em);
+
+
+
+form{
+    height: 45px;
+    gap: 0%;
 }
-.section{
-    margin-top: 1.2em;
-    margin-bottom: 1.2em;
-}
-/*BUTTONS*/
 input{
     font-weight: 300;
     border: 0;
@@ -86,6 +92,8 @@ input{
     background-color: var(--txt-bg2);
     font-family: var(--custom-font);
     font-size: 1em;
+    padding: 1.2em;
+    width: 310px;
 }
 button{
     font-weight: 300;
@@ -98,21 +106,84 @@ button{
     color: var(--txt-bg2);
     font-family: var(--custom-font);
     font-size: 1em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    width: 110px;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
 }
-/*ICONS*/
-.icon-32{
-    color: var(--txt-bg2);
-    height: 32px;
-    padding-left: 0.65em;;
-    padding-right: 0.65em;
+button:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 0.233);
 }
+
+
+
 .icon-22{
     color: var(--txt-bg2);
     height: 22px;
-    padding-left: 0.65em;;
-    padding-right: 0.65em;
 }
-/*FOOTER*/
+.icon-32{
+    color: var(--txt-bg2);
+    height: 32px;
+    transition: color 0.2s ease;
+}
+.icon-32:hover{
+    color: var(--txt-bg-hover);
+    cursor: pointer;
+}
+.url-ref{
+    color: var(--txt-bg-hover);
+}
+.link-url{
+    color: var(--txt-bg2);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.link-url:hover{
+    color: var(--txt-bg-hover);
+    cursor: pointer;
+}
+
+
+
+
 footer{
     background-color: var(--area-bg);
+}
+
+
+
+
+.main-t{
+    font-size: 4.25em;
+    color: var(--txt-bg1);
+    font-weight: 700;
+}
+.sub-t{
+    font-size: 2em;
+    color: var(--txt-bg2);
+    font-weight: 400;
+}
+.sub-t2{
+    font-size: 3.25em;
+    color: var(--txt-bg2);
+    font-weight: 500;
+}
+.t-txt{
+    font-size: 1.5em;
+    color: var(--txt-bg2);
+    font-weight: 300;
+}
+.txt{
+    font-size: 1.05em;
+    color: var(--txt-bg2);
+    font-weight: 300;
+}
+    
+
+
+
+.hidden{
+    display: none;
 }
