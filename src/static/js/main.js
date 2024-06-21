@@ -8,8 +8,8 @@ function main(){
 
     // Renderer creation and DOM append
     const width = window.innerWidth;
-    // const yOffset = document.getElementById("header").offsetHeight;
-    const height = window.innerHeight;
+    const yOffset = document.getElementById("header").offsetHeight;
+    const height = window.innerHeight + yOffset; /* 21/06/2024 changed from innerHeight to (innerHeight + yOffset) */
     const renderer = createRenderer(width, height);
     const container = document.getElementById('threejs-canvas');
     container.appendChild(renderer.domElement);
@@ -117,7 +117,7 @@ function main(){
     let raycaster = new THREE.Raycaster();
     labelRenderer.domElement.addEventListener("pointerdown", event => {
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1; /* 21/06/2024 changed from innerHeight to (innerHeight + yOffset) */
         raycaster.setFromCamera(pointer, camera);
         for(let i = 0; i < meshPointers.length; i++){
             let intersections = raycaster.intersectObject(meshPointers[i], true);
@@ -135,10 +135,10 @@ function main(){
 
     // Camera, render and label render window resize
     const onWindowResize=() => {
-        camera.aspect = innerWidth / innerHeight;
+        camera.aspect = innerWidth / (innerHeight + yOffset); /* 21/06/2024 changed from innerHeight to (innerHeight + yOffset) */
         camera.updateProjectionMatrix();
-        renderer.setSize(innerWidth, innerHeight); /* (innerHeight + yOffset) */
-        labelRenderer.setSize(innerWidth, innerHeight);
+        renderer.setSize(innerWidth, (innerHeight + yOffset)); 
+        labelRenderer.setSize(innerWidth, (innerHeight + yOffset));
     }
 
     window.addEventListener("resize", onWindowResize);
