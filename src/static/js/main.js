@@ -2,11 +2,13 @@ import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, remov
 import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
 import {setOption, requestedData, allowRequest, putData, getData} from './clientFunctions.js';
+import {displayData} from './contentFunctions.js'
 
 function main(){
 
     // Renderer creation and DOM append
     const width = window.innerWidth;
+    // const yOffset = document.getElementById("header").offsetHeight;
     const height = window.innerHeight;
     const renderer = createRenderer(width, height);
     const container = document.getElementById('threejs-canvas');
@@ -100,6 +102,16 @@ function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
+    //Inspect data
+    const inspectButton = document.getElementsByClassName('inspect-data');
+    const containerIns = document.getElementById('inspect-container');
+    for(let i=0; i< inspectButton.length; i++){
+        inspectButton[i].addEventListener("click", _ =>{
+        // displayData(user_data, user_key, 'display-Data');
+        containerIns.classList.toggle('hidden');
+        })
+    }
+
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
     let raycaster = new THREE.Raycaster();
@@ -125,7 +137,7 @@ function main(){
     const onWindowResize=() => {
         camera.aspect = innerWidth / innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(innerWidth, innerHeight);
+        renderer.setSize(innerWidth, innerHeight); /* (innerHeight + yOffset) */
         labelRenderer.setSize(innerWidth, innerHeight);
     }
 
