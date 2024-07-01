@@ -2,7 +2,7 @@ import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, remov
 import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
 import {setOption, requestedData, allowRequest, putData, getData} from './clientFunctions.js';
-import {displayData} from './contentFunctions.js'
+import {setInspectData} from './contentFunctions.js'
 
 function main(){
 
@@ -93,6 +93,7 @@ function main(){
             meshPointers = processFireData(user_key, user_data, earth_radius);
             addMesh(scene, meshPointers);
             setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
+            setInspectData(user_key, user_data, 'summary-section', 'table-section');
             labelDiv.classList.add("hidden");
             labelDivInfo.classList.add("hidden");
             const updatedData = await putData(user_data);
@@ -102,15 +103,48 @@ function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
-    //Inspect data
+    //OPEN Inspect data
     const inspectButton = document.getElementsByClassName('inspect-data');
     const containerIns = document.getElementById('inspect-container');
+    const inspectArea = document.getElementById('inspect-area');
+    const inspectSection = document.getElementById('inspect-section');
+
     for(let i=0; i< inspectButton.length; i++){
         inspectButton[i].addEventListener("click", _ =>{
-        // displayData(user_data, user_key, 'display-Data');
         containerIns.classList.toggle('hidden');
         })
     }
+
+    //OPEN summary table sections 
+    const summaryButton = document.getElementById('summary');
+    const summarySection = document.getElementById('summary-section');
+    const tableButton = document.getElementById('table');
+    const tableSection = document.getElementById('table-section');
+    summaryButton.addEventListener("click", _ =>{
+        if(summarySection.classList.contains("hidden")){
+            summarySection.classList.remove("hidden");
+            tableSection.classList.add('hidden');
+        }
+    });
+    tableButton.addEventListener("click", _ =>{
+        if(tableSection.classList.contains("hidden")){
+            tableSection.classList.remove("hidden");
+            summarySection.classList.add('hidden');
+        }
+    });
+
+    // Max window
+    // const maxWindow = document.getElementById('max-inspect');
+    // maxWindow.addEventListener('click', _ =>{
+    //     containerIns.classList.toggle('w-max');
+    //     inspectArea.classList.toggle('w-max');
+    //     containerIns.classList.toggle('h-100');
+    //     inspectArea.classList.toggle('h-100');
+    //     inspectSection.classList.toggle('h-max');
+    //     tableSection.classList.toogle('h-max');
+    //     summarySection.classList.toogle('h-max')
+    // });
+    
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();

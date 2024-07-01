@@ -42,6 +42,7 @@ function createMarkers(dataObject){
     return markMesh
 }
 
+
 /* Process user fire data, adds cartesian and mesh to each value */
 function processFireData(userKey, dataObject, earth_radius, filterOptions = null){
     if(dataObject[userKey] == [] || (filterOptions != null && Object.keys(filterOptions).length < 1)){
@@ -103,5 +104,6 @@ function displayFireData(dataObject, identifier){
     document.getElementById('id').innerHTML = `<b>Id</b>: ${identifier}`;
     document.getElementById('idLabel').innerHTML = `<b>Id</b>: ${identifier}`;
 }
+
 
 export {processFireData, displayFireData, addCartesian, createMarkers}

@@ -90,7 +90,7 @@
                       <summary>Country <input type="checkbox" id="filterCountry" class="main-checkbox" checked="true"></summary>
                       <div class="available ov-f-y" name="countries" id="availableCountry"></div>
                     </details>
-                    <button class="action-button" id="reset-button">Reset default</button>
+                    <button class="default-button" id="reset-button">Reset to default</button>
                     <button class="action-button" id="save-button">Save</button>
                   </div>
                 </details>
@@ -109,7 +109,7 @@
                       <summary>Earth textures</summary>
                       <div></div>
                     </details>
-                    <button class="action-button" id="reset-button">Reset default</button>
+                    <button class="default-button" id="reset-button">Reset to default</button>
                     <button class="action-button" id="save-button">Apply</button>
                   </div>
                 </details>
@@ -117,20 +117,28 @@
             </div>         
           </div>
         </div>
-        <div class="hidden container h-fit w-fit" id="inspect-container" style="max-width: 700px;
-                  position: absolute;
-                  left: 0;
-                  right: 0;
-                  margin-left: auto;
-                  margin-right: auto;">
-          <div class="area" style="padding: 2em;">
-            <div class="d-flex" style="padding: 1em 0 1em 0;justify-content: space-between;">
-              <span>Current data</span>
-              <button class="inspect-data">Close</button>
+        <div class="hidden container h-fit" id="inspect-container">
+          <div class="area" id="inspect-area">
+            <div class="d-flex" style="justify-content: space-between; align-items: center;">
+              <h2 class="detail-t">Information</h2>
+              <div>
+                <button class="inspect-data">Close</button>
+                <button id="max-inspect">Maximize</button>
+              </div>
             </div>
-            <div id="display-Data" style="overflow: auto; padding: 0.5em; max-height: 400px; margin-bottom: 1em;">
-              <table>
-                <thead><tr><th>latitude</th><th>longitude</th><th>bright_ti4</th><th>scan</th><th>track</th><th>acq_date</th><th>acq_time</th><th>satellite</th><th>instrument</th><th>confidence</th><th>version</th><th>bright_ti5</th><th>frp</th><th>daynight</th><th>country</th><th>iso_abreviation</th><th>affiliated_country</th><th>affiliated_iso_abreviation</th><th>region</th><th>subregion</th><th>nasa_abreviation</th><th>earth_cartesian</th></tr></thead><tbody><tr><td>40.24542</td><td>-3.47989</td><td>303.22</td><td>0.65</td><td>0.73</td><td>2024-06-19</td><td>102</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>283.32</td><td>2.6</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>40.24546</td><td>-3.47577</td><td>307.33</td><td>0.65</td><td>0.73</td><td>2024-06-19</td><td>102</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>283.39</td><td>3.53</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>41.31255</td><td>1.65891</td><td>305.11</td><td>0.36</td><td>0.57</td><td>2024-06-19</td><td>102</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>290.88</td><td>1.04</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>41.31255</td><td>1.6606</td><td>314.52</td><td>0.41</td><td>0.61</td><td>2024-06-19</td><td>241</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>290.88</td><td>1.69</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>41.40561</td><td>1.99671</td><td>304.64</td><td>0.42</td><td>0.61</td><td>2024-06-19</td><td>241</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>290.42</td><td>0.53</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>43.03656</td><td>-2.22179</td><td>298.48</td><td>0.48</td><td>0.48</td><td>2024-06-19</td><td>241</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>283.63</td><td>0.74</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>37.18072</td><td>-6.89796</td><td>299.32</td><td>0.39</td><td>0.44</td><td>2024-06-19</td><td>243</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>288.44</td><td>0.59</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>37.18467</td><td>-6.89666</td><td>300.15</td><td>0.39</td><td>0.44</td><td>2024-06-19</td><td>243</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>287.78</td><td>0.59</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>37.36245</td><td>-5.86533</td><td>298.33</td><td>0.43</td><td>0.46</td><td>2024-06-19</td><td>243</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>287.12</td><td>0.68</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>40.24286</td><td>-3.47468</td><td>310.59</td><td>0.49</td><td>0.49</td><td>2024-06-19</td><td>243</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>285.2</td><td>1.87</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>40.24594</td><td>-3.47572</td><td>324.07</td><td>0.49</td><td>0.49</td><td>2024-06-19</td><td>243</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>287.5</td><td>3.19</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>40.24721</td><td>-3.47298</td><td>304.13</td><td>0.49</td><td>0.49</td><td>2024-06-19</td><td>243</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>285.26</td><td>1.87</td><td>N</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>40.24686</td><td>-3.47554</td><td>330.08</td><td>0.32</td><td>0.55</td><td>2024-06-19</td><td>1225</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>298.15</td><td>3.28</td><td>D</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr><tr><td>41.44156</td><td>2.23023</td><td>332.65</td><td>0.49</td><td>0.4</td><td>2024-06-19</td><td>1225</td><td>N</td><td>VIIRS</td><td>n</td><td>2.0NRT</td><td>298.04</td><td>2.25</td><td>D</td><td>Spain</td><td>ES</td><td>Spain</td><td>ES</td><td>Europe</td><td>Southern Europe</td><td>ESP</td><td>[object Object]</td></tr></tbody></table>
+            <div class="d-flex">
+              <div>
+                <button id="summary">Summary</button>
+                <button id="table">Table</button>
+              </div>
+            </div>
+            <div class="section d-flex" id="inspect-section">
+              <div class="d-grid inspect-section" id="summary-section">
+                <span id="empty-data-summary" class="empty-data">You have no data to summary</span>
+              </div>  
+              <div class="hidden inspect-section" id="table-section">
+                <span id="empty-data-table" class="empty-data">You have no data to create a table</span>
+              </div>
             </div>
             <div class="dropdown w-fit">
               <button>Export data</button>
@@ -141,17 +149,17 @@
             </div>
           </div>
         </div>
-        <div id="markerInformation" class="hidden container fr-1 h-fit w-fit" style="margin-right: 0.5%;">
+        <div class="container fr-1 h-fit w-fit hidden" id="markerInformation" style="margin-right: 0.5%;">
           <div class="area">
-            <h2>container-features</h2>
-            <div class="d-grid">
+            <h2 class="main-2-t">Spot information</h2>
+            <div class="d-grid txt">
               <span class="marker-info" id="id"></span>
               <span class="marker-info" id="latitude"></span>
               <span class="marker-info" id="longitude"></span>
               <span class="marker-info" id="country"></span>
               <span class="marker-info" id="nasa_abreviation"></span>
               <span class="marker-info" id="affiliated_iso_country"></span>
-              <span class="marker-info" id="nasa_region"></span>
+              <span class="marker-info" id="region"></span>
               <span class="marker-info" id="subregion"></span>    
               <span class="marker-info" id="acq_date"></span>
               <span class="marker-info" id="acq_time"></span>
