@@ -95,13 +95,13 @@ function displayFireData(dataObject, identifier){
         const htmlElm = document.getElementById(key);
         const earthLabel = document.getElementById(key + 'Label');
         if(htmlElm){
-            htmlElm.innerHTML = `<b>${key}</b>: ${value}`;
+            htmlElm.innerHTML = `<b style="color: rgb(118, 149, 183);">${key}:</b> ${value}`;
         }
         if(earthLabel){
-            earthLabel.innerHTML = `<b>${key}</b>: ${value}`;
+            earthLabel.innerHTML = `<b>${key}:</b> ${value}`;
         }
     }
-    document.getElementById('id').innerHTML = `<b>Id</b>: ${identifier}`;
+    document.getElementById('id').innerHTML = `<b style="color: rgb(118, 149, 183);">Id:</b> ${identifier}`;
     document.getElementById('idLabel').innerHTML = `<b>Id</b>: ${identifier}`;
 }
 

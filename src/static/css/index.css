@@ -16,6 +16,10 @@
     --filter-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-funnel-fill' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z'/%3E%3C/svg%3E");
     --request-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cloud-arrow-down-fill' viewBox='0 0 16 16'%3E%3Cpath d='M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708'/%3E%3C/svg%3E");
 }
+
+html{
+    height: 100%;
+}
 body{
     margin: 0;
     padding: 0;
@@ -29,9 +33,6 @@ header{
     background: linear-gradient(to right, var(--header-bg), var(--header-mid-bg), var(--header-bg));
     border-bottom: var(--border-pix) solid var(--border-bg);
     backdrop-filter: blur(var(--blur-filter-hard));
-}
-.application-container{
-    position: relative;
 }
 .canvas{
     position: fixed; 
@@ -49,6 +50,7 @@ header{
     padding: var(--area-pad);
     border: var(--border-pix) solid var(--border-bg);
     backdrop-filter: blur(var(--blur-filter-hard));
+    border-radius: 5px;
 }
 .section{
     margin-top: 1.5em;
@@ -59,7 +61,6 @@ header{
     margin-left: 2em; 
     max-height: 300px; 
     scroll-behavior: smooth;
-    /* background-color: #0464db; */
 }
 
 
@@ -79,7 +80,6 @@ header{
     font-weight: 400;
     display: inline-block;
     margin-right: 10px;
-    transition: 0.2s;
 }
 .filter-marker::before{
     content: "";
@@ -92,7 +92,6 @@ header{
     font-weight: 400;
     display: inline-block;
     margin-right: 10px;
-    transition: 0.2s;
 }
 .settings-marker::before{
     content: "";
@@ -105,11 +104,15 @@ header{
     font-weight: 400;
     display: inline-block;
     margin-right: 10px;
-    transition: 0.2s background-color;
 }
+
 details[open] > summary::before {
-    background-color: #0464db;
+    background-color: rgb(160, 255, 247);
 }
+details[open] > summary{
+    color: rgb(255, 255, 255);
+}
+
 summary:hover{
     cursor: pointer;
 }
@@ -155,7 +158,7 @@ select:hover, #requestDate:hover{
     padding: 0.5em;
     font-size: 0.85em;
     font-weight: 200;
-    color: rgb(118, 149, 183);
+    color: #1c70d6;
     border: 1px solid transparent;
     border-radius: 5px;
     background: none;
@@ -163,8 +166,7 @@ select:hover, #requestDate:hover{
 }
 .default-button:hover{
     cursor: pointer;
-    color: #1c70d6;
-    background-color: #1f324b9a;
+    background-color: #1f324bb9;
 }
 
 
@@ -206,12 +208,12 @@ select:hover, #requestDate:hover{
 
 
 .main-t{
-    font-size: 2.5em;
+    font-size: 2.25em;
     color: rgb(255, 255, 255);
     font-weight: 500;
 }
 .main-2-t{
-    font-size: 2em;
+    font-size: 1.4em;
     color: rgb(255, 255, 255);
     font-weight: 500;
 }
@@ -228,24 +230,20 @@ select:hover, #requestDate:hover{
 }
 .detail-t{
     font-size: 1.25em;
-    color: rgb(255, 255, 255);
+    color: rgb(194, 194, 194);
     font-weight: 400;
 }
 .marker-info{
-    font-size: 1.05em;
+    font-size: 12px;
     color: rgb(255, 255, 255);
-    font-weight: 200;
+    font-weight: 500;
     padding-bottom: 2px;
 }
 .empty-data{
-    font-size: 1em;
-    color: rgb(151, 151, 151);
-    font-weight: 400;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
 }
-/* .option-t{
-    font-size: 0.85em;
-    font-weight: 200;
-} */
 
 
 /* MARKER LABEL EARTH AND MARKER LABEL INFORMATION CSS */
@@ -306,7 +304,8 @@ select:hover, #requestDate:hover{
     overflow: auto; 
     max-height: 400px;
 } 
-/* HIDDEN CLASS */
+
+
 .hidden{
     display: none;
 }
