@@ -116,9 +116,6 @@ function main(){
     //OPEN Inspect data
     const inspectButton = document.getElementsByClassName('inspect-data');
     const containerIns = document.getElementById('inspect-container');
-    const inspectArea = document.getElementById('inspect-area');
-    const inspectSection = document.getElementById('inspect-section');
-
     for(let i=0; i< inspectButton.length; i++){
         inspectButton[i].addEventListener("click", _ =>{
         containerIns.classList.toggle('hidden');
@@ -134,12 +131,16 @@ function main(){
         if(summarySection.classList.contains("hidden")){
             summarySection.classList.remove("hidden");
             tableSection.classList.add('hidden');
+            summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
+            tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
         }
     });
     tableButton.addEventListener("click", _ =>{
         if(tableSection.classList.contains("hidden")){
             tableSection.classList.remove("hidden");
             summarySection.classList.add('hidden');
+            tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
+            summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
         }
     });
 

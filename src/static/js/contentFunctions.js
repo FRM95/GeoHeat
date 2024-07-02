@@ -3,7 +3,7 @@ const defineNode = (identifier, currData, spots) =>{
 
     const nodeDiv = document.createElement('div');
     nodeDiv.id = identifier;
-    nodeDiv.className = "section d-grid";
+    nodeDiv.className = "section d-grid c-inspect";
 
     const spanDate = document.createElement('span');
     spanDate.innerHTML = `Data from: ${currData['date']}`;
@@ -11,11 +11,11 @@ const defineNode = (identifier, currData, spots) =>{
     numberOfSpots.innerHTML = `Current spots: ${spots}`;
     const spanSource = document.createElement('span');
     spanSource.innerHTML = `Source: ${currData['source']}`;
-    const spanDelimiter = document.createElement('delimiter');
+    const spanDelimiter = document.createElement('span');
     spanDelimiter.innerHTML = `Delimiter: ${currData['delimiter']}`;
     const spanZone = document.createElement('zone');
     spanZone.innerHTML = `Zone: ${currData['zone']}`;
-    const spanDayRange = document.createElement('dayrange');
+    const spanDayRange = document.createElement('span');
     spanDayRange.innerHTML = `dayrange: ${currData['dayrange']}`;
 
     nodeDiv.appendChild(spanDate);
