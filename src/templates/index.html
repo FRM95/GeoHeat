@@ -29,14 +29,19 @@
     <main>
       <div class="application-container">
         <div class="canvas" id="threejs-canvas"></div>
-        <div class="container fl-1 w-fit" style="margin-top: 0%;"> 
-          <div class="area" style="border-left: none; border-top: none; border-radius: 0;">            
-            <h1 class="main-t">Home</h1>
+        <div class="container fl-1" id="container-sidebar" aria-expanded="true"> 
+          <div class="collapse">
+            <button id="collapse-sidebar"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-short collapse-icon" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+            </svg></button>
+          </div>
+          <div class="area" style="border-left: none; border-top: none; border-radius: 0; overflow: hidden;" id="area-sidebar"> 
+            <h1 class="main-t">Explore</h1>
             <span class="desc-t">Available requests: 1000<br></span>
-            <span class="expl-t">The limit of requests is 1000 per 10 minutes.</span>
-            <div class="ov-f-y" style="max-height: 70vh; padding-right: 1em;">
+            <span class="expl-t">The limit of requests is 1000 per 10 minutes</span>
+            <div class="ov-f-y" style="max-height: 80%; padding-right: 1em;">
               <div class="section">
-                <details>
+                <details class="details-elm">
                   <summary class="detail-t m-b05 request-marker">Request data
                     <br><span class="expl-t">Request new fire data from FIRMS</span>
                   </summary>
@@ -69,7 +74,7 @@
                 </details>
               </div>
               <div class="section">
-                <details>
+                <details class="details-elm">
                   <summary class="detail-t m-b05 filter-marker">Filter data
                     <br><span class="expl-t">Choose fire data to display on earth</span>
                   </summary>
@@ -96,7 +101,7 @@
                 </details>
               </div>
               <div class="section">
-                <details>
+                <details class="details-elm">
                   <summary class="detail-t m-b05 settings-marker">Settings
                     <br><span class="expl-t">Configure fire data and earth style</span>
                   </summary>
@@ -208,4 +213,3 @@
     <script type="module" src="/static/js/main.js"></script>
 	</body>
 </html>
-

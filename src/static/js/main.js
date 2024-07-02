@@ -103,6 +103,16 @@ function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
+    // Hide sidebar
+    const sidebar = document.getElementById('container-sidebar');
+    const Areasidebar = document.getElementById('area-sidebar');
+    const hideSidebar = document.getElementById('collapse-sidebar');
+    hideSidebar.addEventListener("click", _=>{
+        Areasidebar.classList.toggle('collapsed');
+        sidebar.classList.toggle('collapsed-width');
+        sidebar.ariaExpanded = sidebar.ariaExpanded !== 'true';
+    });
+
     //OPEN Inspect data
     const inspectButton = document.getElementsByClassName('inspect-data');
     const containerIns = document.getElementById('inspect-container');
@@ -112,7 +122,7 @@ function main(){
     for(let i=0; i< inspectButton.length; i++){
         inspectButton[i].addEventListener("click", _ =>{
         containerIns.classList.toggle('hidden');
-        })
+        });
     }
 
     //OPEN summary table sections 

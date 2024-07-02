@@ -16,10 +16,6 @@
     --filter-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-funnel-fill' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z'/%3E%3C/svg%3E");
     --request-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cloud-arrow-down-fill' viewBox='0 0 16 16'%3E%3Cpath d='M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708'/%3E%3C/svg%3E");
 }
-
-html{
-    height: 100%;
-}
 body{
     margin: 0;
     padding: 0;
@@ -30,6 +26,7 @@ body{
 
 
 header{
+    height: 3.5em;
     background: linear-gradient(to right, var(--header-bg), var(--header-mid-bg), var(--header-bg));
     border-bottom: var(--border-pix) solid var(--border-bg);
     backdrop-filter: blur(var(--blur-filter-hard));
@@ -41,9 +38,12 @@ header{
     z-index: -99;
 }
 .container{
-    margin-top: 1%;
     position: relative;
     z-index: -1;
+    height: calc(100vh - 3.5em); 
+    max-width: 20%;
+    min-width: 0%;
+    display: flex;
 }
 .area{
     background: linear-gradient(to bottom, var(--header-bg), var(--header-mid-bg));
@@ -51,6 +51,9 @@ header{
     border: var(--border-pix) solid var(--border-bg);
     backdrop-filter: blur(var(--blur-filter-hard));
     border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    transition: all 0s;
 }
 .section{
     margin-top: 1.5em;
@@ -61,6 +64,35 @@ header{
     margin-left: 2em; 
     max-height: 300px; 
     scroll-behavior: smooth;
+}
+.collapse{
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    z-index: -1;
+}
+#collapse-sidebar{
+    height: 100px;
+    width: fit-content;
+    padding: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: linear-gradient(to right,rgb(194, 194, 194), rgb(255, 255, 255));
+    border: none;
+    transition: box-shadow 0.22s ease-out, scale 0.22s ease-out;
+}
+#collapse-sidebar:hover{
+    box-shadow: 0px 0px 10px 2px rgba(179, 179, 179, 0.849);
+    cursor: pointer;
+}
+#collapse-sidebar:hover > .collapse-icon{
+    scale: 1.05;
+}
+.collapse-icon{
+    transition: transform 0.22s ease-out;
+}
+#container-sidebar[aria-expanded = 'false'] > .collapse > #collapse-sidebar > .collapse-icon{
+    transform: rotate(180deg);
 }
 
 
@@ -105,23 +137,32 @@ header{
     display: inline-block;
     margin-right: 10px;
 }
-
 details[open] > summary::before {
-    background-color: rgb(160, 255, 247);
+    background-color: #2b79d8;
 }
 details[open] > summary{
     color: rgb(255, 255, 255);
 }
-
+summary::before{
+    transition: background-color 0.25s;
+}
 summary:hover{
     cursor: pointer;
+}
+.details-elm:hover > .detail-t::before{
+    background-color: #2b79d8;
 }
 
 
 
 label, select, input{
-    font-size: 0.85em;
-    font-weight: 200;
+    font-size: 0.75em;
+}
+select, input{
+    font-weight: 400;
+}
+label{
+    font-weight: 400
 }
 select, #requestDate{
     color: rgb(148, 191, 255);
@@ -132,7 +173,7 @@ select, #requestDate{
     transition: border-color 0.25s
 }
 #requestDate{
-    font-size: 1em;
+    font-size: 0.9em;
 }
 select:hover, #requestDate:hover{
     border-color:rgb(148, 191, 255);
@@ -191,6 +232,7 @@ select:hover, #requestDate:hover{
 }
 .ov-f-y{
     overflow-y: auto;
+    scrollbar-color: #535962 rgb(52, 66, 83);
 }
 .m-b05{
     margin-bottom: 0.5em;
@@ -218,8 +260,8 @@ select:hover, #requestDate:hover{
     font-weight: 500;
 }
 .desc-t{
-    font-size: 1.1em;
-    color: rgb(151, 151, 151);
+    font-size: 1em;
+    color: #959595;
     font-weight: 500;
     margin: 0 0 0.5em 0;
 }
@@ -229,8 +271,8 @@ select:hover, #requestDate:hover{
     font-weight: 500;
 }
 .detail-t{
-    font-size: 1.25em;
-    color: rgb(194, 194, 194);
+    font-size: 1.15em;
+    color: rgb(255, 255, 255);
     font-weight: 400;
 }
 .marker-info{
@@ -246,7 +288,7 @@ select:hover, #requestDate:hover{
 }
 
 
-/* MARKER LABEL EARTH AND MARKER LABEL INFORMATION CSS */
+
 #markerLabel{
     padding: 4px;
     border: 1px solid red;
@@ -280,13 +322,9 @@ select:hover, #requestDate:hover{
     display: block;
     text-align: left;
 }
-  
-/* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover {
     background-color: #df1313;
 }
-  
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -308,4 +346,11 @@ select:hover, #requestDate:hover{
 
 .hidden{
     display: none;
+}
+.collapsed{
+    width: 0%;
+    padding: 0;
+}
+.collapsed-width{
+    width: 0%;
 }
