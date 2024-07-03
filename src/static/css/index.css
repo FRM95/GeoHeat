@@ -155,15 +155,17 @@ summary:hover{
     font-size: 1.2em;
     font-weight: 500;
     padding: 0.5em;
+    margin-top: 1.05em;
+    margin-bottom: 1.05em;
 }
-.details-inspect[open]{
+/* .details-inspect[open]{
     background-color: #ecececb2;
     box-shadow: 0px 0px 0px 10px #ecececb2;
 }
 .details-inspect[open] > .box-shad:hover{
     background-color: transparent;
     box-shadow: none;
-}
+} */
 
 
 .box-shad:hover{
@@ -465,6 +467,7 @@ select:hover, #requestDate:hover{
     max-width: 35%;
     width: auto;
     height: auto;
+    transition: width 0.1s ease-out, max-width 0.1s ease-out, left 0.1s ease-out;
 }
 #inspect-area{
     background: #fff;

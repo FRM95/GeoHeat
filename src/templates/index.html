@@ -141,11 +141,14 @@
             </div>         
           </div>
         </div>
-        <div class="hidden container h-fit" id="inspect-container">
+        <div class="hidden container h-fit" id="inspect-container" aria-expanded="false">
           <div class="area" id="inspect-area">
             <div class="d-flex" style="justify-content: space-between; align-items: center;">
               <h2 class="main-3-t">Inspect data</h2>
               <div>
+                <button class="access-button" id="min-inspect"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen-exit" viewBox="0 0 16 16">
+                  <path d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5m5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5M0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5m10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0z"/>
+                </svg></button>
                 <button class="access-button" id="max-inspect"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
                   <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/>
                 </svg></button>
@@ -179,7 +182,7 @@
                 </div>
               </div>
               <div style="border-bottom: 1px solid rgba(19, 19, 19, 0.33);"></div>
-              <details class="section details-inspect">
+              <details class="details-inspect">
                 <summary class="m-b1 box-shad" style="margin-top: 3%;">Export data<br>
                   <span class="expl-t d-flex" style="align-items: center; gap: 0.5em; margin-top: 0.5em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
@@ -202,7 +205,7 @@
                 </div>
               </details>
               <div style="border-bottom: 1px solid rgba(19, 19, 19, 0.33);"></div>
-              <details class="section details-inspect">
+              <details class="details-inspect">
                 <summary class="m-b1 box-shad" style="margin-top: 3%;">Import data<br>
                   <span class="expl-t d-flex" style="align-items: center; gap: 0.5em; margin-top: 0.5em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>

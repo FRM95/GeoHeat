@@ -103,30 +103,57 @@ function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
-    // Hide sidebar
+    // UI/UX functions
     const sidebar = document.getElementById('container-sidebar');
     const Areasidebar = document.getElementById('area-sidebar');
     const hideSidebar = document.getElementById('collapse-sidebar');
+    const inspectButton = document.getElementsByClassName('inspect-data');
+    const containerIns = document.getElementById('inspect-container');
+    const maxWindow = document.getElementById('max-inspect');
+    const minWindow = document.getElementById('min-inspect');
+    const summaryButton = document.getElementById('summary');
+    const summarySection = document.getElementById('summary-section');
+    const tableButton = document.getElementById('table');
+    const tableSection = document.getElementById('table-section');
+
+    // Hide sidebar
     hideSidebar.addEventListener("click", _=>{
         Areasidebar.classList.toggle('collapsed');
         sidebar.classList.toggle('collapsed-width');
         sidebar.ariaExpanded = sidebar.ariaExpanded !== 'true';
+        if(containerIns.ariaExpanded == "true"){
+            minWindow.dispatchEvent(new Event("click"));
+        }
     });
 
-    //OPEN Inspect data
-    const inspectButton = document.getElementsByClassName('inspect-data');
-    const containerIns = document.getElementById('inspect-container');
+    //Open Inspect data
     for(let i=0; i< inspectButton.length; i++){
         inspectButton[i].addEventListener("click", _ =>{
         containerIns.classList.toggle('hidden');
         });
     }
 
-    //OPEN summary table sections 
-    const summaryButton = document.getElementById('summary');
-    const summarySection = document.getElementById('summary-section');
-    const tableButton = document.getElementById('table');
-    const tableSection = document.getElementById('table-section');
+    // Max window Inspect data
+    maxWindow.addEventListener('click', _ =>{
+        if(containerIns.ariaExpanded === "false"){
+            const newWidth = window.innerWidth * 0.85;
+            if(sidebar.offsetWidth != 0){
+                hideSidebar.dispatchEvent(new Event("click"));
+            }
+            containerIns.style = `width: ${newWidth}px; max-width: ${newWidth}px;`;
+            containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
+        }
+    });
+
+    //Exit full screen Inspect data
+    minWindow.addEventListener('click', _ =>{
+        if(containerIns.ariaExpanded === "true"){
+            containerIns.style = "";
+            containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
+        }
+    });
+
+    //OPEN summary/table sections 
     summaryButton.addEventListener("click", _ =>{
         if(summarySection.classList.contains("hidden")){
             summarySection.classList.remove("hidden");
@@ -144,18 +171,6 @@ function main(){
         }
     });
 
-    // Max window
-    // const maxWindow = document.getElementById('max-inspect');
-    // maxWindow.addEventListener('click', _ =>{
-    //     containerIns.classList.toggle('w-max');
-    //     inspectArea.classList.toggle('w-max');
-    //     containerIns.classList.toggle('h-100');
-    //     inspectArea.classList.toggle('h-100');
-    //     inspectSection.classList.toggle('h-max');
-    //     tableSection.classList.toogle('h-max');
-    //     summarySection.classList.toogle('h-max')
-    // });
-    
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
