@@ -44,19 +44,20 @@ function main(){
     // Default data
     let meshPointers = [];
 
-    // Mark information functionality
-    const labelDivInfo = document.getElementById("markerInformation");
-    const closeBtn = document.getElementById("closeButton");
-    closeBtn.addEventListener("pointerdown", _ => {
-      labelDiv.classList.add("hidden");
-      labelDivInfo.classList.add("hidden");
-    })
-
     // Globe mark label functionality
     const labelDiv = document.getElementById("markerLabel");
     const label = new CSS2DObject(labelDiv);
     setLabelAttributes(label, earth, camera)
     scene.add(label);
+
+    // Mark information functionality
+    const labelDivInfo = document.getElementById("markerInformation");
+    const closeBtn = document.getElementById("closeButton");
+    closeBtn.addEventListener("pointerdown", _ => {
+        labelDiv.classList.add("hidden");
+        labelDivInfo.classList.add("hidden");
+        labelDivInfo.ariaExpanded = "false";
+    })
 
     // Creates filter data and request data options
     for(const[key, value] of Object.entries(options_data)){
@@ -140,6 +141,9 @@ function main(){
             if(sidebar.offsetWidth != 0){
                 hideSidebar.dispatchEvent(new Event("click"));
             }
+            if(labelDivInfo.offsetWidth != 0){
+                closeBtn.dispatchEvent(new Event("pointerdown"));
+            }
             containerIns.style = `width: ${newWidth}px; max-width: ${newWidth}px;`;
             containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
         }
@@ -188,7 +192,8 @@ function main(){
                 displayFireData(fireInformation, meshId);
                 label.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
                 label.element.classList.remove("hidden");
-                labelDivInfo.classList.remove("hidden")
+                labelDivInfo.classList.remove("hidden");
+                labelDivInfo.ariaExpanded = "true";
             }
         }
     });

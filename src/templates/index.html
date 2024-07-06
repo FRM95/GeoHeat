@@ -221,46 +221,52 @@
             </div>
           </div>
         </div>
-        <div class="container fr-1 h-fit w-fit hidden" id="markerInformation" style="margin-right: 2%; margin-top: 2%;">
-          <div class="area">
+        <div class="container fr-1 h-fit w-fit hidden" id="markerInformation" aria-expanded="false">
+          <div class="area" style="background: #ffffff; padding: 1em; border-radius: 10px;">
             <h2 class="main-2-t"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
               <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
             </svg> Spot information</h2>
-            <div class="d-grid txt">
-              <span class="marker-info" id="id"></span>
-              <span class="marker-info" id="latitude"></span>
-              <span class="marker-info" id="longitude"></span>
-              <span class="marker-info" id="country"></span>
-              <span class="marker-info" id="nasa_abreviation"></span>
-              <span class="marker-info" id="affiliated_iso_country"></span>
-              <span class="marker-info" id="region"></span>
-              <span class="marker-info" id="subregion"></span>    
-              <span class="marker-info" id="acq_date"></span>
-              <span class="marker-info" id="acq_time"></span>
-              <span class="marker-info" id="instrument"></span>
-              <span class="marker-info" id="satellite"></span>
-              <span class="marker-info" id="version"></span>
-              <span class="marker-info" id="daynight"></span>
-              <span class="marker-info" id="path"></span>
-              <span class="marker-info" id="row"></span>
-              <span class="marker-info" id="bright_ti4"></span>
-              <span class="marker-info" id="bright_ti5"></span>
-              <span class="marker-info" id="bright_ti31"></span>
-              <span class="marker-info" id="brightness"></span>
-              <span class="marker-info" id="confidence"></span>
-              <span class="marker-info" id="scan"></span>
-              <span class="marker-info" id="track"></span>
-              <span class="marker-info" id="frp"></span>
+            <span class="expl-t">Selected spot FIRMS information</span>
+            <div class="d-grid txt" style="margin: 1em 0em 1em 0em;">
+              <span class="marker-info" id="spot_attributes" aria-hidden="true" style="margin: 0em 0em 0.5em 0em;"></span>
+              <span class="marker-info" id="id" aria-hidden="true"></span>
+              <span class="marker-info" id="latitude" aria-hidden="true"></span>
+              <span class="marker-info" id="longitude" aria-hidden="true"></span>
+              <span class="marker-info" id="country" aria-hidden="true"></span>
+              <span class="marker-info" id="nasa_abreviation" aria-hidden="true"></span>
+              <span class="marker-info" id="affiliated_iso_country" aria-hidden="true"></span>
+              <span class="marker-info" id="region" aria-hidden="true"></span>
+              <span class="marker-info" id="subregion" aria-hidden="true"></span>    
+              <span class="marker-info" id="acq_date" aria-hidden="true"></span>
+              <span class="marker-info" id="acq_time" aria-hidden="true"></span>
+              <span class="marker-info" id="instrument" aria-hidden="true"></span>
+              <span class="marker-info" id="satellite" aria-hidden="true"></span>
+              <span class="marker-info" id="version" aria-hidden="true"></span>
+              <span class="marker-info" id="daynight" aria-hidden="true"></span>
+              <span class="marker-info" id="path" aria-hidden="true"></span>
+              <span class="marker-info" id="row" aria-hidden="true"></span>
+              <span class="marker-info" id="bright_ti4" aria-hidden="true"></span>
+              <span class="marker-info" id="bright_ti5" aria-hidden="true"></span>
+              <span class="marker-info" id="bright_ti31" aria-hidden="true"></span>
+              <span class="marker-info" id="brightness" aria-hidden="true"></span>
+              <span class="marker-info" id="confidence" aria-hidden="true"></span>
+              <span class="marker-info" id="scan" aria-hidden="true"></span>
+              <span class="marker-info" id="track" aria-hidden="true"></span>
+              <span class="marker-info" id="frp" aria-hidden="true"></span>
             </div>
           </div>
         </div>
         <div id="markerLabel" class="hidden">
-          <button id="closeButton">X</button>
           <div id="markerLabelInformation">
             <span id="idLabel"></span>
             <span id="latitudeLabel"></span>
             <span id="longitudeLabel"></span>
           </div>
+          <button id="closeButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </button>
         </div>
       </div>
     </main>
