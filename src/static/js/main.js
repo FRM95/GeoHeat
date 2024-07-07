@@ -1,7 +1,7 @@
 import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
 import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
-import {setOption, requestedData, allowRequest, putData, getData} from './clientFunctions.js';
+import {setOption, requestedData, allowRequest, putData, getData, exportData} from './clientFunctions.js';
 import {setInspectData} from './contentFunctions.js'
 
 function main(){
@@ -116,6 +116,8 @@ function main(){
     const summarySection = document.getElementById('summary-section');
     const tableButton = document.getElementById('table');
     const tableSection = document.getElementById('table-section');
+    const getFiles = document.getElementsByClassName('file-request');
+
 
     // Hide sidebar
     hideSidebar.addEventListener("click", _=>{
@@ -175,6 +177,14 @@ function main(){
         }
     });
 
+
+    //Download file data
+    for(let i = 0; i < getFiles.length; i++){
+        const fileType = getFiles[i].getAttribute('download-file');
+        getFiles[i].addEventListener("click", async _ =>{
+            await exportData(user_key, user_data, fileType);
+        });
+    }
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();

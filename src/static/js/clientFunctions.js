@@ -1,3 +1,7 @@
+const padTwoDigits = (num) => {
+    return num.toString().padStart(2, "0");
+  }
+
 /* Hide options based on value */
 const hideOptions = (htmlElm) =>{
     if(htmlElm != null){
@@ -167,6 +171,44 @@ async function putData(userData){
     }
 }
 
+/* Exports NASA FIRMS DATA to file */
+async function exportData(userKey, userData, option) {
+    const data = userData[userKey];
+    if(data.length == 0){
+        console.error('empty')
+        return null // flash message of empty data
+    }
+    if(option == 'csv') {
+        let headers = null;
+        let rows = [];
+        try {
+            for(let i = 0; i < data.length; i++){
+                const requestedFires = data[i][firedata];
+            }
+        } catch (error) {
+            console.error(error) // flash message of fetch error
+        }
+    }
+    else if(option == 'json'){
+        try{
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const currDate = new Date();
+            const fileName = `${padTwoDigits(currDate.getDate())}${padTwoDigits(currDate.getMonth() + 1)}${currDate.getFullYear()}_${padTwoDigits(currDate.getHours())}${padTwoDigits(currDate.getMinutes())}`;
+            a.download = `firms_data_${fileName}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            // const tab = window.open("data:application/json," + encodeURIComponent(json), "_blank");
+            // tab.focus();
+        }
+        catch (error) {
+            console.error(error) // flash message of fetch error
+        }
+    }
+}
 
 
-export {setOption, getData, putData, requestedData, allowRequest};
+export {setOption, getData, putData, requestedData, allowRequest, exportData};
