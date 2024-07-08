@@ -27,7 +27,7 @@ function createMarkers(dataObject){
     const common_geo = new THREE.CircleGeometry(0.0015, 32);
     const common_mat = new THREE.MeshBasicMaterial({color:0xff0000});
     let dummy = new THREE.Object3D();
-    let userData = {};
+    let user_Data = {};
     let markMesh = new THREE.InstancedMesh(common_geo, common_mat, dataObject.length);
     for(let i = 0; i < dataObject.length; i++){
         dummy.position.x = dataObject[i].earth_cartesian.x;
@@ -36,9 +36,9 @@ function createMarkers(dataObject){
         dummy.lookAt(dummy.position.clone().setLength(1.5));
         dummy.updateMatrix();
         markMesh.setMatrixAt(i, dummy.matrix);
-        userData[i] = dataObject[i];
+        user_Data[i] = dataObject[i];
     }
-    markMesh.userData = userData;
+    markMesh.userData = user_Data;
     return markMesh
 }
 

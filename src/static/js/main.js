@@ -97,7 +97,7 @@ function main(){
             setInspectData(user_key, user_data, 'summary-section', 'table-section');
             labelDiv.classList.add("hidden");
             labelDivInfo.classList.add("hidden");
-            const updatedData = await putData(user_data);
+            // const updatedData = await putData(user_data);
         }
     });
 
@@ -186,6 +186,7 @@ function main(){
         });
     }
 
+
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
     let raycaster = new THREE.Raycaster();
@@ -193,19 +194,27 @@ function main(){
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1; /* 21/06/2024 changed from innerHeight to (innerHeight + yOffset) */
         raycaster.setFromCamera(pointer, camera);
-        for(let i = 0; i < meshPointers.length; i++){
-            let intersections = raycaster.intersectObject(meshPointers[i], true);
-            if(intersections.length > 0){
-                let currIntersection = intersections[0];
-                let meshId = currIntersection.instanceId;
-                let fireInformation = currIntersection.object.userData[meshId];
-                displayFireData(fireInformation, meshId);
-                label.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
-                label.element.classList.remove("hidden");
-                labelDivInfo.classList.remove("hidden");
-                labelDivInfo.ariaExpanded = "true";
+        if(raycaster.intersectObject(earth).length > 0){
+            labelRenderer.domElement.style.cursor = 'grabbing';
+            for(let i = 0; i < meshPointers.length; i++){
+                let intersections = raycaster.intersectObject(meshPointers[i]);
+                if(intersections.length > 0){
+                    let currIntersection = intersections[0];
+                    let meshId = currIntersection.instanceId;
+                    let fireInformation = currIntersection.object.userData[meshId];
+                    displayFireData(fireInformation, meshId);
+                    label.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
+                    label.element.classList.remove("hidden");
+                    labelDivInfo.classList.remove("hidden");
+                    labelDivInfo.ariaExpanded = "true";
+                    break
+                }
             }
         }
+    });
+
+    labelRenderer.domElement.addEventListener("pointerup", _ => {
+        labelRenderer.domElement.style.cursor = 'default';
     });
 
     // Camera, render and label render window resize

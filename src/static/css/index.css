@@ -481,8 +481,29 @@ select:hover, #requestDate:hover{
     align-items: center;
     gap: 0.5em;
 }
-.dropdown-content a:hover {
+.dropdown-content a:hover{
     background-color: rgb(0, 102, 228);
+}
+.dropdown-content button {
+    float: none;
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 0.85em;
+    font-weight: 300;
+    transition: background-color 0.1s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+}
+.dropdown-content button:hover{
+    background-color: rgb(0, 102, 228);
+    cursor: pointer;
 }
 .dropdown:hover .dropdown-content {
     display: block;
