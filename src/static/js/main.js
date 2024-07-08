@@ -1,4 +1,4 @@
-import {createRenderer, setCamera, setControls, Earth, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
+import {createRenderer, setCamera, setControls, Earth, Earth3D, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
 import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from './filterFunctions.js';
 import {processFireData, displayFireData} from './globeFunctions.js';
 import {setOption, requestedData, allowRequest, putData, getData, exportData} from './clientFunctions.js';
@@ -19,27 +19,33 @@ function main(){
     labelRenderer.setSize(width, height);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
-    container.appendChild(labelRenderer.domElement);
+    container.appendChild(labelRenderer.domElement);   
+    
+    // Scene creation
+    const scene = new THREE.Scene();
 
     // Camera creation
     const camera = setCamera(75, width/height, 0.1, 10, 0, 0, 3);
 
-    // Scene creation
-    const scene = new THREE.Scene();
-
     // Controls creation
-    const orbitControls = setControls(camera, labelRenderer.domElement, true, 0.03, false);
-
-    // Auto rotate speed functionality
-    labelRenderer.domElement.addEventListener("click", _ => {
-        orbitControls.autoRotateSpeed = (Math.log(orbitControls.getDistance()) - Math.log(orbitControls.minDistance)) * 1.75; 
-    });
+    const TrackballControls = setControls(camera, labelRenderer.domElement);
 
     // Earth creation
-    const material = new THREE.MeshBasicMaterial({color: 0xffffff});
     const earth_radius = 1;
-    const earth = Earth(earth_radius, 64, 32, material, "/static/textures/earthmap10k.jpg");
+    const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
+    const textureProperties = {earth: true, clouds: false, hydroSphere: true};
+    const earthObject = Earth3D(sphereProperties, textureProperties);
+    const earth = earthObject.earthGroup;
+    const earthMesh = earthObject.earthMesh;
     scene.add(earth);
+
+    // Lights creation
+    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.05);
+    scene.add(ambientLight);
+    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 2.25);
+    sunLight.position.set(-4, 3, 2);
+    camera.add(sunLight);
+    scene.add(camera);
 
     // Default data
     let meshPointers = [];
@@ -47,7 +53,7 @@ function main(){
     // Globe mark label functionality
     const labelDiv = document.getElementById("markerLabel");
     const label = new CSS2DObject(labelDiv);
-    setLabelAttributes(label, earth, camera)
+    setLabelAttributes(label, earthMesh, camera)
     scene.add(label);
 
     // Mark information functionality
@@ -232,7 +238,7 @@ function main(){
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
         labelRenderer.render(scene, camera);
-        orbitControls.update();
+        TrackballControls.update();
         label.userData.trackVisibility();
     }
 
