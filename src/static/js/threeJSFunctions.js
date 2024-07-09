@@ -27,7 +27,7 @@ function setControls(camera, domElem, staticMove = false, dampFactor = 0.04, noP
     let controls = new TrackballControls(camera, domElem);
     controls.staticMoving = staticMove;
     controls.dynamicDampingFactor = dampFactor;
-    controls.minDistance = 1.1;
+    controls.minDistance = 1.15;
     controls.maxDistance = 5;
     controls.noPan = noPan;
     controls.rotateSpeed = rotSpeed;
@@ -76,8 +76,7 @@ const setTextures = (sphereGeometry, texturesProperties) => {
         const cloudsTexture = loader.load('/static/textures/earthhiresclouds4K.jpg');
         cloudsMat.alphaMap = cloudsTexture;
         cloudsMat.transparent = true;
-        cloudsMat.opacity = 0.8
-        cloudsMat.blending = THREE.AdditiveBlending;
+        cloudsMat.opacity = 1;
         const cloudsMesh = new THREE.Mesh(sphereGeometry, cloudsMat);
         cloudsMesh.scale.setScalar(1.0025);
         returnObject.cloudsMesh = cloudsMesh;
@@ -86,7 +85,7 @@ const setTextures = (sphereGeometry, texturesProperties) => {
     if(texturesProperties.hydroSphere){
         const fresnelMat = getFresnelMat();
         const glowMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
-        glowMesh.scale.setScalar(1.0028);
+        glowMesh.scale.setScalar(1.003);
         returnObject.glowMesh = glowMesh;
     }
 
@@ -99,11 +98,13 @@ const Earth3D = (sphereProperties, texturesProperties) => {
     const sphere = setSphere(sphereProperties);
     const textures = setTextures(sphere, texturesProperties);
     let earthValue = null;
+    let cloudValue = null;
     for(const [key, value] of Object.entries(textures)){
         if(key === 'earthMesh'){ earthValue = value; }
+        else if(key === 'cloudsMesh'){ cloudValue = value; }
         group.add(value);
     }
-    return {earthGroup: group, earthMesh: earthValue}
+    return {earthGroup: group, earthMesh: earthValue, cloudsMesh: cloudValue}
 }
 
 /* Add Earth label functionality */

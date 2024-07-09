@@ -37,6 +37,7 @@ function main(){
     const earthObject = Earth3D(sphereProperties, textureProperties);
     const earth = earthObject.earthGroup;
     const earthMesh = earthObject.earthMesh;
+    const cloudsMesh = earthObject.cloudsMesh;
     scene.add(earth);
 
     // Lights creation
