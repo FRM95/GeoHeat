@@ -9,7 +9,7 @@ function createRenderer(w, h){
     let renderer = new THREE.WebGLRenderer({antialias:true});
     renderer.setSize(w,h);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    // renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+    renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
     return renderer
 }
 
