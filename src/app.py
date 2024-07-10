@@ -13,31 +13,16 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 api = Firms()
 
-# def mongoDB():
-   
-#     client = MongoClient(
-#             host = getenv('HOST'),
-#             port = 27017, 
-#             username = getenv('MONGO_INITDB_ROOT_USERNAME'), 
-#             password = getenv('MONGO_INITDB_ROOT_PASSWORD'),
-#             authSource = getenv('AUTHENTICATION_DB'))
-    
-#     db = client[getenv('MONGO_INITDB_DATABASE')]
-
-#     return db
-
 @app.route("/")
 def init():
     return redirect(url_for('login'))
 
 @app.route("/login", methods = ['GET','POST'])
 def login():
-   
     if request.method == 'POST':
         input_key = request.form.get('nasa-FIRMS-value')
         if input_key in session:
             return redirect(url_for('home', key = input_key))
-        
         else:
             verified_key = api.checkKey(input_key)
             if isinstance(verified_key, dict):
@@ -47,7 +32,6 @@ def login():
             else:
                 flash(verified_key)
                 return redirect(url_for('login'))
-
     else:
         with open('./data/mock_data.json', 'r') as f:
             mock_data = json.load(f)
@@ -57,17 +41,10 @@ def login():
 def home(key):
 
     if key in session:
-
-        # If user key exists, Try to get active fires from mongodb
         active_fires = {key: []}
         with open("./data/request_data.json", 'r') as fp1:
             available_request_data = json.load(fp1)
-        
-        # db = mongoDB()
-        # logger.info(list(db.request_data.find({})))
-
         return render_template('index.html', user_data = active_fires, user_key = key, options_data = available_request_data)
-    
     else:
         return redirect(url_for('login'))
 
@@ -95,6 +72,7 @@ def updateData():
             return {'error': f'Unable to request new data, invalid MAP_KEY {request_key}'}
     
     elif request.method == 'PUT':
+        return 'soon'
         request_data = request.json
         request_key = [*request_data][0]
         if request_key in session:
