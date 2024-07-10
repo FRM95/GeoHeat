@@ -108,7 +108,7 @@ class APIOperations():
                 geodataframe = GeoDataFrame(area_data, geometry=points_from_xy(area_data.longitude, area_data.latitude), crs="EPSG:4326")
                 world_data = read_file('./data/world_data.geojson', driver='GeoJSON')
                 geodataframe = sjoin(geodataframe, world_data, how='left')
-                geodataframe = geodataframe.drop(columns=['country_id','index_right', 'geometry'], errors = 'ignore')
+                geodataframe = geodataframe.drop(columns=['index_right', 'geometry'], errors = 'ignore')
                 geodataframe = geodataframe.fillna('unknown')
                 geodataframe = geodataframe.reset_index(drop=True)
             except Exception as e:

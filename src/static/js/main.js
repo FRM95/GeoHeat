@@ -41,9 +41,9 @@ function main(){
     scene.add(earth);
 
     // Lights creation
-    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.05);
+    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.25);
     scene.add(ambientLight);
-    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 5);
+    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 6.5);
     sunLight.position.set(-4, 3, 2);
     camera.add(sunLight);
     scene.add(camera);
