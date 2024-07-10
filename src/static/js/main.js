@@ -33,7 +33,7 @@ function main(){
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const textureProperties = {earth: true, clouds: false, hydroSphere: true};
+    const textureProperties = {earth: true, clouds: true, hydroSphere: true};
     const earthObject = Earth3D(sphereProperties, textureProperties);
     const earth = earthObject.earthGroup;
     const earthMesh = earthObject.earthMesh;
@@ -43,7 +43,7 @@ function main(){
     // Lights creation
     const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.05);
     scene.add(ambientLight);
-    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 2.25);
+    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 5);
     sunLight.position.set(-4, 3, 2);
     camera.add(sunLight);
     scene.add(camera);
