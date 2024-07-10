@@ -63,9 +63,9 @@ const setTextures = (sphereGeometry, texturesProperties) => {
 
     if(texturesProperties.earth){
         const earthMaterial = new THREE.MeshPhongMaterial();
-        const earthTexture = loader.load("/static/textures/16k/earth_16k.png");
+        const earthTexture = loader.load("/static/textures/high/earth_map_10k.png");
         earthMaterial.map = earthTexture;
-        const bumpTexture = loader.load("/static/textures/16k/earth_bump_16k.png");
+        const bumpTexture = loader.load("/static/textures/high/earth_bump_10k.png");
         earthMaterial.bumpMap = bumpTexture;
         const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
         returnObject.earthMesh = earthMesh;
@@ -73,7 +73,7 @@ const setTextures = (sphereGeometry, texturesProperties) => {
 
     if(texturesProperties.clouds){
         const cloudsMat = new THREE.MeshStandardMaterial();
-        const cloudsTexture = loader.load("/static/textures/16k/earth_cloud_16k.png");
+        const cloudsTexture = loader.load("/static/textures/high/earth_cloud_10k.png");
         cloudsMat.alphaMap = cloudsTexture;
         cloudsMat.transparent = true;
         cloudsMat.opacity = 1;
