@@ -124,6 +124,9 @@ function main(){
     const tableButton = document.getElementById('table');
     const tableSection = document.getElementById('table-section');
     const getFiles = document.getElementsByClassName('file-request');
+    const zoomIn = document.getElementById('zoom-in');
+    const zoomOut = document.getElementById('zoom-out');
+    const zoomDefault = document.getElementById('zoom-default');
 
 
     // Hide sidebar
@@ -182,6 +185,37 @@ function main(){
             tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
             summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
         }
+    });
+
+
+    // Earth 3D Zoom in-out with wheel events
+    let pressedIn;
+    let pressedOut;
+    const wheelEvent = (delx, delty) => new WheelEvent('wheel', {
+        deltaX: delx,
+        deltaY: delty,
+        bubbles: true,
+        cancelable: true,
+        view: window
+    });
+    zoomIn.addEventListener("mousedown", _ =>{
+        pressedIn = setInterval(() => {
+            labelRenderer.domElement.dispatchEvent(wheelEvent(0, -100));
+        }, 20);
+    });
+    zoomIn.addEventListener('mouseup', () => {
+        clearInterval(pressedIn);
+    });
+    zoomOut.addEventListener("mousedown", _ => {
+        pressedOut = setInterval(() => {
+            labelRenderer.domElement.dispatchEvent(wheelEvent(0, +100));
+        }, 20);
+    });
+    zoomOut.addEventListener('mouseup', () => {
+        clearInterval(pressedOut);
+    });
+    zoomDefault.addEventListener("click", _ =>{
+        TrackballControls.reset();
     });
 
 
