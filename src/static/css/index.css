@@ -33,6 +33,9 @@ header{
     background: linear-gradient(to right, var(--header-bg), var(--header-mid-bg), var(--header-bg));
     border-bottom: var(--border-pix) solid var(--border-bg);
     backdrop-filter: blur(var(--blur-filter-hard));
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
 .canvas{
     position: fixed; 
@@ -292,19 +295,35 @@ select:hover, #requestDate:hover{
     width: 20px;
 }
 .zoom-area{
-    position: fixed; 
-    right: 0; 
-    top: 90%; 
-    margin-right: 0.85%; 
-    width: auto; 
+    position: fixed;
+    right: 0;
+    top: 85%;
+    margin-right: 2.5%;
+    width: auto;
     height: auto;
-    gap: 0.5em;
+    background-color: rgb(247, 245, 245);
+    border: 1px solid #6a6a6a;
+    border-radius: 3.5px;
 }
 .zoom-button{
     width: 30px;
-    height: auto;
-    padding: 4px;
+    height: 50px;
     justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, box-shadow 0.3s 0.001s;
+    background-color: rgb(247, 245, 245);
+    padding: 8px;
+    border: none;
+}
+.zoom-button:hover{
+    box-shadow: 0px 0px 10px 2px rgba(179, 179, 179, 0.849);
+    cursor: pointer;
+    background-color: rgb(223, 237, 255);
+}
+.zoom-button > svg{
+    width: 1.25em;
+    height: 1.25em;
+    color: #202020;
 }
 
 

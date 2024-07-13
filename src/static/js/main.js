@@ -33,7 +33,7 @@ function main(){
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const textureProperties = {earth: true, clouds: true, hydroSphere: true};
+    const textureProperties = {Earth_map: true, Bump_map:true, Clouds_map: true, Hydrosphere_map: true};
     const earthObject = Earth3D(sphereProperties, textureProperties);
     const earth = earthObject.earthGroup;
     const earthMesh = earthObject.earthMesh;
@@ -198,25 +198,55 @@ function main(){
         cancelable: true,
         view: window
     });
-    zoomIn.addEventListener("mousedown", _ =>{
-        pressedIn = setInterval(() => {
-            labelRenderer.domElement.dispatchEvent(wheelEvent(0, -100));
-        }, 20);
+    zoomIn.addEventListener("mousedown", event =>{
+        if(event.button == 0){
+            pressedIn = setInterval(() => {
+                labelRenderer.domElement.dispatchEvent(wheelEvent(0, -70));
+            }, 20);
+        }
     });
-    zoomIn.addEventListener('mouseup', () => {
-        clearInterval(pressedIn);
+    zoomIn.addEventListener('mouseup', event => {
+        if(event.button == 0){
+            clearInterval(pressedIn);
+        }
     });
-    zoomOut.addEventListener("mousedown", _ => {
-        pressedOut = setInterval(() => {
-            labelRenderer.domElement.dispatchEvent(wheelEvent(0, +100));
-        }, 20);
+    zoomOut.addEventListener("mousedown", event => {
+        if(event.button == 0){
+            pressedOut = setInterval(() => {
+                labelRenderer.domElement.dispatchEvent(wheelEvent(0, +70));
+            }, 20);
+        }
     });
-    zoomOut.addEventListener('mouseup', () => {
-        clearInterval(pressedOut);
+    zoomOut.addEventListener('mouseup', event => {
+        if(event.button == 0){
+            clearInterval(pressedOut);
+        }
     });
     zoomDefault.addEventListener("click", _ =>{
         TrackballControls.reset();
     });
+
+
+    //Layers dropdown
+    const layersDropwdown = document.getElementById('dropwdown-layers');
+    const newContent = document.createElement('div');
+    newContent.className = 'dropdown-content';
+    for(const[key, value] of Object.entries(textureProperties)){
+        const layerDropdown = document.createElement("div");
+        const newNode = document.createElement("input");
+        newNode.setAttribute('type', 'checkbox');
+        newNode.checked = value;
+        const label = document.createElement("label");
+        label.innerHTML = key;
+        layerDropdown.appendChild(newNode);
+        layerDropdown.appendChild(label);
+        newContent.appendChild(layerDropdown);
+    }
+    const applyLayers = document.createElement("button");
+    applyLayers.className = "action-button";
+    applyLayers.textContent = "Apply";
+    newContent.appendChild(applyLayers);
+    layersDropwdown.appendChild(newContent);
 
 
     //Download file data

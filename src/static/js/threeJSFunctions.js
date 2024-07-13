@@ -60,18 +60,19 @@ const setSphere = (sphereProperties) => {
 const setTextures = (sphereGeometry, texturesProperties) => {
     const loader = new THREE.TextureLoader();
     let returnObject = {};
-
-    if(texturesProperties.earth){
+    if(texturesProperties.Earth_map){
         const earthMaterial = new THREE.MeshPhongMaterial();
         const earthTexture = loader.load("/static/textures/high/earth_map_10k.png");
         earthMaterial.map = earthTexture;
-        const bumpTexture = loader.load("/static/textures/high/earth_bump_10k.png");
-        earthMaterial.bumpMap = bumpTexture;
+        if(texturesProperties.Bump_map){
+            const bumpTexture = loader.load("/static/textures/high/earth_bump_10k.png");
+            earthMaterial.bumpMap = bumpTexture;
+        }
         const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
         returnObject.earthMesh = earthMesh;
-    }  
+    }
 
-    if(texturesProperties.clouds){
+    if(texturesProperties.Clouds_map){
         const cloudsMat = new THREE.MeshStandardMaterial();
         const cloudsTexture = loader.load("/static/textures/high/earth_cloud_10k.png");
         cloudsMat.alphaMap = cloudsTexture;
@@ -82,11 +83,11 @@ const setTextures = (sphereGeometry, texturesProperties) => {
         returnObject.cloudsMesh = cloudsMesh;
     }
 
-    if(texturesProperties.hydroSphere){
+    if(texturesProperties.Hydrosphere_map){
         const fresnelMat = getFresnelMat();
-        const glowMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
-        glowMesh.scale.setScalar(1.003);
-        returnObject.glowMesh = glowMesh;
+        const hydrosphereMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
+        hydrosphereMesh.scale.setScalar(1.003);
+        returnObject.hydrosphereMesh = hydrosphereMesh;
     }
 
     return returnObject
@@ -99,12 +100,13 @@ const Earth3D = (sphereProperties, texturesProperties) => {
     const textures = setTextures(sphere, texturesProperties);
     let earthValue = null;
     let cloudValue = null;
+    let hydrosphereValue = null;
     for(const [key, value] of Object.entries(textures)){
         if(key === 'earthMesh'){ earthValue = value; }
         else if(key === 'cloudsMesh'){ cloudValue = value; }
         group.add(value);
     }
-    return {earthGroup: group, earthMesh: earthValue, cloudsMesh: cloudValue}
+    return {earthGroup: group, earthMesh: earthValue, cloudsMesh: cloudValue, hydrosphereMesh: hydrosphereValue}
 }
 
 /* Add Earth label functionality */
