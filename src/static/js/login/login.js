@@ -1,6 +1,6 @@
-import {createRenderer, setCamera, Earth, THREE} from './threeJSFunctions.js';
-import {addCartesian, createMarkers} from './globeFunctions.js';
-import {getFresnelMat} from "./getFresnelMat.js";
+import {createRenderer, setCamera, Earth, THREE} from '../scripts/threeJSFunctions.js';
+import {addCartesian, createMarkers} from '../scripts/globeFunctions.js';
+import {getFresnelMat} from "../scripts/getFresnelMat.js";
 
 function main(){
 

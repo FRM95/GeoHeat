@@ -1,8 +1,9 @@
-import {createRenderer, setCamera, setControls, Earth, Earth3D, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from './threeJSFunctions.js';
-import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from './filterFunctions.js';
-import {processFireData, displayFireData} from './globeFunctions.js';
-import {setOption, requestedData, allowRequest, putData, getData, exportData} from './clientFunctions.js';
-import {setInspectData} from './contentFunctions.js'
+import {createRenderer, setCamera, setControls, Earth, Earth3D, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from '../scripts/threeJSFunctions.js';
+import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from '../scripts/filterFunctions.js';
+import {processFireData, displayFireData} from '../scripts/globeFunctions.js';
+import {setOption, requestedData, allowRequest, putData, getData, exportData} from '../scripts/clientFunctions.js';
+import {setInspectData} from '../scripts/contentFunctions.js'
+import {userInterface, applyLayers} from '../scripts/userFunctions.js'
 
 function main(){
 
@@ -33,11 +34,10 @@ function main(){
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const textureProperties = {Earth_map: true, Bump_map:true, Clouds_map: true, Hydrosphere_map: true};
+    let textureProperties = {Earth_map: true, Bump_map:true, Clouds_map: true, Hydrosphere_map: true};
     const earthObject = Earth3D(sphereProperties, textureProperties);
     const earth = earthObject.earthGroup;
     const earthMesh = earthObject.earthMesh;
-    const cloudsMesh = earthObject.cloudsMesh;
     scene.add(earth);
 
     // Lights creation
@@ -111,145 +111,16 @@ function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
-    // UI/UX functions
-    const sidebar = document.getElementById('container-sidebar');
-    const Areasidebar = document.getElementById('area-sidebar');
-    const hideSidebar = document.getElementById('collapse-sidebar');
-    const inspectButton = document.getElementsByClassName('inspect-data');
-    const containerIns = document.getElementById('inspect-container');
-    const maxWindow = document.getElementById('max-inspect');
-    const minWindow = document.getElementById('min-inspect');
-    const summaryButton = document.getElementById('summary');
-    const summarySection = document.getElementById('summary-section');
-    const tableButton = document.getElementById('table');
-    const tableSection = document.getElementById('table-section');
-    const getFiles = document.getElementsByClassName('file-request');
-    const zoomIn = document.getElementById('zoom-in');
-    const zoomOut = document.getElementById('zoom-out');
-    const zoomDefault = document.getElementById('zoom-default');
-
-
-    // Hide sidebar
-    hideSidebar.addEventListener("click", _=>{
-        Areasidebar.classList.toggle('collapsed');
-        sidebar.classList.toggle('collapsed-width');
-        sidebar.ariaExpanded = sidebar.ariaExpanded !== 'true';
-        if(containerIns.ariaExpanded == "true"){
-            minWindow.dispatchEvent(new Event("click"));
-        }
-    });
-
-    //Open Inspect data
-    for(let i=0; i< inspectButton.length; i++){
-        inspectButton[i].addEventListener("click", _ =>{
-        containerIns.classList.toggle('hidden');
-        });
-    }
-
-    // Max window Inspect data
-    maxWindow.addEventListener('click', _ =>{
-        if(containerIns.ariaExpanded === "false"){
-            const newWidth = window.innerWidth * 0.85;
-            if(sidebar.offsetWidth != 0){
-                hideSidebar.dispatchEvent(new Event("click"));
-            }
-            if(labelDivInfo.offsetWidth != 0){
-                closeBtn.dispatchEvent(new Event("pointerdown"));
-            }
-            containerIns.style = `width: ${newWidth}px; max-width: ${newWidth}px;`;
-            containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
-        }
-    });
-
-    //Exit full screen Inspect data
-    minWindow.addEventListener('click', _ =>{
-        if(containerIns.ariaExpanded === "true"){
-            containerIns.style = "";
-            containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
-        }
-    });
-
-    //OPEN summary/table sections 
-    summaryButton.addEventListener("click", _ =>{
-        if(summarySection.classList.contains("hidden")){
-            summarySection.classList.remove("hidden");
-            tableSection.classList.add('hidden');
-            summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
-            tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
-        }
-    });
-    tableButton.addEventListener("click", _ =>{
-        if(tableSection.classList.contains("hidden")){
-            tableSection.classList.remove("hidden");
-            summarySection.classList.add('hidden');
-            tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
-            summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
-        }
-    });
-
-
-    // Earth 3D Zoom in-out with wheel events
-    let pressedIn;
-    let pressedOut;
-    const wheelEvent = (delx, delty) => new WheelEvent('wheel', {
-        deltaX: delx,
-        deltaY: delty,
-        bubbles: true,
-        cancelable: true,
-        view: window
-    });
-    zoomIn.addEventListener("mousedown", event =>{
-        if(event.button == 0){
-            pressedIn = setInterval(() => {
-                labelRenderer.domElement.dispatchEvent(wheelEvent(0, -70));
-            }, 20);
-        }
-    });
-    zoomIn.addEventListener('mouseup', event => {
-        if(event.button == 0){
-            clearInterval(pressedIn);
-        }
-    });
-    zoomOut.addEventListener("mousedown", event => {
-        if(event.button == 0){
-            pressedOut = setInterval(() => {
-                labelRenderer.domElement.dispatchEvent(wheelEvent(0, +70));
-            }, 20);
-        }
-    });
-    zoomOut.addEventListener('mouseup', event => {
-        if(event.button == 0){
-            clearInterval(pressedOut);
-        }
-    });
-    zoomDefault.addEventListener("click", _ =>{
-        TrackballControls.reset();
-    });
-
-
-    //Layers dropdown
-    const layersDropwdown = document.getElementById('dropwdown-layers');
-    const newContent = document.createElement('div');
-    newContent.className = 'dropdown-content';
-    for(const[key, value] of Object.entries(textureProperties)){
-        const layerDropdown = document.createElement("div");
-        const newNode = document.createElement("input");
-        newNode.setAttribute('type', 'checkbox');
-        newNode.checked = value;
-        const label = document.createElement("label");
-        label.innerHTML = key;
-        layerDropdown.appendChild(newNode);
-        layerDropdown.appendChild(label);
-        newContent.appendChild(layerDropdown);
-    }
-    const applyLayers = document.createElement("button");
-    applyLayers.className = "action-button";
-    applyLayers.textContent = "Apply";
-    newContent.appendChild(applyLayers);
-    layersDropwdown.appendChild(newContent);
+    // UX-UI Functions
+    userInterface(labelRenderer, TrackballControls, textureProperties);
+    const layersApply = document.getElementById("apply-interface-layers");
+    layersApply.addEventListener("click", _ =>{
+        textureProperties = applyLayers(textureProperties);
+    })
 
 
     //Download file data
+    const getFiles = document.getElementsByClassName('file-request');
     for(let i = 0; i < getFiles.length; i++){
         const fileType = getFiles[i].getAttribute('download-file');
         getFiles[i].addEventListener("click", async _ =>{
