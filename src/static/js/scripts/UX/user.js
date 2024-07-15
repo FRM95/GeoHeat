@@ -156,7 +156,7 @@ function userInterface(labelRenderer, TrackballControls, texturesObject){
     user_events();
 
     // Earth 3D Zoom in-out with wheel events
-    user_zoom(TrackballControls, labelRenderer);
+    user_zoom(labelRenderer, TrackballControls);
 
     // Select layers to apply
     select_layers(texturesObject);

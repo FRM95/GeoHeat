@@ -22,7 +22,7 @@ const createCamera = (fov, aspect, near, far, position_x, position_y, position_z
 
 /* Set camera controls */
 const createControls = (camera, domElem, staticMove = false, dampFactor = 0.04, noPan = true, rotSpeed = 1.5, zoomSpeed = 0.05) => {
-    let controls = new TrackballControls(camera, domElem);
+    const controls = new TrackballControls(camera, domElem);
     controls.staticMoving = staticMove;
     controls.dynamicDampingFactor = dampFactor;
     controls.minDistance = 1.15;
@@ -200,25 +200,6 @@ const buildLight = (lightObject) => {
     return returnObject
 }
 
-const buildGalaxy = (texturesObject) =>{
-    const vertices = [];
-    for(let i = 0; i < 2500; i ++) {
-        const x = THREE.MathUtils.randFloatSpread(200);
-        const y = THREE.MathUtils.randFloatSpread(200);
-        const z = THREE.MathUtils.randFloatSpread(200);
-        vertices.push(x,y,z);
-    }
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    const material = new THREE.PointsMaterial({ 
-        color: 0xffffff, 
-        size: 0.1, 
-        map: new THREE.TextureLoader().load("https://raw.githubusercontent.com/Kuntal-Das/textures/main/sp2.png"),
-        transparent: true }
-    );
-    const points = new THREE.Points(geometry, material);
-    console.log(points);
-}
 
 /* Remove object from scene */
 const removeObject = (sceneObject, object) => {
