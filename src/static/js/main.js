@@ -1,16 +1,18 @@
-import {createRenderer, setCamera, setControls, Earth, Earth3D, setLabelAttributes, removeMesh, addMesh, THREE, CSS2DRenderer, CSS2DObject} from '../scripts/threeJSFunctions.js';
-import {setCheckbox, setNewDate, setMultipleDates, resetDefault, filteredOptions} from '../scripts/filterFunctions.js';
-import {processFireData, displayFireData} from '../scripts/globeFunctions.js';
-import {setOption, requestedData, allowRequest, putData, getData, exportData} from '../scripts/clientFunctions.js';
-import {setInspectData} from '../scripts/contentFunctions.js'
-import {userInterface, applyLayers} from '../scripts/userFunctions.js'
+import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLight, THREE } from './scripts/threeJS/functions.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { setOption, requestedData, allowRequest, putData, getData, exportData } from './scripts/requests/functions.js';
+import { processFireData, displayFireData } from './scripts/fires/functions.js';
+import { setCheckbox, setNewDate, resetDefault, filteredOptions } from './scripts/UX/filter.js';
+import { setInspectData } from './scripts/UX/inspect.js'
+import { userInterface, applyLayers } from './scripts/UX/user.js'
+import { texturesQuality, texturesProperties, lightProperties } from "./config.js";
 
 function main(){
 
     // Renderer creation and DOM append
-    const width = window.innerWidth;
     const yOffset = document.getElementById("header").offsetHeight;
-    const height = window.innerHeight + yOffset; /* 21/06/2024 changed from innerHeight to (innerHeight + yOffset) */
+    const width = window.innerWidth;
+    const height = window.innerHeight + yOffset;
     const renderer = createRenderer(width, height);
     const container = document.getElementById('threejs-canvas');
     container.appendChild(renderer.domElement);
@@ -26,24 +28,23 @@ function main(){
     const scene = new THREE.Scene();
 
     // Camera creation
-    const camera = setCamera(75, width/height, 0.1, 10, 0, 0, 3);
+    const camera = createCamera(75, width/height, 0.1, 10, 0, 0, 3);
 
     // Controls creation
-    const TrackballControls = setControls(camera, labelRenderer.domElement);
-
+    const TrackballControls = createControls(camera, labelRenderer.domElement);
+    
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    let textureProperties = {Earth_map: true, Bump_map:true, Clouds_map: true, Hydrosphere_map: true};
-    const earthObject = Earth3D(sphereProperties, textureProperties);
-    const earth = earthObject.earthGroup;
-    const earthMesh = earthObject.earthMesh;
+    const groupObject = Group(sphereProperties, texturesProperties, texturesQuality);
+    const earth = groupObject.group;
+    const earthMesh = groupObject.meshes.earthMesh;
     scene.add(earth);
 
     // Lights creation
-    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.25);
-    scene.add(ambientLight);
-    const sunLight = new THREE.DirectionalLight(0xFFFFFF, 6.5);
+    const lightObject = buildLight(lightProperties); 
+    scene.add(lightObject.ambientLight);
+    const sunLight = lightObject.directionalLight;
     sunLight.position.set(-4, 3, 2);
     camera.add(sunLight);
     scene.add(camera);
@@ -82,9 +83,9 @@ function main(){
     let boxes = document.getElementsByClassName("main-checkbox");
     saveFilter.addEventListener("click", _ => {
         let filtersToApply = filteredOptions(boxes);
-        removeMesh(scene, meshPointers)
+        removeObject(scene, meshPointers)
         meshPointers = processFireData(user_key, user_data, earth_radius, filtersToApply);
-        addMesh(scene, meshPointers);
+        addObject(scene, meshPointers);
         labelDiv.classList.add("hidden");
         labelDivInfo.classList.add("hidden");
     });
@@ -97,9 +98,9 @@ function main(){
         const flagRequest = allowRequest(user_key, user_data, selectedOptions);
         const flagResult = await getData(user_key, user_data, flagRequest, selectedOptions);
         if(flagResult){
-            removeMesh(scene, meshPointers);
+            removeObject(scene, meshPointers);
             meshPointers = processFireData(user_key, user_data, earth_radius);
-            addMesh(scene, meshPointers);
+            addObject(scene, meshPointers);
             setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
             setInspectData(user_key, user_data, 'summary-section', 'table-section');
             labelDiv.classList.add("hidden");
@@ -112,11 +113,11 @@ function main(){
     resetDefault('reset-button', 'main-checkbox');
 
     // UX-UI Functions
-    userInterface(labelRenderer, TrackballControls, textureProperties);
-    const layersApply = document.getElementById("apply-interface-layers");
-    layersApply.addEventListener("click", _ =>{
-        textureProperties = applyLayers(textureProperties);
-    })
+    // userInterface(labelRenderer, TrackballControls, textureProperties);
+    // const layersApply = document.getElementById("apply-interface-layers");
+    // layersApply.addEventListener("click", _ =>{
+    //     textureProperties = applyLayers(textureProperties);
+    // })
 
 
     //Download file data

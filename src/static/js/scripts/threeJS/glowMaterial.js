@@ -1,4 +1,4 @@
-import {THREE} from './threeJSFunctions.js';
+import { THREE } from './functions.js';
 
 function getFresnelMat({rimHex = 0x0088ff, facingHex = 0x000000} = {}) {
   const uniforms = {

@@ -4,7 +4,6 @@ const defineNode = (identifier, currData, spots) =>{
     const nodeDiv = document.createElement('div');
     nodeDiv.id = identifier;
     nodeDiv.className = "section d-grid c-inspect";
-
     const spanDate = document.createElement('span');
     spanDate.innerHTML = `Data from: ${currData['date']}`;
     const numberOfSpots = document.createElement('span');

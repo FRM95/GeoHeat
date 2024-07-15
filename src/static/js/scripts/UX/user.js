@@ -15,7 +15,7 @@ const zoomDefault = document.getElementById('zoom-default');
 
 
 /* Interface select layers */
-const UI_UX_functionalities = () =>{
+const user_events = () =>{
 
      // Hide sidebar
      hideSidebar.addEventListener("click", _=>{
@@ -78,7 +78,8 @@ const UI_UX_functionalities = () =>{
 
 
 /* LabelRenderer Zoom in/Out */
-const UI_UX_Zoom_Mesh = (labelRenderer, TrackballControls) =>{
+const user_zoom = (labelRenderer, TrackballControls) => {
+
     let pressedIn;
     let pressedOut;
     const wheelEvent = (delx, delty) => new WheelEvent('wheel', {
@@ -117,8 +118,9 @@ const UI_UX_Zoom_Mesh = (labelRenderer, TrackballControls) =>{
     });
 }
 
+
 /* Interface select layers */
-const UI_Select_Layers = (textureProperties) => {
+const select_layers = (textureProperties) => {
     const layersDropwdown = document.getElementById('dropwdown-layers');
     if(layersDropwdown!=null){
         const newContent = document.createElement('div');
@@ -150,13 +152,13 @@ const UI_Select_Layers = (textureProperties) => {
 function userInterface(labelRenderer, TrackballControls, textureProperties){
 
     // General UI/UX functions
-    UI_UX_functionalities();
+    user_events();
 
     // Earth 3D Zoom in-out with wheel events
-    UI_UX_Zoom_Mesh(TrackballControls, labelRenderer);
+    user_zoom(TrackballControls, labelRenderer);
 
     // Select layers to apply
-    UI_Select_Layers(textureProperties);
+    select_layers(textureProperties);
 
 }
 

@@ -1,6 +1,6 @@
-import {createRenderer, setCamera, Earth, THREE} from '../scripts/threeJSFunctions.js';
-import {addCartesian, createMarkers} from '../scripts/globeFunctions.js';
-import {getFresnelMat} from "../scripts/getFresnelMat.js";
+import { createRenderer, createCamera, Earth, THREE } from './scripts/threeJS/functions.js';
+import { addCartesian, createMarkers } from './scripts/fires/functions.js';
+import { getFresnelMat } from "./scripts/threeJS/glowMaterial.js";
 
 function main(){
 
@@ -12,7 +12,7 @@ function main(){
     container.appendChild(renderer.domElement);
 
     // Camera creation
-    const camera = setCamera(75, width/height, 0.1, 10, -0.4, 0, 1.5);
+    const camera = createCamera(75, width/height, 0.1, 10, -0.4, 0, 1.5);
     camera.rotation.z = -0.15;
 
     // Scene creation
