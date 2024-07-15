@@ -12,6 +12,10 @@ const texturesQuality = {
         'high' : "/static/textures/high/earth_cloud_10k.png",
         'ultrahigh': "/static/textures/ultra_high/earth_cloud_16k.png"
     },
+    Starfield_map:{
+        'high': "https://raw.githubusercontent.com/Kuntal-Das/textures/main/sp2.png",
+        'ultrahigh' : "https://raw.githubusercontent.com/Kuntal-Das/textures/main/sp2.png"
+    }
 }
 
 /* Default Textures properties */
@@ -39,11 +43,20 @@ var texturesProperties = {
         visible : true,
         properties : {},
         scale: 1.003
+    },
+    Starfield_map : {
+        visible : true,
+        texture_quality: 'high',
+        properties : {
+            color: 0xffffff,
+            size: 0.1,
+            transparent: true
+        }
     }
 }
 
 /* Default Light properties */
-const lightProperties = {
+var lightProperties = {
     ambient_light : {
         visible : true,
         properties : {
@@ -57,7 +70,16 @@ const lightProperties = {
             color: 0xFFFFFF, 
             intensity: 6.5  
         }
+    }
+}
 
+/* Default Background (starfield) properties */
+var backgroundProperties = {
+    visible : true,
+    properties : {
+        color: 0xffffff,
+        size: 0.1,
+        transparent: true
     }
 }
 

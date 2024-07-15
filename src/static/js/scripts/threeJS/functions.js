@@ -93,21 +93,44 @@ const buildTextures = (sphereGeometry, texturesObject, texturesQuality) => {
         returnObject.Exosphere_map = exosphereMesh;
     }
 
+    if(texturesObject.Starfield_map){
+        const vertices = [];
+        const pointGeometry = new THREE.BufferGeometry();
+        for(let i = 0; i < 2500; i ++) {
+            const x = THREE.MathUtils.randFloatSpread(200);
+            const y = THREE.MathUtils.randFloatSpread(200);
+            const z = THREE.MathUtils.randFloatSpread(200);
+            vertices.push(x,y,z);
+        }
+        pointGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        const starsQuality = texturesObject.Starfield_map.texture_quality;
+        const starsTexture = loader.load(texturesQuality.Starfield_map[starsQuality]);
+        const starsMaterial = new THREE.PointsMaterial(texturesObject.Starfield_map.properties);
+        starsMaterial.map = starsTexture;
+        const points = new THREE.Points(pointGeometry, starsMaterial);
+        returnObject.Starfield_map = points;
+    }
+
     return returnObject
 }
 
 /* Apply visible property to texture Object */
-const textureVisible = (texturesObject, groupMesh) =>{
+const textureVisible = (texturesObject, groupMesh, backgroundMesh) =>{
     const checkBoxLayers = document.getElementsByClassName("checkbox-layer");
     for(let i = 0; i < checkBoxLayers.length; i++){
         const layerProp = checkBoxLayers[i].getAttribute('property');
         const ischecked = checkBoxLayers[i].checked;
         texturesObject[layerProp].visible = ischecked;
-        const meshes = groupMesh.children;
-        for(let j=0; j < meshes.length; j++){
-            if(meshes[j].name == layerProp){
-                meshes[j].visible = ischecked;
-                break;
+        if(backgroundMesh.name == layerProp){
+            backgroundMesh.visible = ischecked
+        }
+        else{
+            const meshes = groupMesh.children;
+            for(let j=0; j < meshes.length; j++){
+                if(meshes[j].name == layerProp){
+                    meshes[j].visible = ischecked;
+                    break;
+                }
             }
         }
     }
@@ -120,7 +143,9 @@ const createGroup = (texturesObject) =>{
     group.name = "groupMesh";
     for(const [key, value] of Object.entries(texturesObject)){
         value.name = key;
-        group.add(value);
+        if(key != 'Starfield_map'){
+            group.add(value);
+        }
     }
     return group
 }
@@ -131,7 +156,7 @@ const Group = (sphereProperties, texturesObject, texturesQuality) => {
     const sphere = createSphere(sphereProperties);
     const textures = buildTextures(sphere, texturesObject, texturesQuality);
     const groupMesh = createGroup(textures);
-    return groupMesh
+    return {groupMesh: groupMesh, backgroundMesh: textures.Starfield_map}
 }
 
 /* Add Earth label functionality */
@@ -173,6 +198,26 @@ const buildLight = (lightObject) => {
         returnObject.directionalLight = directionalLight;
     }
     return returnObject
+}
+
+const buildGalaxy = (texturesObject) =>{
+    const vertices = [];
+    for(let i = 0; i < 2500; i ++) {
+        const x = THREE.MathUtils.randFloatSpread(200);
+        const y = THREE.MathUtils.randFloatSpread(200);
+        const z = THREE.MathUtils.randFloatSpread(200);
+        vertices.push(x,y,z);
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    const material = new THREE.PointsMaterial({ 
+        color: 0xffffff, 
+        size: 0.1, 
+        map: new THREE.TextureLoader().load("https://raw.githubusercontent.com/Kuntal-Das/textures/main/sp2.png"),
+        transparent: true }
+    );
+    const points = new THREE.Points(geometry, material);
+    console.log(points);
 }
 
 /* Remove object from scene */

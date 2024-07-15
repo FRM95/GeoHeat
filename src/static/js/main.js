@@ -28,7 +28,7 @@ function main(){
     const scene = new THREE.Scene();
 
     // Camera creation
-    const camera = createCamera(75, width/height, 0.1, 10, 0, 0, 3);
+    const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
 
     // Controls creation
     const TrackballControls = createControls(camera, labelRenderer.domElement);
@@ -36,29 +36,22 @@ function main(){
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const earth = Group(sphereProperties, texturesProperties, texturesQuality);
+    const meshes = Group(sphereProperties, texturesProperties, texturesQuality);
+    const earth = meshes.groupMesh;
     scene.add(earth);
 
     // Lights creation
     const lightObject = buildLight(lightProperties); 
-    scene.add(lightObject.ambientLight);
+    const sphereLight = lightObject.ambientLight;
     const sunLight = lightObject.directionalLight;
     sunLight.position.set(-4, 3, 2);
+    scene.add(sphereLight);
     camera.add(sunLight);
     scene.add(camera);
 
-    const vertices = [];
-    for(let i = 0; i < 10000; i ++) {
-        const x = THREE.MathUtils.randFloatSpread(20);
-        const y = THREE.MathUtils.randFloatSpread(20);
-        const z = THREE.MathUtils.randFloatSpread(20);
-        vertices.push(x,y,z);
-    }
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.01 });
-    const points = new THREE.Points( geometry, material );
-    scene.add(points);
+    // Background creation
+    const stars = meshes.backgroundMesh;
+    scene.add(stars);
 
     // Default data
     let meshPointers = [];
@@ -128,7 +121,7 @@ function main(){
     userInterface(labelRenderer, TrackballControls, texturesProperties);
     const layersApply = document.getElementById("apply-interface-layers");
     layersApply.addEventListener("click", _ =>{
-        textureVisible(texturesProperties, earth);
+        textureVisible(texturesProperties, earth, stars);
         console.log(scene);
     });
 
