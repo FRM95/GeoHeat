@@ -15,7 +15,7 @@ const texturesQuality = {
 }
 
 /* Default Textures properties */
-const texturesProperties = {
+var texturesProperties = {
     Earth_map : {
         visible : true,
         texture_quality: 'high',
@@ -23,12 +23,6 @@ const texturesProperties = {
             color: 0xffffff,
             emissive: 0x000000
         }
-    },
-    Bump_map:{
-        visible : true,
-        texture_quality: 'high',
-        properties : {},
-        scale: 1
     },
     Clouds_map:{
         visible : true,
@@ -41,7 +35,7 @@ const texturesProperties = {
         },
         scale: 1.0025,
     },
-    Hydrosphere_map:{
+    Exosphere_map:{
         visible : true,
         properties : {},
         scale: 1.003

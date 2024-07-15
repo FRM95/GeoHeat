@@ -58,25 +58,23 @@ const createSphere = (sphereProperties) => {
 const buildTextures = (sphereGeometry, texturesObject, texturesQuality) => {
     const loader = new THREE.TextureLoader();
     let returnObject = {};
-    if(texturesObject.Earth_map.visible){
+    if(texturesObject.Earth_map){
 
         const earthMaterial = new THREE.MeshPhongMaterial(texturesObject.Earth_map.properties);
         const earthQuality = texturesObject.Earth_map.texture_quality;
         const earthTexture = loader.load(texturesQuality.Earth_map[earthQuality]);
         earthMaterial.map = earthTexture;
-
-        if(texturesObject.Bump_map.visible){
-            const bumpQuality = texturesObject.Bump_map.texture_quality;
-            const bumpTexture = loader.load(texturesQuality.Bump_map[bumpQuality]);
-            earthMaterial.bumpMap = bumpTexture;
-            earthMaterial.bumpScale = texturesObject.Bump_map.scale;
-        }
+        
+        const bumpQuality = earthQuality;
+        const bumpTexture = loader.load(texturesQuality.Bump_map[bumpQuality]);
+        earthMaterial.bumpMap = bumpTexture;
+        earthMaterial.bumpScale = 1;
 
         const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
-        returnObject.earthMesh = earthMesh;
+        returnObject.Earth_map = earthMesh;
     }
 
-    if(texturesObject.Clouds_map.visible){
+    if(texturesObject.Clouds_map){
 
         const cloudsMat = new THREE.MeshStandardMaterial(texturesObject.Clouds_map.properties);
         const cloudsQuality = texturesObject.Clouds_map.texture_quality;
@@ -85,23 +83,43 @@ const buildTextures = (sphereGeometry, texturesObject, texturesQuality) => {
 
         const cloudsMesh = new THREE.Mesh(sphereGeometry, cloudsMat);
         cloudsMesh.scale.setScalar(texturesObject.Clouds_map.scale);
-        returnObject.cloudsMesh = cloudsMesh;
+        returnObject.Clouds_map = cloudsMesh;
     }
 
-    if(texturesObject.Hydrosphere_map.visible){
+    if(texturesObject.Exosphere_map){
         const fresnelMat = getFresnelMat();
-        const hydrosphereMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
-        hydrosphereMesh.scale.setScalar(texturesObject.Hydrosphere_map.scale);
-        returnObject.hydrosphereMesh = hydrosphereMesh;
+        const exosphereMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
+        exosphereMesh.scale.setScalar(texturesObject.Exosphere_map.scale);
+        returnObject.Exosphere_map = exosphereMesh;
     }
 
     return returnObject
 }
 
+/* Apply visible property to texture Object */
+const textureVisible = (texturesObject, groupMesh) =>{
+    const checkBoxLayers = document.getElementsByClassName("checkbox-layer");
+    for(let i = 0; i < checkBoxLayers.length; i++){
+        const layerProp = checkBoxLayers[i].getAttribute('property');
+        const ischecked = checkBoxLayers[i].checked;
+        texturesObject[layerProp].visible = ischecked;
+        const meshes = groupMesh.children;
+        for(let j=0; j < meshes.length; j++){
+            if(meshes[j].name == layerProp){
+                meshes[j].visible = ischecked;
+                break;
+            }
+        }
+    }
+}
+
+
 /* Creates Three group */
 const createGroup = (texturesObject) =>{
     const group = new THREE.Group();
+    group.name = "groupMesh";
     for(const [key, value] of Object.entries(texturesObject)){
+        value.name = key;
         group.add(value);
     }
     return group
@@ -113,7 +131,7 @@ const Group = (sphereProperties, texturesObject, texturesQuality) => {
     const sphere = createSphere(sphereProperties);
     const textures = buildTextures(sphere, texturesObject, texturesQuality);
     const groupMesh = createGroup(textures);
-    return {group: groupMesh, meshes: textures}
+    return groupMesh
 }
 
 /* Add Earth label functionality */
@@ -191,6 +209,7 @@ export {
     addObject,
     removeObject,
     buildLight,
+    textureVisible,
     THREE,
 };
 

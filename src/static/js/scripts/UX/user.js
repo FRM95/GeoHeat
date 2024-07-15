@@ -12,6 +12,7 @@ const tableSection = document.getElementById('table-section');
 const zoomIn = document.getElementById('zoom-in');
 const zoomOut = document.getElementById('zoom-out');
 const zoomDefault = document.getElementById('zoom-default');
+const labelDivInfo = document.getElementById("markerInformation");
 
 
 /* Interface select layers */
@@ -120,17 +121,17 @@ const user_zoom = (labelRenderer, TrackballControls) => {
 
 
 /* Interface select layers */
-const select_layers = (textureProperties) => {
+const select_layers = (texturesObject) => {
     const layersDropwdown = document.getElementById('dropwdown-layers');
     if(layersDropwdown!=null){
         const newContent = document.createElement('div');
         newContent.className = 'dropdown-content';
-        for(const[key, value] of Object.entries(textureProperties)){
+        for(const[key, value] of Object.entries(texturesObject)){
             const layerDropdown = document.createElement("div");
             const newNode = document.createElement("input");
             newNode.setAttribute('type', 'checkbox');
             newNode.className = 'checkbox-layer';
-            newNode.checked = value;
+            newNode.checked = value.visible;
             newNode.setAttribute('property', key);
             const label = document.createElement("label");
             label.innerHTML = key;
@@ -149,7 +150,7 @@ const select_layers = (textureProperties) => {
 
 
 /* User interface and experience functions */
-function userInterface(labelRenderer, TrackballControls, textureProperties){
+function userInterface(labelRenderer, TrackballControls, texturesObject){
 
     // General UI/UX functions
     user_events();
@@ -158,20 +159,8 @@ function userInterface(labelRenderer, TrackballControls, textureProperties){
     user_zoom(TrackballControls, labelRenderer);
 
     // Select layers to apply
-    select_layers(textureProperties);
+    select_layers(texturesObject);
 
 }
 
-/* Apply layers to texture Object */
-function applyLayers(textureProperties){
-    const checkBoxLayers = document.getElementsByClassName("checkbox-layer");
-    for(let i = 0; i < checkBoxLayers.length; i++){
-        const layerProp = checkBoxLayers[i].getAttribute('property');
-        const ischecked = checkBoxLayers[i].checked;
-        textureProperties[layerProp] = ischecked;
-    }
-    return textureProperties
-}
-
-
-export {userInterface, applyLayers}
+export {userInterface}

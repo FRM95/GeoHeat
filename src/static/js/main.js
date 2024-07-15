@@ -1,10 +1,10 @@
-import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLight, THREE } from './scripts/threeJS/functions.js';
+import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLight, textureVisible, THREE } from './scripts/threeJS/functions.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { setOption, requestedData, allowRequest, putData, getData, exportData } from './scripts/requests/functions.js';
 import { processFireData, displayFireData } from './scripts/fires/functions.js';
 import { setCheckbox, setNewDate, resetDefault, filteredOptions } from './scripts/UX/filter.js';
 import { setInspectData } from './scripts/UX/inspect.js'
-import { userInterface, applyLayers } from './scripts/UX/user.js'
+import { userInterface } from './scripts/UX/user.js'
 import { texturesQuality, texturesProperties, lightProperties } from "./config.js";
 
 function main(){
@@ -36,9 +36,7 @@ function main(){
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const groupObject = Group(sphereProperties, texturesProperties, texturesQuality);
-    const earth = groupObject.group;
-    const earthMesh = groupObject.meshes.earthMesh;
+    const earth = Group(sphereProperties, texturesProperties, texturesQuality);
     scene.add(earth);
 
     // Lights creation
@@ -49,12 +47,26 @@ function main(){
     camera.add(sunLight);
     scene.add(camera);
 
+    const vertices = [];
+    for(let i = 0; i < 10000; i ++) {
+        const x = THREE.MathUtils.randFloatSpread(20);
+        const y = THREE.MathUtils.randFloatSpread(20);
+        const z = THREE.MathUtils.randFloatSpread(20);
+        vertices.push(x,y,z);
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.01 });
+    const points = new THREE.Points( geometry, material );
+    scene.add(points);
+
     // Default data
     let meshPointers = [];
 
     // Globe mark label functionality
     const labelDiv = document.getElementById("markerLabel");
     const label = new CSS2DObject(labelDiv);
+    const earthMesh = earth.children[0];
     setLabelAttributes(label, earthMesh, camera)
     scene.add(label);
 
@@ -113,11 +125,12 @@ function main(){
     resetDefault('reset-button', 'main-checkbox');
 
     // UX-UI Functions
-    // userInterface(labelRenderer, TrackballControls, textureProperties);
-    // const layersApply = document.getElementById("apply-interface-layers");
-    // layersApply.addEventListener("click", _ =>{
-    //     textureProperties = applyLayers(textureProperties);
-    // })
+    userInterface(labelRenderer, TrackballControls, texturesProperties);
+    const layersApply = document.getElementById("apply-interface-layers");
+    layersApply.addEventListener("click", _ =>{
+        textureVisible(texturesProperties, earth);
+        console.log(scene);
+    });
 
 
     //Download file data
