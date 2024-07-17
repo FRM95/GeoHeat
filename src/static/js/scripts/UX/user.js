@@ -83,6 +83,9 @@ const user_zoom = (labelRenderer, TrackballControls) => {
 
     let pressedIn;
     let pressedOut;
+    let zoomFactor = 5;
+    const delay = 0.5;
+
     const wheelEvent = (delx, delty) => new WheelEvent('wheel', {
         deltaX: delx,
         deltaY: delty,
@@ -90,33 +93,45 @@ const user_zoom = (labelRenderer, TrackballControls) => {
         cancelable: true,
         view: window
     });
+
     zoomIn.addEventListener("mousedown", event =>{
         if(event.button == 0){
             pressedIn = setInterval(() => {
-                labelRenderer.domElement.dispatchEvent(wheelEvent(0, -70));
-            }, 20);
+                labelRenderer.domElement.dispatchEvent(wheelEvent(0, -zoomFactor));
+                zoomFactor += 0.25;
+            }, delay);
         }
     });
+
     zoomIn.addEventListener('mouseup', event => {
-        if(event.button == 0){
-            clearInterval(pressedIn);
-        }
+        clearInterval(pressedIn);
+        zoomFactor = 5;
     });
+
     zoomOut.addEventListener("mousedown", event => {
         if(event.button == 0){
             pressedOut = setInterval(() => {
-                labelRenderer.domElement.dispatchEvent(wheelEvent(0, +70));
-            }, 20);
+                labelRenderer.domElement.dispatchEvent(wheelEvent(0, zoomFactor));
+                zoomFactor += 0.25;
+            }, delay);
         }
     });
+
     zoomOut.addEventListener('mouseup', event => {
-        if(event.button == 0){
-            clearInterval(pressedOut);
-        }
+        clearInterval(pressedOut);
+        zoomFactor = 5;
     });
+
     zoomDefault.addEventListener("click", _ =>{
         TrackballControls.reset();
+        clearInterval(pressedIn);
+        clearInterval(pressedOut);
     });
+
+    labelRenderer.domElement.addEventListener('mouseup', _ =>{
+        clearInterval(pressedIn);
+        clearInterval(pressedOut);
+    })
 }
 
 

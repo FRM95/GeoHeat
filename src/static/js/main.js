@@ -30,15 +30,15 @@ function main(){
     // Camera creation
     const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
 
-    // Controls creation
-    const TrackballControls = createControls(camera, labelRenderer.domElement);
-    
     // Earth creation
     const earth_radius = 1;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
     const meshes = Group(sphereProperties, texturesProperties, texturesQuality);
     const earth = meshes.groupMesh;
     scene.add(earth);
+
+    // Controls creation
+    const TrackballControls = createControls(camera, labelRenderer.domElement, earth);
 
     // Lights creation
     const lightObject = buildLight(lightProperties); 
@@ -122,7 +122,6 @@ function main(){
     const layersApply = document.getElementById("apply-interface-layers");
     layersApply.addEventListener("click", _ =>{
         textureVisible(texturesProperties, earth, stars);
-        console.log(scene);
     });
 
 

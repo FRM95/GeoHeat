@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
+import { ArcballControls } from 'three/addons/controls/ArcballControls.js';
 import { getFresnelMat } from "./glowMaterial.js";
 
 /* Creates WebGL renderer based on width and height parameters */
@@ -20,18 +20,32 @@ const createCamera = (fov, aspect, near, far, position_x, position_y, position_z
     return camera
 }
 
-/* Set camera controls */
-const createControls = (camera, domElem, staticMove = false, dampFactor = 0.04, noPan = true, rotSpeed = 1.5, zoomSpeed = 0.05) => {
-    const controls = new TrackballControls(camera, domElem);
-    controls.staticMoving = staticMove;
-    controls.dynamicDampingFactor = dampFactor;
+
+const rotationSpeed = (dist) =>{
+    let rotSpeed = 0.55;
+    if(dist < 2){
+        rotSpeed = (8/77 * dist) + 47/1540;
+    }
+    return rotSpeed
+}
+
+/* Creates Controls of Three JS camera */
+const createControls = (camera, domElem, targetObject, staticMove = false, dampFactor = 0.04, noPan = true, rotSpeed = 1.5, zoomSpeed = 0.05) => {
+
+    const controls = new ArcballControls(camera, domElem);
+    controls.target = targetObject.position;
+    controls.enablePan = false;
     controls.minDistance = 1.15;
     controls.maxDistance = 5;
-    controls.noPan = noPan;
-    controls.rotateSpeed = rotSpeed;
-    controls.zoomSpeed = zoomSpeed;
+    controls.scaleFactor = 1.1;
+    controls.dampingFactor = 25;
+    controls.addEventListener('change', _ => {
+        controls.rotateSpeed = rotationSpeed(camera.position.distanceTo(controls.target))
+    });
+
     return controls
 }
+
 
 /* Creates earth geometry */
 function Earth(radius = 1.0, widthSegments = 64, heightSegments = 32, material = null, texture_path = null){
