@@ -73,14 +73,5 @@ var lightProperties = {
     }
 }
 
-/* Default Background (starfield) properties */
-var backgroundProperties = {
-    visible : true,
-    properties : {
-        color: 0xffffff,
-        size: 0.1,
-        transparent: true
-    }
-}
 
 export { texturesQuality, texturesProperties, lightProperties }

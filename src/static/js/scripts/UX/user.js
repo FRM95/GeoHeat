@@ -103,7 +103,7 @@ const user_zoom = (labelRenderer, TrackballControls) => {
         }
     });
 
-    zoomIn.addEventListener('mouseup', event => {
+    zoomIn.addEventListener('mouseup', () => {
         clearInterval(pressedIn);
         zoomFactor = 5;
     });
@@ -117,20 +117,22 @@ const user_zoom = (labelRenderer, TrackballControls) => {
         }
     });
 
-    zoomOut.addEventListener('mouseup', event => {
+    zoomOut.addEventListener('mouseup', () => {
         clearInterval(pressedOut);
         zoomFactor = 5;
     });
 
-    zoomDefault.addEventListener("click", _ =>{
+    zoomDefault.addEventListener("click", () =>{
         TrackballControls.reset();
         clearInterval(pressedIn);
         clearInterval(pressedOut);
+        zoomFactor = 5;
     });
 
-    labelRenderer.domElement.addEventListener('mouseup', _ =>{
+    labelRenderer.domElement.addEventListener('mouseup', () =>{
         clearInterval(pressedIn);
         clearInterval(pressedOut);
+        zoomFactor = 5;
     })
 }
 
@@ -139,10 +141,13 @@ const user_zoom = (labelRenderer, TrackballControls) => {
 const select_layers = (texturesObject) => {
     const layersDropwdown = document.getElementById('dropwdown-layers');
     if(layersDropwdown!=null){
+
         const newContent = document.createElement('div');
         newContent.className = 'dropdown-content';
+
         for(const[key, value] of Object.entries(texturesObject)){
             const layerDropdown = document.createElement("div");
+            layerDropdown.className = 'dropdown-area';
             const newNode = document.createElement("input");
             newNode.setAttribute('type', 'checkbox');
             newNode.className = 'checkbox-layer';
@@ -154,11 +159,20 @@ const select_layers = (texturesObject) => {
             layerDropdown.appendChild(label);
             newContent.appendChild(layerDropdown);
         }
+
+        const layerDropdown = document.createElement("div");
+        layerDropdown.className = 'dropdown-area';
+        layerDropdown.style.justifyContent = 'center';
+        layerDropdown.style.margin = '0.45em';
+        layerDropdown.style.borderRadius = '5px';
+
         const applyLayers = document.createElement("button");
-        applyLayers.className = "action-button";
-        applyLayers.textContent = "Apply";
+        applyLayers.className = "dropdown-area-button";
+        applyLayers.textContent = 'Apply layers';
         applyLayers.id = "apply-interface-layers";
-        newContent.appendChild(applyLayers);
+
+        layerDropdown.appendChild(applyLayers);
+        newContent.appendChild(layerDropdown);
         layersDropwdown.appendChild(newContent);
     }
 }

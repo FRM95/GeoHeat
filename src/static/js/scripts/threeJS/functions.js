@@ -30,7 +30,7 @@ const rotationSpeed = (dist) =>{
 }
 
 /* Creates Controls of Three JS camera */
-const createControls = (camera, domElem, targetObject, staticMove = false, dampFactor = 0.04, noPan = true, rotSpeed = 1.5, zoomSpeed = 0.05) => {
+const createControls = (camera, domElem, targetObject) => {
 
     const controls = new ArcballControls(camera, domElem);
     controls.target = targetObject.position;
@@ -39,8 +39,9 @@ const createControls = (camera, domElem, targetObject, staticMove = false, dampF
     controls.maxDistance = 5;
     controls.scaleFactor = 1.1;
     controls.dampingFactor = 25;
+
     controls.addEventListener('change', _ => {
-        controls.rotateSpeed = rotationSpeed(camera.position.distanceTo(controls.target))
+        controls.rotateSpeed = rotationSpeed(camera.position.distanceTo(controls.target));
     });
 
     return controls

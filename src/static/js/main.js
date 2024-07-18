@@ -29,6 +29,7 @@ function main(){
 
     // Camera creation
     const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
+    camera.lookAt(0, 0, 0);
 
     // Earth creation
     const earth_radius = 1;
@@ -48,6 +49,10 @@ function main(){
     scene.add(sphereLight);
     camera.add(sunLight);
     scene.add(camera);
+
+    // Example
+    // const axesHelper = new THREE.AxesHelper(2);
+    // scene.add(axesHelper);
 
     // Background creation
     const stars = meshes.backgroundMesh;
@@ -178,10 +183,10 @@ function main(){
     // Animate function to start render
     function animate(){
         requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-        labelRenderer.render(scene, camera);
         TrackballControls.update();
         label.userData.trackVisibility();
+        renderer.render(scene, camera);
+        labelRenderer.render(scene, camera);
     }
 
     animate();
