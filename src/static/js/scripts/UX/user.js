@@ -192,4 +192,12 @@ function userInterface(labelRenderer, TrackballControls, texturesObject){
 
 }
 
+const updateLoadingProgressBar = async (frac, delay=200) => {
+    return new Promise(resolve => {
+        const progress = document.getElementById("progress");
+        progress.style.width = `${frac * 200}px`;
+        setTimeout(resolve, delay)
+    })
+}
+
 export {userInterface}

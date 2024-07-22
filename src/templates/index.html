@@ -87,36 +87,14 @@
         </div>
       </div>
       <div style="align-items: center; display: inherit; margin-right: 1%;">
-        <div class="dropdown" id="dropwdown-notifications">
-          <button class="menu-button">
+        <div class="dropdown" id="dropwdown-notifications" status = "empty" notifications = "0">
+          <button class="menu-button" style="gap: 3px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
               <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
             </svg>
+            <span id="notification-counter" ></span>
           </button>
-          <div id="notifications-layer" class="dropdown-content" style="border-radius: 5px 0px 5px 5px; right: 1%; max-height: 400px; height: auto;">
-            <div class="notification d-grid">
-              <div class="notification-id">
-                <span>Fri. 18/07/2024 11:16 AM</span>
-                <button class="notification-close"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                </svg></button>
-              </div>
-              <div class="notification-message">
-                <span>Mensaje de lo que sea</span>
-              </div>
-            </div>
-            <div class="notification d-grid">
-              <div class="notification-id">
-                <span>Sat. 18/07/2024 12:16 AM</span>
-                <button><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                </svg></button>
-              </div>
-              <div class="notification-message">
-                <span>Mensaje de lo que sea 2</span>
-              </div>
-            </div>
-          </div>
+          <div id="notifications-layer" class="dropdown-content" style="border-radius: 5px 0px 5px 5px; right: 1%; max-height: 500px; height: auto; overflow-y: auto;"></div>
         </div>
       </div>
     </header>

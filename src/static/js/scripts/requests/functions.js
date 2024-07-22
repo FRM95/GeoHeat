@@ -1,3 +1,5 @@
+import {notificationHandler} from '../UX/notifications.js'
+
 const padTwoDigits = (num) => {
     return num.toString().padStart(2, "0");
   }
@@ -56,17 +58,23 @@ const setOption = (optKey, optValue) => {
 /* Obtains filtered options */
 const requestedData = (selectors) => {
     let result = {};
+    const date = new Date();
     for(let i = 0; i<selectors.length; i++){
         if (!selectors[i].classList.contains("hidden")){
             result[selectors[i].getAttribute('property')] = selectors[i].value;
         }
     }
+    result['time'] = date.toTimeString().slice(0, 8);
+    result['full_date'] = date.toString().split("(")[0].trim();
+    result['utc_date'] = date.toISOString().replace("T"," ").substring(0, 10);
+    result['utc_time'] = date.toISOString().replace("T"," ").substring(11, 19);
+    result['full_utc_date'] = date.toUTCString()
     return result
 }
 
 /* Decides to allow the new request, not to allow, or add aditional data based on dayrange */
 const allowRequest = (userKey, currentData, selectedData) => {
-    let result = true;
+    let result = { 'allowed' : true, 'reference' : null, 'reason_denied' : null };
     const userData = currentData[userKey];
     for(let i = 0; i < userData.length; i++){
         const data = userData[i];
@@ -75,11 +83,12 @@ const allowRequest = (userKey, currentData, selectedData) => {
                 if(data['delimiter'] == 'country'){
                     if(data['zone'] == selectedData['zone']){
                         if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
-                            result = false
+                            result['allowed'] = false;
+                            result['reason_denied'] = `You've already requested data from: ${data['zone']} within ${data['dayrange']} days`;
                             break
                         }
                         else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
-                            result = data
+                            result['reference'] = data
                             break
                         }
                     }
@@ -87,22 +96,24 @@ const allowRequest = (userKey, currentData, selectedData) => {
                 else{
                     if(data['zone'] == "-180,-90,180,90"){
                         if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
-                            result = false
+                            result['allowed'] = false;
+                            result['reason_denied'] = `You've already requested data from: World within ${data['dayrange']} days`;
                             break
                         }
                         else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
-                            result = data
+                            result['reference'] = data
                             break
                         }
                     }
                     else{
                         if(data['zone'] == selectedData['zone']){
                             if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
-                                result = false
+                                result['allowed'] = false;
+                                result['reason_denied'] = `You've already requested data from: ${data['zone']} within ${data['dayrange']} days`;
                                 break
                             }
                             else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
-                                result = data
+                                result['reference'] = data
                                 break
                             }
                         }
@@ -115,31 +126,30 @@ const allowRequest = (userKey, currentData, selectedData) => {
 }
 
 /* Adds requested data to user data */
-function addData(userKey, userData, flagOption, newData){
+const added_data = (userKey, userData, flagRequest, selectedData, newData) => {
     if('error' in newData){
-        console.log(newData);
+        notificationHandler('request_error', selectedData, newData);
+        console.log(newData)
         return false 
     }
     else{
-        if(flagOption == true){
+        if(flagRequest['reference'] == null){
             userData[userKey].push(newData[userKey][0]);
-            console.log(userData);
         }
         else{
-            flagOption['firedata'] = newData[userKey][0]['firedata'];
-            flagOption['dayrange'] = newData[userKey][0]['dayrange'];
-            console.log(userData);
+            let pointerReference = flagRequest['reference'];
+            pointerReference['firedata'] = newData[userKey][0]['firedata'];
+            pointerReference['dayrange'] = newData[userKey][0]['dayrange'];
         }
+        notificationHandler('request_correct', selectedData)
+        console.log(userData)
         return true
     }
 }
 
 /* Fetch new NASA FIRMS DATA based on options */
-async function getData(userKey, userData, flagOption, selectedData){
-    if(flagOption == false){
-        return flagOption // flash message of data is already downloaded
-    }
-    try {
+async function getData(userKey, userData, flagRequest, selectedData){
+    try{
         selectedData["key"] = userKey;
         const response = await fetch('/updateData', {
             method: 'POST',
@@ -149,7 +159,7 @@ async function getData(userKey, userData, flagOption, selectedData){
             },
         });
         const newData = await response.json();
-        return addData(userKey, userData, flagOption, newData);
+        return added_data(userKey, userData, flagRequest, selectedData, newData);
     } catch (error) {
         console.error(error) // flash message of fetch error
     }

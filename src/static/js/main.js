@@ -5,9 +5,10 @@ import { processFireData, displayFireData } from './scripts/fires/functions.js';
 import { setCheckbox, setNewDate, resetDefault, filteredOptions } from './scripts/UX/filter.js';
 import { setInspectData } from './scripts/UX/inspect.js'
 import { userInterface } from './scripts/UX/user.js'
+import { notificationHandler } from './scripts/UX/notifications.js'
 import { texturesQuality, texturesProperties, lightProperties } from "./config.js";
 
-function main(){
+async function main(){
 
     // Renderer creation and DOM append
     const yOffset = document.getElementById("header").offsetHeight;
@@ -16,6 +17,7 @@ function main(){
     const renderer = createRenderer(width, height);
     const container = document.getElementById('threejs-canvas');
     container.appendChild(renderer.domElement);
+    // await updateLoadingProgressBar(0.1);
 
     // Label Render creation
     const labelRenderer = new CSS2DRenderer();
@@ -23,9 +25,11 @@ function main(){
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
     container.appendChild(labelRenderer.domElement);   
+    // await updateLoadingProgressBar(0.2);
     
     // Scene creation
     const scene = new THREE.Scene();
+    // await updateLoadingProgressBar(0.3);
 
     // Camera creation
     const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
@@ -49,6 +53,7 @@ function main(){
     scene.add(sphereLight);
     camera.add(sunLight);
     scene.add(camera);
+    
 
     // Example
     // const axesHelper = new THREE.AxesHelper(2);
@@ -57,6 +62,7 @@ function main(){
     // Background creation
     const stars = meshes.backgroundMesh;
     scene.add(stars);
+    // await updateLoadingProgressBar(0.6);
 
     // Default data
     let meshPointers = [];
@@ -67,6 +73,7 @@ function main(){
     const earthMesh = earth.children[0];
     setLabelAttributes(label, earthMesh, camera)
     scene.add(label);
+    // await updateLoadingProgressBar(0.7);
 
     // Mark information functionality
     const labelDivInfo = document.getElementById("markerInformation");
@@ -82,11 +89,13 @@ function main(){
         setCheckbox(key, value); 
         setOption(key, value);
     }
+    // await updateLoadingProgressBar(0.8);
 
     // Request date creation
     const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
     document.getElementById('requestDate').max = currDay;
     document.getElementById('requestDate').value = currDay;
+
 
     // Applies filter
     const saveFilter = document.getElementById("save-button");
@@ -100,22 +109,27 @@ function main(){
         labelDivInfo.classList.add("hidden");
     });
 
+
     // Get and update user data
     const requestData = document.getElementById("request-button");
     const selectors = document.getElementsByClassName("request-parameter");
     requestData.addEventListener("click", async _ => {
         const selectedOptions = requestedData(selectors);
         const flagRequest = allowRequest(user_key, user_data, selectedOptions);
-        const flagResult = await getData(user_key, user_data, flagRequest, selectedOptions);
-        if(flagResult){
-            removeObject(scene, meshPointers);
-            meshPointers = processFireData(user_key, user_data, earth_radius);
-            addObject(scene, meshPointers);
-            setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
-            setInspectData(user_key, user_data, 'summary-section', 'table-section');
-            labelDiv.classList.add("hidden");
-            labelDivInfo.classList.add("hidden");
-            // const updatedData = await putData(user_data);
+        if(flagRequest.allowed){
+            const addedCorrectly = await getData(user_key, user_data, flagRequest, selectedOptions);
+            if(addedCorrectly){
+                removeObject(scene, meshPointers);
+                meshPointers = processFireData(user_key, user_data, earth_radius);
+                addObject(scene, meshPointers);
+                setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
+                setInspectData(user_key, user_data, 'summary-section', 'table-section');
+                labelDiv.classList.add("hidden");
+                labelDivInfo.classList.add("hidden");
+            }
+        }
+        else{
+            notificationHandler('request_denied', flagRequest, selectedOptions);
         }
     });
 
@@ -128,6 +142,8 @@ function main(){
     layersApply.addEventListener("click", _ =>{
         textureVisible(texturesProperties, earth, stars);
     });
+
+    // await updateLoadingProgressBar(0.9);
 
 
     //Download file data
@@ -169,6 +185,8 @@ function main(){
     labelRenderer.domElement.addEventListener("pointerup", _ => {
         labelRenderer.domElement.style.cursor = 'default';
     });
+
+    // await updateLoadingProgressBar(1, 100);
 
     // Camera, render and label render window resize
     const onWindowResize=() => {

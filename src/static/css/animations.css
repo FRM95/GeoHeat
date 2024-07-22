@@ -8,6 +8,42 @@
     }
 }
 
+@keyframes l3 {
+    to{
+        transform: rotate(1turn)
+    }
+}
+
+@keyframes bell-ring {
+    0%{
+        transform: rotate(30deg);
+    }
+    0.5% {
+        transform: rotate(-30deg);
+    }
+    1% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* @keyframes notification-scale {
+    0%{
+        transform: scale(1.2);
+    }
+    0.5% {
+        transform: rotate(1.5);
+    }
+    1% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+} */
+
 /*NO ANIMATIONS/TRANSITIONS*/
 @media (prefers-reduced-motion: reduce){
     button{
