@@ -177,4 +177,4 @@ function displayFireData(dataObject, identifier){
 }
 
 
-export {processFireData, displayFireData, addCartesian, createMarkers}
+export {processFireData, displayFireData, addCartesian, createMarkers, coordToCartesian}

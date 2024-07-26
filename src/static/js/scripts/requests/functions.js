@@ -33,10 +33,12 @@ const setOption = (optKey, optValue) => {
             if('area' in currOpt){
                 newOpt.value = currOpt['area'];
                 newOpt.text = currOpt['name'];
+                newOpt.setAttribute("data-coordinates", currOpt['coordinates'])
             }
             else if('country' in currOpt){
                 newOpt.value = currOpt['country'];
                 newOpt.text = currOpt['name'];
+                newOpt.setAttribute("data-coordinates", currOpt['coordinates'])
             }
             else if('delimiter' in currOpt){
                 newOpt.value = currOpt['delimiter'];
@@ -60,15 +62,21 @@ const requestedData = (selectors) => {
     let result = {};
     const date = new Date();
     for(let i = 0; i<selectors.length; i++){
-        if (!selectors[i].classList.contains("hidden")){
-            result[selectors[i].getAttribute('property')] = selectors[i].value;
+        const selection = selectors[i];
+        if (!selection.classList.contains("hidden")){
+            const property = selection.getAttribute('property');
+            result[property] = selection.value;
+            if(property === "zone"){
+                const options = selection.options[selection.selectedIndex];
+                result['coordinates'] = options.dataset.coordinates;
+            }
         }
     }
     result['time'] = date.toTimeString().slice(0, 8);
     result['full_date'] = date.toString().split("(")[0].trim();
     result['utc_date'] = date.toISOString().replace("T"," ").substring(0, 10);
     result['utc_time'] = date.toISOString().replace("T"," ").substring(11, 19);
-    result['full_utc_date'] = date.toUTCString()
+    result['full_utc_date'] = date.toUTCString();
     return result
 }
 

@@ -1,11 +1,12 @@
 import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLight, textureVisible, THREE } from './scripts/threeJS/functions.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { setOption, requestedData, allowRequest, putData, getData, exportData } from './scripts/requests/functions.js';
-import { processFireData, displayFireData } from './scripts/fires/functions.js';
+import { processFireData, displayFireData, coordToCartesian } from './scripts/fires/functions.js';
 import { setCheckbox, setNewDate, resetDefault, filteredOptions } from './scripts/UX/filter.js';
 import { setInspectData } from './scripts/UX/inspect.js'
 import { userInterface } from './scripts/UX/user.js'
 import { notificationHandler } from './scripts/UX/notifications.js'
+import { moveToPoint } from './scripts/UX/globe.js'
 import { texturesQuality, texturesProperties, lightProperties } from "./config.js";
 
 async function main(){
@@ -17,7 +18,6 @@ async function main(){
     const renderer = createRenderer(width, height);
     const container = document.getElementById('threejs-canvas');
     container.appendChild(renderer.domElement);
-    // await updateLoadingProgressBar(0.1);
 
     // Label Render creation
     const labelRenderer = new CSS2DRenderer();
@@ -25,15 +25,12 @@ async function main(){
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0px';
     container.appendChild(labelRenderer.domElement);   
-    // await updateLoadingProgressBar(0.2);
     
     // Scene creation
     const scene = new THREE.Scene();
-    // await updateLoadingProgressBar(0.3);
 
     // Camera creation
     const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
-    camera.lookAt(0, 0, 0);
 
     // Earth creation
     const earth_radius = 1;
@@ -41,6 +38,8 @@ async function main(){
     const meshes = Group(sphereProperties, texturesProperties, texturesQuality);
     const earth = meshes.groupMesh;
     scene.add(earth);
+    camera.lookAt(earth.position);
+
 
     // Controls creation
     const TrackballControls = createControls(camera, labelRenderer.domElement, earth);
@@ -62,7 +61,7 @@ async function main(){
     // Background creation
     const stars = meshes.backgroundMesh;
     scene.add(stars);
-    // await updateLoadingProgressBar(0.6);
+
 
     // Default data
     let meshPointers = [];
@@ -73,7 +72,7 @@ async function main(){
     const earthMesh = earth.children[0];
     setLabelAttributes(label, earthMesh, camera)
     scene.add(label);
-    // await updateLoadingProgressBar(0.7);
+
 
     // Mark information functionality
     const labelDivInfo = document.getElementById("markerInformation");
@@ -89,7 +88,7 @@ async function main(){
         setCheckbox(key, value); 
         setOption(key, value);
     }
-    // await updateLoadingProgressBar(0.8);
+
 
     // Request date creation
     const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
@@ -113,6 +112,8 @@ async function main(){
     // Get and update user data
     const requestData = document.getElementById("request-button");
     const selectors = document.getElementsByClassName("request-parameter");
+    let tweenAnimation = null;
+
     requestData.addEventListener("click", async _ => {
         const selectedOptions = requestedData(selectors);
         const flagRequest = allowRequest(user_key, user_data, selectedOptions);
@@ -126,6 +127,12 @@ async function main(){
                 setInspectData(user_key, user_data, 'summary-section', 'table-section');
                 labelDiv.classList.add("hidden");
                 labelDivInfo.classList.add("hidden");
+                const coordinatesArr = selectedOptions['coordinates'].split(" ");
+                let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
+                coordinates = coordToCartesian(coordinates, earth_radius)
+                const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
+                tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
+                tweenAnimation.start();
             }
         }
         else{
@@ -136,15 +143,13 @@ async function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
+
     // UX-UI Functions
     userInterface(labelRenderer, TrackballControls, texturesProperties);
     const layersApply = document.getElementById("apply-interface-layers");
     layersApply.addEventListener("click", _ =>{
         textureVisible(texturesProperties, earth, stars);
     });
-
-    // await updateLoadingProgressBar(0.9);
-
 
     //Download file data
     const getFiles = document.getElementsByClassName('file-request');
@@ -159,19 +164,34 @@ async function main(){
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
     let raycaster = new THREE.Raycaster();
+
     labelRenderer.domElement.addEventListener("pointerdown", event => {
+
+        if(tweenAnimation instanceof TWEEN.Tween && tweenAnimation._isPlaying){ tweenAnimation.stop(); }
+        
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1; /* 21/06/2024 changed from innerHeight to (innerHeight + yOffset) */
         raycaster.setFromCamera(pointer, camera);
+
         if(raycaster.intersectObject(earth).length > 0){
+
             labelRenderer.domElement.style.cursor = 'grabbing';
             for(let i = 0; i < meshPointers.length; i++){
+
                 let intersections = raycaster.intersectObject(meshPointers[i]);
+
                 if(intersections.length > 0){
+
                     let currIntersection = intersections[0];
+                    const vectorTarget = new THREE.Vector3(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
+                    tweenAnimation = moveToPoint(vectorTarget, camera, earth, earth_radius);
+                    console.log(tweenAnimation);
+                    tweenAnimation.start();
+
                     let meshId = currIntersection.instanceId;
                     let fireInformation = currIntersection.object.userData[meshId];
                     displayFireData(fireInformation, meshId);
+
                     label.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
                     label.element.classList.remove("hidden");
                     labelDivInfo.classList.remove("hidden");
@@ -186,7 +206,6 @@ async function main(){
         labelRenderer.domElement.style.cursor = 'default';
     });
 
-    // await updateLoadingProgressBar(1, 100);
 
     // Camera, render and label render window resize
     const onWindowResize=() => {
@@ -202,6 +221,7 @@ async function main(){
     function animate(){
         requestAnimationFrame(animate);
         TrackballControls.update();
+        TWEEN.update();
         label.userData.trackVisibility();
         renderer.render(scene, camera);
         labelRenderer.render(scene, camera);
