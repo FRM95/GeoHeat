@@ -315,17 +315,25 @@
             </svg>
           </button>
         </div>
-        <div class="d-grid zoom-area">
-          <button class="zoom-button d-flex" id="zoom-in" style="border-bottom: 0.5px solid #6a6a6a78; border-radius: 3.5px 3.5px 0px 0px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-            </svg>
-          </button>
-          <button class="zoom-button d-flex" id="zoom-out" style="border-top: 0.5px solid #6a6a6a78;; border-radius: 0px 0px 3.5px 3.5px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
-            </svg>
-          </button>
+        <div class="d-flex earth-tools">
+          <div id="compass">
+            <div id="arrow">
+              <div id="arrow-North"></div>
+              <div id="arrow-South"></div>
+            </div>
+          </div>
+          <div class="d-flex zoom-tool">
+            <button class="zoom-button d-flex" id="zoom-out" style="border-radius: 14px 0px 0px 14px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+              </svg>
+            </button>
+            <button class="zoom-button d-flex" id="zoom-in" style="border-radius: 0px 14px 14px 0px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </main>

@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { ArcballControls } from 'three/addons/controls/ArcballControls.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { getFresnelMat } from "./glowMaterial.js";
 
 /* Creates WebGL renderer based on width and height parameters */
@@ -40,9 +41,10 @@ const createControls = (camera, domElem, targetObject) => {
     controls.scaleFactor = 1.1;
     controls.dampingFactor = 25;
 
-    controls.addEventListener('change', _ => {
-        controls.rotateSpeed = rotationSpeed(camera.position.distanceTo(controls.target));
-    });
+    // controls.addEventListener('change', _ => {
+    //     controls.rotateSpeed = rotationSpeed(camera.position.distanceTo(controls.target));
+    // });
+
 
     return controls
 }

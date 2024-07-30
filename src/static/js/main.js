@@ -33,13 +33,12 @@ async function main(){
     const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
 
     // Earth creation
-    const earth_radius = 1;
+    const earth_radius = 1.0;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
     const meshes = Group(sphereProperties, texturesProperties, texturesQuality);
     const earth = meshes.groupMesh;
     scene.add(earth);
     camera.lookAt(earth.position);
-
 
     // Controls creation
     const TrackballControls = createControls(camera, labelRenderer.domElement, earth);
@@ -52,7 +51,7 @@ async function main(){
     scene.add(sphereLight);
     camera.add(sunLight);
     scene.add(camera);
-    
+
 
     // Example
     // const axesHelper = new THREE.AxesHelper(2);
@@ -143,6 +142,14 @@ async function main(){
     // Reset filters
     resetDefault('reset-button', 'main-checkbox');
 
+    const compass = document.getElementById("arrow");
+    const vectorUp = new THREE.Vector2(earth.position.x, earth.position.y + 1);
+    function updateCompass(){
+        const mE = camera.matrixWorld.elements;
+        const dY = new THREE.Vector2(mE[1], mE[5]);
+        const angleYAxis = THREE.MathUtils.radToDeg(vectorUp.angleTo(dY)) * Math.sign(mE[1]);
+        compass.style.transform = `rotate(${angleYAxis}deg)`;
+    }
 
     // UX-UI Functions
     userInterface(labelRenderer, TrackballControls, texturesProperties);
@@ -216,10 +223,11 @@ async function main(){
     }
 
     window.addEventListener("resize", onWindowResize);
-    
+
     // Animate function to start render
     function animate(){
         requestAnimationFrame(animate);
+        updateCompass();
         TrackballControls.update();
         TWEEN.update();
         label.userData.trackVisibility();
