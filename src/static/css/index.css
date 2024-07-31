@@ -27,21 +27,18 @@
 }
 
 
-body{
-    margin: 0;
-    padding: 0;
-    font-family: var(--global-custom-font);
-    overflow: hidden;
-}
-
 .dark{
     background: var(--header-background-color-dark);
 }
 .light{
     background: var(--header-background-color-light);
 }
-
-
+body{
+    margin: 0;
+    padding: 0;
+    font-family: var(--global-custom-font);
+    overflow: hidden;
+}
 header{
     height: var(--header-height);
     backdrop-filter: var(--global-container-backdrop-filter);
@@ -51,6 +48,7 @@ header{
     transition: background var(--global-transition-background-time);
     border-bottom: var(--global-container-border-width) solid var(--global-container-border-color);
 }
+
 
 
 
