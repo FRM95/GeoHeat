@@ -2,7 +2,7 @@ import { createRenderer, createCamera, createControls, Group, setLabelAttributes
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { setOption, requestedData, allowRequest, putData, getData, exportData } from './scripts/requests/functions.js';
 import { processFireData, displayFireData, coordToCartesian } from './scripts/fires/functions.js';
-import { setCheckbox, setNewDate, resetDefault, filteredOptions } from './scripts/UX/filter.js';
+import { setCheckbox, setNewDate, resetDefault, filteredOptions, setMultipleDates } from './scripts/UX/filter.js';
 import { setInspectData } from './scripts/UX/inspect.js'
 import { userInterface } from './scripts/UX/user.js'
 import { notificationHandler } from './scripts/UX/notifications.js'
@@ -41,7 +41,7 @@ async function main(){
     camera.lookAt(earth.position);
 
     // Controls creation
-    const TrackballControls = createControls(camera, labelRenderer.domElement, earth);
+    const controls = createControls(camera, labelRenderer.domElement, earth);
 
     // Lights creation
     const lightObject = buildLight(lightProperties); 
@@ -54,8 +54,8 @@ async function main(){
 
 
     // Example
-    // const axesHelper = new THREE.AxesHelper(2);
-    // scene.add(axesHelper);
+    const axesHelper = new THREE.AxesHelper(2);
+    scene.add(axesHelper);
 
     // Background creation
     const stars = meshes.backgroundMesh;
@@ -107,11 +107,17 @@ async function main(){
         labelDivInfo.classList.add("hidden");
     });
 
-
     // Get and update user data
     const requestData = document.getElementById("request-button");
     const selectors = document.getElementsByClassName("request-parameter");
     let tweenAnimation = null;
+
+    // Include it when load windows
+    if(user_data[user_key].length > 0){
+        meshPointers = processFireData(user_key, user_data, earth_radius);
+        addObject(scene, meshPointers);
+        setMultipleDates(user_key, user_data, 'availableDate', 'filterDate')
+    }
 
     requestData.addEventListener("click", async _ => {
         const selectedOptions = requestedData(selectors);
@@ -152,10 +158,18 @@ async function main(){
     }
 
     // UX-UI Functions
-    userInterface(labelRenderer, TrackballControls, texturesProperties);
+    userInterface(labelRenderer, controls, texturesProperties);
     const layersApply = document.getElementById("apply-interface-layers");
     layersApply.addEventListener("click", _ =>{
         textureVisible(texturesProperties, earth, stars);
+        let coordinates = {
+            "x": 0.7731234559502869,
+            "y": 0.6325369079640581,
+            "z": 0.046660282068943904
+          }
+        const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
+        tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
+        tweenAnimation.start();
     });
 
     //Download file data
@@ -228,7 +242,7 @@ async function main(){
     function animate(){
         requestAnimationFrame(animate);
         updateCompass();
-        TrackballControls.update();
+        controls.update();
         TWEEN.update();
         label.userData.trackVisibility();
         renderer.render(scene, camera);
