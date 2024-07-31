@@ -34,6 +34,13 @@ body{
     overflow: hidden;
 }
 
+.dark{
+    background: var(--header-background-color-dark);
+}
+.light{
+    background: var(--header-background-color-light);
+}
+
 
 header{
     height: var(--header-height);
@@ -43,12 +50,6 @@ header{
     position: relative;
     transition: background var(--global-transition-background-time);
     border-bottom: var(--global-container-border-width) solid var(--global-container-border-color);
-}
-header[theme = "dark"]{
-    background: var(--header-background-color-dark);
-}
-header[theme = "light"]{
-    background: var(--header-background-color-light);
 }
 
 
