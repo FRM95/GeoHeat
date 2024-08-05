@@ -40,11 +40,11 @@ def login():
 @app.route('/home/<key>', methods=['GET'])
 def home(key):
     if key in session:
-        # active_fires = {key: []}
+        active_fires = {key: []}
         with open("./data/request_data.json", 'r') as fp1:
             available_request_data = json.load(fp1)
-        with open("./data/fire_data_example.json", 'r') as fp1:
-            active_fires = json.load(fp1)
+        # with open("./data/fire_data_example.json", 'r') as fp1:
+        #     active_fires = json.load(fp1)
         return render_template('index.html', user_data = active_fires, user_key = key, options_data = available_request_data)
     else:
         return redirect(url_for('login'))

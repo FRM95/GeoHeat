@@ -61,7 +61,6 @@ async function main(){
     const stars = meshes.backgroundMesh;
     scene.add(stars);
 
-
     // Default data
     let meshPointers = [];
 

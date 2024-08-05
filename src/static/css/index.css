@@ -4,15 +4,9 @@
 
 :root{
 
-    /*header global variables*/
-    --header-height: 3.5em;
-    --header-bg-color-light-1: rgb(192, 192, 192);
-    --header-bg-color-light-2: rgba(164, 201, 255, 0.801);
-    --header-background-color-light: linear-gradient(to right, var(--header-bg-color-light-1), var(--header-bg-color-light-2), var(--header-bg-color-light-1));
-    --header-bg-color-dark-1: rgb(28, 33, 40);
-    --header-bg-color-dark-2: rgba(38, 51, 70, 0.801);
-    --header-background-color-dark: linear-gradient(to right, var(--header-bg-color-dark-1), var(--header-bg-color-dark-2), var(--header-bg-color-dark-1));
-
+    /*header local variables*/
+    --header-height: 3em;
+    --header-button-height: 3em;
 
     --link-txt-color: rgb(100, 100, 100);
     --link-txt-color-hover: #2997ff;
@@ -23,30 +17,143 @@
     --request-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cloud-arrow-down-fill' viewBox='0 0 16 16'%3E%3Cpath d='M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708'/%3E%3C/svg%3E");
     --save-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-floppy-fill' viewBox='0 0 16 16'%3E%3Cpath d='M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z'/%3E%3Cpath d='M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z'/%3E%3C/svg%3E");
     --save-svg-2 : url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-floppy' viewBox='0 0 16 16'%3E%3Cpath d='M11 2H9v3h2z'/%3E%3Cpath d='M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z'/%3E%3C/svg%3E");
-
 }
 
-
-.dark{
-    background: var(--header-background-color-dark);
-}
-.light{
-    background: var(--header-background-color-light);
-}
+/********************* BODY *********************/
 body{
     margin: 0;
     padding: 0;
-    font-family: var(--global-custom-font);
     overflow: hidden;
+    font-family: var(--custom-font);
 }
+
+/********************* HEADER *********************/
 header{
     height: var(--header-height);
-    backdrop-filter: var(--global-container-backdrop-filter);
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: background var(--global-transition-background-time);
-    border-bottom: var(--global-container-border-width) solid var(--global-container-border-color);
+    transition: background-color var(--transition-background-time);
+    border-bottom: var(--container-border-width) solid var(--container-border-color);
+    background-color: var(--container-background-color);
+}
+.header-left{
+    display: inherit; 
+    margin-left: 1%;
+    gap: 1em;
+}
+.header-middle{
+    display: inherit; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    gap: 1em;
+}
+.header-right{
+    display: inherit; 
+    margin-right: 1%;
+    gap: 1em;
+}
+.header-button{
+    color: var(--header-button-text-color);
+    height: var(--header-button-height);
+    background: none;
+    transition: all 0.25s;
+    gap: 0.65em;
+}
+.header-button > svg, .header-input > svg{
+    color: var(--header-button-svg-color);
+    height: 18px;
+    width: 18px;
+}
+.header-button:hover{
+    background-color: var(--header-button-hover-background-color);
+}
+.header-button:hover > svg{
+    color: var(--header-button-hover-svg-color);
+}
+.header-input{
+    height: 30px; 
+    width: 240px;
+    border-radius: 5px;
+    padding-right: 25px;
+    border: var(--result-1-border);
+}
+.header-form-result{
+    z-index: 1;
+    top: 85%;
+    border-radius: 5px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+.results-list{
+    margin: 10px 0px 10px 0px;
+    padding-left: 35px;
+}
+.results-list > li{
+    padding: 5px;
+}
+.results-list > .header-list-item:hover{
+    background-color: #dbdbdb5e;
+    cursor: pointer;
+    color: #0073ff;
+}
+
+
+/********************* DROPDOWN *********************/
+.dropdown{
+    overflow: hidden;
+}
+.dropdown:has(.dropdown-content:hover) > .header-button > svg{
+    color: var(--header-button-hover-svg-color);
+}
+.dropdown:has(.dropdown-content:hover) > .header-button{
+    background-color: var(--header-button-hover-background-color);
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+    background-color: var(--dropdown-content-background-color);
+    border: 1px solid #d7d7d7;
+    top: 88%;
+    border-radius: 5px;
+}
+.dropdown-area{
+    transition: background-color 0.1s ease-out;
+    display: flex;
+}
+.dropdown-area:hover{
+    background-color: var(--dropdown-area-hover-background-color);
+}
+.dropdown-area button, .dropdown-area a, .dropdown-area label{
+    float: none;
+    color: var(--dropdown-area-text-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 0.85em;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.dropdown-area input{
+    margin-left: 1em;
+}
+.dropdown-area-button{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+}
+.dropdown-area-button:hover{
+    cursor: pointer;
 }
 
 
@@ -62,19 +169,17 @@ header{
 .container{
     position: relative;
     z-index: -1;
-    height: calc(100vh - 3.5em); 
+    height: calc(100vh - var(--header-height));
     /* max-width: 20%; */
     min-width: 0%;
     display: flex;
+    padding: 0px 5px 0px 5px;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
 }
 .area{
-    background: linear-gradient(to bottom, var(--header-bg), var(--header-mid-bg));
-    padding: var(--area-pad);
-    border: var(--border-pix) solid var(--border-bg);
-    backdrop-filter: blur(var(--blur-filter-hard));
     border-radius: 5px;
-    height: 100%;
-    width: 100%;
     transition: all 0s;
 }
 .section{
@@ -541,61 +646,9 @@ select:hover, #requestDate:hover{
 
 
 
-.dropdown{
-    overflow: hidden;
-}
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-.dropdown:hover > .menu-button{
-    background-color: rgba(104, 120, 138, 0.568);
-}
-.dropdown:hover > .menu-button > svg{
-    color: rgb(0, 102, 228);
-}
-.dropdown-content {
-    display: none;
-    position: absolute;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    background-color: rgb(28, 33, 40);
-    border: var(--border-pix) solid var(--border-bg);
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-.dropdown-area{
-    transition: background-color 0.1s ease-out;
-    display: flex;
-}
-.dropdown-area:hover{
-    background-color: rgb(0, 102, 228);
-}
-.dropdown-area button, .dropdown-area a, .dropdown-area label{
-    float: none;
-    color: rgb(255, 255, 255);
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    font-size: 0.85em;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-}
-.dropdown-area input{
-    margin-left: 1em;
-}
-.dropdown-area-button{
-    border: none;
-    background-color: transparent;
-    width: 100%;
-}
-.dropdown-area-button:hover{
-    cursor: pointer;
-}
+
+
+
 #apply-interface-layers:before{
     content: "";
     width: 15px;

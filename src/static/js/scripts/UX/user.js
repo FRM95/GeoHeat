@@ -1,3 +1,5 @@
+import { moveToPoint } from "./globe.js";
+
 const sidebar = document.getElementById('container-sidebar');
 const Areasidebar = document.getElementById('area-sidebar');
 const hideSidebar = document.getElementById('collapse-sidebar');
@@ -14,12 +16,61 @@ const zoomOut = document.getElementById('zoom-out');
 const zoomDefault = document.getElementById('zoom-default');
 const labelDivInfo = document.getElementById("markerInformation");
 
+/*TODO: TERMINAR DE PONER NOMBRES BONITOS*/
+const searchInput = document.getElementById('header-input-form');
+const list = document.getElementById("header-form-list");
+const listDiv = document.getElementById("header-form-result-list");
+
+/*looping through each child of the search results list and remove each child*/
+const clearList = () =>{
+    list.innerHTML = ""
+    listDiv.ariaHidden = "true";
+}
+
+const noResults = () =>{
+    const error = document.createElement('li')
+    error.classList.add('list-error-background')
+    const text = document.createTextNode("Sorry, we didn't find any results");
+    error.appendChild(text)
+    list.appendChild(error)
+}
+
+const searhcCoordinates = (searchElement) =>{
+    const coordinatesArr = searchElement['coordinates'].split(" ");
+    let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
+    coordinates = coordToCartesian(coordinates, earth_radius)
+}
+
+/* show results*/
+const setList = (results) =>{
+    clearList();
+    for (const country of results){
+        const resultItem = document.createElement('li');
+        resultItem.classList.add('header-list-item');
+        resultItem.setAttribute("coordinates", country["coordinates"]);
+        resultItem.setAttribute("name", country["name"]);
+        const text = document.createTextNode(country.name);
+        resultItem.appendChild(text);
+        resultItem.addEventListener("click", (e)=> {
+            let target = e.target;
+            searchInput.value = target.getAttribute("name");
+            searchInput.setAttribute("data-coordinates", target.getAttribute("coordinates"));
+            searchInput.setAttribute("data-name", target.getAttribute("name"));
+            clearList();
+        })
+        list.appendChild(resultItem);
+    }
+    if (results.length === 0 ){
+        return false
+    }
+    return true;
+}
 
 /* Interface select layers */
-const user_events = () =>{
+const user_events = () => {
 
-     // Hide sidebar
-     hideSidebar.addEventListener("click", _=>{
+    // Hide sidebar
+    hideSidebar.addEventListener("click", _=>{
         Areasidebar.classList.toggle('collapsed');
         sidebar.classList.toggle('collapsed-width');
         sidebar.ariaExpanded = sidebar.ariaExpanded !== 'true';
@@ -75,6 +126,32 @@ const user_events = () =>{
             summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
         }
     });
+
+    // Search countries and areas
+    searchInput.addEventListener("input", (e) => {
+        let value = e.target.value;
+        if(value.trim()){
+            value = value.trim().toLowerCase();
+            let countries = setList(options_data['Country'].filter(country => {
+                return country["name"].toLowerCase().includes(value)
+            })); 
+            if(countries){
+                listDiv.ariaHidden = "false";
+            } else {
+                let areas = setList(options_data['Area'].filter(area => {
+                    return area["name"].toLowerCase().includes(value)
+                }));
+                if(areas){
+                    listDiv.ariaHidden = "false";
+                } else {
+                    noResults();
+                }
+            }
+        } else {
+            clearList();
+        }
+    });    
+
 }
 
 
