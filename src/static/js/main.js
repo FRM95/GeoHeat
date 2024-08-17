@@ -96,7 +96,7 @@ async function main(){
 
     // Applies filter
     const saveFilter = document.getElementById("save-button");
-    let boxes = document.getElementsByClassName("main-checkbox");
+    let boxes = document.getElementsByClassName("summary-checkbox");
     saveFilter.addEventListener("click", _ => {
         let filtersToApply = filteredOptions(boxes);
         removeObject(scene, meshPointers)
@@ -145,7 +145,7 @@ async function main(){
     });
 
     // Reset filters
-    resetDefault('reset-button', 'main-checkbox');
+    resetDefault('reset-button', 'summary-checkbox');
 
     const compass = document.getElementById("arrow");
     const vectorUp = new THREE.Vector2(earth.position.x, earth.position.y + 1);

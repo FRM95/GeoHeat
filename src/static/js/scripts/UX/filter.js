@@ -76,7 +76,7 @@ const insertDateAt = (date, refElement, domElement, parentName) =>{
     newNode.checked = true;
     newNode.setAttribute('property', 'date');
     newNode.value = date;
-    newNode.className = parentName;
+    newNode.classList.add(parentName, 'input-checkbox', 'checkbox-1');
     backwardEvent(newNode, parentName);
     const label = document.createElement("label");
     const dateUpdated = date.split("-");
@@ -142,7 +142,7 @@ const setCheckbox = (boxKey, boxValue) => {
                 if(currOpt['name'] != "World"){
                     newNode.value = currOpt['name'];
                     newNode.setAttribute('property', 'region');
-                    newNode.className = 'filter' + boxKey;
+                    newNode.classList.add('filter' + boxKey, 'input-checkbox', 'checkbox-1');
                     forwardEvent('filter' + boxKey);
                     backwardEvent(newNode, 'filter' + boxKey);
                     label.innerHTML = currOpt['name'];
@@ -155,7 +155,7 @@ const setCheckbox = (boxKey, boxValue) => {
             else if('country' in currOpt){
                 newNode.value = currOpt['country'];
                 newNode.setAttribute('property', 'nasa_abreviation');
-                newNode.className = 'filter' + boxKey;
+                newNode.classList.add('filter' + boxKey, 'input-checkbox', 'checkbox-1');
                 forwardEvent('filter' + boxKey);
                 backwardEvent(newNode, 'filter' + boxKey);
                 label.innerHTML = currOpt['name'];
@@ -167,7 +167,7 @@ const setCheckbox = (boxKey, boxValue) => {
             else if('source' in currOpt){
                 newNode.value = currOpt['source'];
                 newNode.setAttribute('property', 'source');
-                newNode.className = 'filter' + boxKey;
+                newNode.classList.add('filter' + boxKey, 'input-checkbox', 'checkbox-1');
                 forwardEvent('filter' + boxKey);
                 backwardEvent(newNode, 'filter' + boxKey);
                 label.innerHTML = currOpt['source'].replace(/_/g, " ");
