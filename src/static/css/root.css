@@ -21,17 +21,25 @@
     --area-border-width: 0.5px;
 
     /* section */
-    --section-margin: 1.5em 0em 1.5em 0em;
+    --section-margin: 1.5em;
 
     /* h1 */
     --page-title-font-weight: 400;
-    --page-title-margin-top: 0%;
-    --page-title-font-size: 2.25em;
+    --page-title-margin: 0;
+    --page-title-font-size: 1.25em;
 
     /* h2 */
     --main-title-font-size: 1.75em;
     --main-title-font-weight: 300;
-    --main-title-margin-bottom: 10px;
+    --main-title-margin: 10px;
+
+    /* main title 2*/
+    --main-title-2-font-size: 1em;
+    --main-title-2-font-weight: 500;
+
+    /* main title 3*/
+    --main-title-3-font-size: 12px;
+    --main-title-3-font-weight: 500;
 
     /*button-1 used in header*/
     --button-1-width: 100px;
@@ -116,10 +124,10 @@
     --main-title-text-color: rgb(100, 100, 100);
 
     /*main 2*/
-    --main-2-title-text-color: rgb(149, 149, 149);
+    --main-title-2-text-color: rgb(149, 149, 149);
 
     /*explanation */
-    --main-3-title-text-color: rgb(118, 149, 183);
+    --main-title-3-text-color: rgb(118, 149, 183);
 
     /*summary-1*/
     --summary-1-text-color: rgb(71, 71, 71);
@@ -179,7 +187,7 @@
     --main-2-title-text-color: rgb(149, 149, 149);
 
     /*explanation */
-    --main-3-title-text-color: rgb(118, 149, 183);
+    --main-title-3-text-color: rgb(118, 149, 183);
 
     /*summary-1*/
     --summary-1-text-color: rgb(86, 37, 37);
@@ -234,8 +242,7 @@
     transition: all 0s;
 }
 .section{
-    margin-top: 1.5em;
-    margin-bottom: 1.5em;
+    margin-bottom: var(--section-margin);
     color: var(--section-text-color);
     font-weight: 300;
 }
@@ -247,19 +254,23 @@
     font-size: var(--page-title-font-size);
     color: var(--page-title-text-color);
     font-weight: var(--page-title-font-weight);
-    margin-top: var(--page-title-margin-top);
+    margin: var(--page-title-margin) auto;
 }
 .main-title{
     font-size: var(--main-title-font-size);
     color: var(--main-title-text-color);
     font-weight: var(--main-title-font-weight);
-    margin-bottom: var(--main-title-margin-bottom);
+    margin: var(--main-title-margin) auto;
 }
 .main-title-2{
-    color: var(--main-2-title-text-color)
+    color: var(--main-title-2-text-color);
+    font-size: var(--main-title-2-font-size);
+    font-weight: var(--main-title-2-font-weight);
 }
 .main-title-3{
-    color: var(--main-3-title-text-color)
+    color: var(--main-title-3-text-color);
+    font-size: var(--main-title-3-font-size);
+    font-weight: var(--main-title-3-font-weight);
 }
 
 
@@ -370,6 +381,7 @@ summary:hover{
     list-style-image: var(--list-1-style-image-error);
 }
 
+
 /*effects*/
 .box-shad:hover{
     background-color: #ecececb2;
@@ -378,12 +390,25 @@ summary:hover{
 .selector:hover{
     cursor: pointer;
 }
+.hidden{
+    display: none !important;
+}
+.collapsed{
+    width: 0%;
+    padding: 0 !important;
+    overflow: hidden;
+}
+.collapsed-width{ /*change to collapsed container */
+    width: 0%;
+    padding: 0 !important;
+}
 
 
 /*scrollbar style 1*/
 .scroll-1{
     overflow-y: auto;
     scrollbar-color: var(--scrollbar-1-color);
+    scrollbar-width: thin;
 }
 
 /*blur variable*/
@@ -391,7 +416,14 @@ summary:hover{
     backdrop-filter: var(--backdrop-filter);
 }
 
+
 /*position effects*/
+.d-grid{
+    display: grid;
+}
+.d-flex{
+    display: flex;
+}
 .centered{
     align-items: center; 
     justify-content: center; 

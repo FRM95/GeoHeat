@@ -4,7 +4,7 @@ const sidebar = document.getElementById('container-sidebar');
 const Areasidebar = document.getElementById('area-sidebar');
 const hideSidebar = document.getElementById('collapse-sidebar');
 const inspectButton = document.getElementsByClassName('inspect-data');
-const containerIns = document.getElementById('inspect-container');
+const containerIns = document.getElementById('container-window');
 const maxWindow = document.getElementById('max-inspect');
 const minWindow = document.getElementById('min-inspect');
 const summaryButton = document.getElementById('summary');
@@ -15,6 +15,7 @@ const zoomIn = document.getElementById('zoom-in');
 const zoomOut = document.getElementById('zoom-out');
 const zoomDefault = document.getElementById('zoom-default');
 const labelDivInfo = document.getElementById("markerInformation");
+const headerTabs = document.querySelectorAll('.header-tab');
 
 /*TODO: TERMINAR DE PONER NOMBRES BONITOS*/
 const searchInput = document.getElementById('header-input-form');
@@ -33,12 +34,6 @@ const noResults = () =>{
     const text = document.createTextNode("Sorry, we didn't find any results");
     error.appendChild(text)
     list.appendChild(error)
-}
-
-const searhcCoordinates = (searchElement) =>{
-    const coordinatesArr = searchElement['coordinates'].split(" ");
-    let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
-    coordinates = coordToCartesian(coordinates, earth_radius)
 }
 
 /* show results*/
@@ -150,8 +145,23 @@ const user_events = () => {
         } else {
             clearList();
         }
-    });    
+    });
 
+    // Change between navbar tabs
+    headerTabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            const contentKey = tab.getAttribute('data-section');
+            const areaSections = document.querySelectorAll(".area-section");
+            areaSections.forEach(function(hideTab){
+                const contentToShow = hideTab.getAttribute("data-content");
+                if(contentKey === contentToShow){
+                    hideTab.classList.remove("hidden");
+                } else {
+                    hideTab.classList.add("hidden");
+                }
+            })
+        });
+    });
 }
 
 
@@ -216,15 +226,12 @@ const user_zoom = (labelRenderer, TrackballControls) => {
 
 /* Interface select layers */
 const select_layers = (texturesObject) => {
-    const layersDropwdown = document.getElementById('dropwdown-layers');
-    if(layersDropwdown!=null){
-
-        const newContent = document.createElement('div');
-        newContent.className = 'dropdown-content';
+    const layersDiv = document.getElementById('earth-layers');
+    if(layersDiv!=null){
 
         for(const[key, value] of Object.entries(texturesObject)){
-            const layerDropdown = document.createElement("div");
-            layerDropdown.className = 'dropdown-area';
+            const layerSection = document.createElement("div");
+            layerSection.className = 'section';
             const newNode = document.createElement("input");
             newNode.setAttribute('type', 'checkbox');
             newNode.className = 'checkbox-layer';
@@ -232,25 +239,18 @@ const select_layers = (texturesObject) => {
             newNode.setAttribute('property', key);
             const label = document.createElement("label");
             label.innerHTML = key;
-            layerDropdown.appendChild(newNode);
-            layerDropdown.appendChild(label);
-            newContent.appendChild(layerDropdown);
+            layerSection.appendChild(newNode);
+            layerSection.appendChild(label);
+            layersDiv.appendChild(layerSection);
         }
 
-        const layerDropdown = document.createElement("div");
-        layerDropdown.className = 'dropdown-area';
-        layerDropdown.style.justifyContent = 'center';
-        layerDropdown.style.margin = '0.45em';
-        layerDropdown.style.borderRadius = '5px';
-
         const applyLayers = document.createElement("button");
-        applyLayers.className = "dropdown-area-button";
+        applyLayers.className = "button-2 action-button";
         applyLayers.textContent = 'Apply layers';
         applyLayers.id = "apply-interface-layers";
-
-        layerDropdown.appendChild(applyLayers);
-        newContent.appendChild(layerDropdown);
-        layersDropwdown.appendChild(newContent);
+        const applyLayersDiv = document.createElement("div");
+        applyLayersDiv.appendChild(applyLayers);
+        layersDiv.appendChild(applyLayersDiv);
     }
 }
 
@@ -267,14 +267,6 @@ function userInterface(labelRenderer, TrackballControls, texturesObject){
     // Select layers to apply
     select_layers(texturesObject);
 
-}
-
-const updateLoadingProgressBar = async (frac, delay=200) => {
-    return new Promise(resolve => {
-        const progress = document.getElementById("progress");
-        progress.style.width = `${frac * 200}px`;
-        setTimeout(resolve, delay)
-    })
 }
 
 export {userInterface}

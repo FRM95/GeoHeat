@@ -1,9 +1,27 @@
 table {
     border-collapse: collapse;
-    font-size: 0.65em;
     text-align: center;
-    border: 1;
+    font-family: var(--custom-font);
+    border: 1px solid #c4c4c4;
+}
+table thead{
+    background-color: #a8ccd5;
+}
+table tbody{
+    background-color: #fdfdfd;
+    font-weight: 300;
+    font-size: 0.75em;
+}
+thead tr{
+    font-weight: 100;
+    font-size: 12px;
 }
 th, td{
     padding: 0.5em;
+}
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }

@@ -161,14 +161,6 @@ async function main(){
     const layersApply = document.getElementById("apply-interface-layers");
     layersApply.addEventListener("click", _ =>{
         textureVisible(texturesProperties, earth, stars);
-        let coordinates = {
-            "x": 0.7731234559502869,
-            "y": 0.6325369079640581,
-            "z": 0.046660282068943904
-          }
-        const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
-        tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
-        tweenAnimation.start();
     });
 
     //Download file data
