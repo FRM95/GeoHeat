@@ -39,8 +39,6 @@ header{
     align-items: center;
     position: relative;
     transition: background-color var(--transition-background-time);
-    border-bottom: var(--container-border-width) solid var(--container-border-color);
-    background-color: var(--container-background-color);
 }
 .header-left{
     display: inherit; 
@@ -64,17 +62,19 @@ header{
     color: var(--header-button-text-color);
     height: var(--header-button-height);
     background: none;
-    transition: all 0.25s;
+    transition: background-color 0.3s;
     gap: 0.65em;
 }
 .header-button > svg, .header-input > svg{
     color: var(--header-button-svg-color);
+    transition: filter 0.3s;
 }
 .header-button:hover{
     background-color: var(--header-button-hover-background-color);
 }
 .header-button:hover > svg{
     color: var(--header-button-hover-svg-color);
+    filter: drop-shadow(0px 0px 1px rgba(100, 100, 100, 0.5));
 }
 .header-input{
     height: 30px; 
@@ -184,12 +184,12 @@ header{
     height: auto;
 }
 #container-window{
-    transition: width 0.1s ease-out, max-width 0.1s ease-out, left 0.1s ease-out;
     border: none;
     border-radius: 4px;
-    margin-top: 1%;
+    margin-top: 3%;
     max-height: 80vh;
     max-width: 35%;
+    transition: width 0.1s ease-out, max-width 0.1s ease-out, left 0.1s ease-out;
 }
 .container-right{
     float: right;
@@ -313,113 +313,77 @@ header{
 }
 
 
-/********************* INSPECT AREA *********************/
+/********************* WINDOW *********************/
+.area-window-header{
+    justify-content: flex-end;
+    align-items: center;
+    height: 1.8em;
+    padding: 0px 5px;
+    gap: 5px;
+}
 .area-window{
-    background: #fff;
-    margin: 1px;
     overflow: hidden;
     width: 100%;
     height: auto;
 }
-.area-header{
-    justify-content: flex-end;
-    align-items: center;
-    height: 2em;
-    border-bottom: 1px solid #a2a2a2;
-    padding: 0px 5px;
-    gap: 5px;
+.window-button > svg{
+    transition: filter var(--transition-shadow-time);
 }
-.access-button{
-    color: #0073ff;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background: none;
-    transition: background-color 0.25s;
+.window-button:hover > svg{
+    filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.9));
 }
-.access-button:hover{
-    cursor: pointer;
-    background-color: #51515140;
+.window-button[action="hide"]{
+    color: rgb(238, 26, 26);
 }
-.window-content{
-    padding: 1em;
-    display: grid;
-    gap: 10px;
-    overflow: hidden;
-    height: calc(100% - 4em);
+.window-button[action="minimize"]{
+    color: rgb(7, 143, 225);
 }
-.window-title{
-    color: #0073ff;
-}
-.window-title > span{
-    font-size: 30px;
-}
-.window-section{
-    overflow-x: hidden;
-    height: 100%;
-    gap: 2em;
-}
-.window-buttons{
-    gap: 1.5em;
-}
-.inspect-section{
-    margin-top: 0.75em;
-    overflow: auto;
-    max-height: 400px;
-    scroll-behavior: smooth;
-    scrollbar-color: #575480 #979797;
-}
-.details-inspect{
-    color: #2b79d8;
-    font-size: 1.2em;
-    font-weight: 500;
-    padding: 0.5em;
-}
-.c-inspect{
-    margin: 0.5em 0em;
+.window-button[action="maximize"]{
+    color: rgb(24, 191, 89);
 }
 
-/********************* INSPECT BUTTONS *********************/
-.inspect-button{
-    font-size: 1.3em;
-    font-weight: 200;
-    color: #959595;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background: none;
-    transition: all 0.25s;
-    align-items: center;
-    display: flex;
-    gap: 0.5em;
-    justify-content: center;
-    text-decoration: none;
-}
-.inspect-button[aria-selected="true"]{
-    color: #1c70d6;
-    text-decoration: none !important;
-}
-.inspect-button:hover{
-    cursor: pointer;
-    text-decoration: underline;
-}
-.inspect-t > button > svg{
-    color: rgb(255, 255, 255);
-    height: 20px;
-    width: 20px;
-}
 
 
 /********************* EARTH TOOLS *********************/
-.earth-tools{
+.container-sphere{
     position: fixed;
     right: 0;
-    top: 88%;
-    margin-right: 2.5%;
-    width: auto;
-    height: auto;
-    border-radius: 3.5px;
+    gap: 1em;
+    background: none;
+    border: none;
+    bottom: 0;
+    margin: 0% 1.5% 3% 0%;
+}
+.camera-tools-header{
+    justify-content: space-around;
+}
+.camera-tools{
+    gap: 15px;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid rgb(65, 65, 65);
+    border-radius: 5px;
+}
+.camera-tools[aria-hidden="true"]{
+    display: none;
+}
+.camera-tools-section{
+    gap: 5px;
+    width: 125px;
+}
+.camera-button{
+    gap: 10px;
+    font-family: var(--custom-font);
+    font-weight: 500;
+    width: inherit;
+}
+.earth-tools{
     gap: 17px;
     align-items: center;
+    justify-content: flex-end;
 }
+
 .zoom-button{
     width: 42px;
     height: 38px;

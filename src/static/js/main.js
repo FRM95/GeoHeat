@@ -128,7 +128,7 @@ async function main(){
                 meshPointers = processFireData(user_key, user_data, earth_radius);
                 addObject(scene, meshPointers);
                 setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
-                setInspectData(user_key, user_data, 'summary-section', 'table-section');
+                // setInspectData(user_key, user_data, 'summary-section', 'table-section');
                 labelDiv.classList.add("hidden");
                 labelDivInfo.classList.add("hidden");
                 const coordinatesArr = selectedOptions['coordinates'].split(" ");

@@ -3,17 +3,11 @@ import { moveToPoint } from "./globe.js";
 const sidebar = document.getElementById('container-sidebar');
 const Areasidebar = document.getElementById('area-sidebar');
 const hideSidebar = document.getElementById('collapse-sidebar');
-const inspectButton = document.getElementsByClassName('inspect-data');
-const containerIns = document.getElementById('container-window');
-const maxWindow = document.getElementById('max-inspect');
-const minWindow = document.getElementById('min-inspect');
-const summaryButton = document.getElementById('summary');
-const summarySection = document.getElementById('summary-section');
-const tableButton = document.getElementById('table');
-const tableSection = document.getElementById('table-section');
+
+
 const zoomIn = document.getElementById('zoom-in');
 const zoomOut = document.getElementById('zoom-out');
-const zoomDefault = document.getElementById('zoom-default');
+const cameraDefault = document.getElementById('camera-default');
 const labelDivInfo = document.getElementById("markerInformation");
 const headerTabs = document.querySelectorAll('.header-tab');
 
@@ -69,56 +63,48 @@ const user_events = () => {
         Areasidebar.classList.toggle('collapsed');
         sidebar.classList.toggle('collapsed-width');
         sidebar.ariaExpanded = sidebar.ariaExpanded !== 'true';
-        if(containerIns.ariaExpanded == "true"){
+        let containerWindow = document.getElementById('container-window');
+        let minWindow = document.getElementById('min-window');
+        if(containerWindow != null && minWindow != null && containerWindow.ariaExpanded === "true"){
             minWindow.dispatchEvent(new Event("click"));
         }
     });
 
-    // Open Inspect data
-    for(let i=0; i< inspectButton.length; i++){
-        inspectButton[i].addEventListener("click", _ =>{
-        containerIns.classList.toggle('hidden');
-        });
-    }
+    // Open window
+    const openWindow = document.querySelectorAll('.window-open');
+    openWindow.forEach(function(open){
+        open.addEventListener("click", () => {
+            let containerWindow = document.getElementById('container-window');
+            if(containerWindow != null){
+                containerWindow.classList.toggle('hidden');
+            }
+        })
+    });
 
-    // Max window Inspect data
-    maxWindow.addEventListener('click', _ =>{
-        if(containerIns.ariaExpanded === "false"){
-            const newWidth = window.innerWidth * 0.85;
-            if(sidebar.offsetWidth != 0){
+    // Maximize window
+    const maxWindow = document.getElementById('max-window');
+    maxWindow.addEventListener('click', () => {
+        let containerWindow = document.getElementById('container-window');
+        if(containerWindow != null && containerWindow.ariaExpanded === "false"){
+            const newWidth = window.innerWidth * 0.75;
+            if(sidebar.ariaExpanded === "true"){
                 hideSidebar.dispatchEvent(new Event("click"));
             }
             if(labelDivInfo.offsetWidth != 0){
                 closeBtn.dispatchEvent(new Event("pointerdown"));
             }
-            containerIns.style = `width: ${newWidth}px; max-width: ${newWidth}px;`;
-            containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
+            containerWindow.style = `width: ${newWidth}px; max-width: ${newWidth}px;`;
+            containerWindow.ariaExpanded = containerWindow.ariaExpanded !== 'true';
         }
     });
 
-    // Exit full screen Inspect data
-    minWindow.addEventListener('click', _ =>{
-        if(containerIns.ariaExpanded === "true"){
-            containerIns.style = "";
-            containerIns.ariaExpanded = containerIns.ariaExpanded !== 'true';
-        }
-    });
-
-    // Open summary/table sections 
-    summaryButton.addEventListener("click", _ =>{
-        if(summarySection.classList.contains("hidden")){
-            summarySection.classList.remove("hidden");
-            tableSection.classList.add('hidden');
-            summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
-            tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
-        }
-    });
-    tableButton.addEventListener("click", _ =>{
-        if(tableSection.classList.contains("hidden")){
-            tableSection.classList.remove("hidden");
-            summarySection.classList.add('hidden');
-            tableButton.ariaSelected = tableButton.ariaSelected !== 'true';
-            summaryButton.ariaSelected = summaryButton.ariaSelected !== 'true';
+    // Minimize window
+    const minWindow = document.getElementById('min-window');
+    minWindow.addEventListener('click', () => {
+        let containerWindow = document.getElementById('container-window');
+        if(containerWindow != null && containerWindow.ariaExpanded === "true"){
+            containerWindow.style = "";
+            containerWindow.ariaExpanded = containerWindow.ariaExpanded !== 'true';
         }
     });
 
@@ -156,6 +142,9 @@ const user_events = () => {
                 const contentToShow = hideTab.getAttribute("data-content");
                 if(contentKey === contentToShow){
                     hideTab.classList.remove("hidden");
+                    if(sidebar.ariaExpanded === "false"){
+                        hideSidebar.dispatchEvent(new Event("click"));
+                    }
                 } else {
                     hideTab.classList.add("hidden");
                 }
@@ -172,6 +161,14 @@ const user_zoom = (labelRenderer, TrackballControls) => {
     let pressedOut;
     let zoomFactor = 5;
     const delay = 0.5;
+
+    const earthCompass = document.getElementById("compass");
+    earthCompass.addEventListener("click", () => {
+        const cameraTools = document.getElementById("camera-tools");
+        if(cameraTools != null){
+            cameraTools.ariaHidden = cameraTools.ariaHidden !== "true";
+        }
+    })
 
     const wheelEvent = (delx, delty) => new WheelEvent('wheel', {
         deltaX: delx,
@@ -209,7 +206,7 @@ const user_zoom = (labelRenderer, TrackballControls) => {
         zoomFactor = 5;
     });
 
-    zoomDefault.addEventListener("click", () =>{
+    cameraDefault.addEventListener("click", () =>{
         TrackballControls.reset();
         clearInterval(pressedIn);
         clearInterval(pressedOut);

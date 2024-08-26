@@ -26,7 +26,7 @@
     /* h1 */
     --page-title-font-weight: 400;
     --page-title-margin: 0;
-    --page-title-font-size: 1.25em;
+    --page-title-font-size: 1.35em;
 
     /* h2 */
     --main-title-font-size: 1.75em;
@@ -49,6 +49,26 @@
     --button-1-font-weight: 300;
     --button-1-font-style: normal;
     --button-1-border: 1px solid rgba(0, 0, 0, 0);
+
+    /*button-2 used as action button (request, filter, apply)*/
+    --button-2-padding: 0.5em;
+    --button-2-font-size: 0.85em;
+    --button-2-font-weight: 200;
+    --button-2-border: 1px solid transparent;
+    --button-2-border-radius: 5px;
+
+    /*button-3 used as default button*/
+    --button-3-padding: 0.5em;
+    --button-3-font-size: 0.85em;
+    --button-3-font-weight: 200;
+    --button-3-border: 1px solid transparent;
+    --button-3-border-radius: 5px;
+    --button-3-background: none;
+
+    /*button-4 used as window header buttons*/
+    --button-4-background: none;
+    --button-4-border: 1px solid transparent;
+
 
     /*input-1 used as input in header*/
     --input-1-width: auto;
@@ -86,27 +106,15 @@
     --select-1-padding: 5px;
     --select-1-font-family: var(--custom-font);
 
-    /*button-2 used as action button (request, filter, apply)*/
-    --button-2-padding: 0.5em;
-    --button-2-font-size: 0.85em;
-    --button-2-font-weight: 200;
-    --button-2-border: 1px solid transparent;
-    --button-2-border-radius: 5px;
-
-    /*button-3 used as default button*/
-    --button-3-padding: 0.5em;
-    --button-3-font-size: 0.85em;
-    --button-3-font-weight: 200;
-    --button-3-border: 1px solid transparent;
-    --button-3-border-radius: 5px;
-    --button-3-background: none;
-
-    --transition-background-time: 0.3s;
+    /*effects*/
+    --transition-shadow-time: 0.5s;
+    --transition-shadow-time-2: 0.25s;
+    --transition-icon-time: 0.25s;
+    --transition-background-time: 0.25s;
 }
 
 
 /*themes*/
-
 [data-theme = "light-soft"]{
     /*container*/
     --container-background-color: rgb(230, 230, 230);
@@ -137,11 +145,15 @@
     --icons-1-hover-color: rgb(43, 121, 216);
 
     /*header*/
-    --header-button-text-color: rgb(31, 32, 32);
+    --header-background-color: rgba(251, 251, 251, 0.88);
+    --header-button-text-color: rgb(64, 66, 66);
     --header-button-svg-color: #3c3c3c;
     --header-button-hover-background-color: #afdcea96;
     --header-button-hover-svg-color: #0679a6;
     --header-input-icon-color: #666666b2;
+
+    /*window*/
+    --header-2-background-color: rgb(230, 230, 230);
 
     /*dropdown*/
     --dropdown-area-hover-background-color: #afdcea96;
@@ -162,72 +174,12 @@
     --button-2-background: linear-gradient(to right, rgb(26, 121, 68), rgb(29, 136, 77), rgb(26, 121, 68));
 
     /*button-3*/
-    --buton-3-text-color: rgb(28, 112, 214);
-    --buton-3-hover-background-color: rgb(223, 237, 255);
+    --button-3-text-color: rgb(28, 112, 214);
+    --button-3-hover-background-color: rgb(223, 237, 255);
 }
 
 
-[data-theme = "light-hard"]{
-    /*container*/
-    --container-background-color: rgba(164, 201, 255, 0.8);
-
-    /*area*/
-    --area-background-color: rgb(252, 254, 254);
-
-    /*section*/
-    --section-text-color: rgb(71, 71, 71);
-
-    /*h1*/
-    --page-title-text-color: rgb(255, 255, 255);
-
-    /*h2*/
-    --main-title-text-color: rgb(208, 208, 208);
-
-    /*main 2*/
-    --main-2-title-text-color: rgb(149, 149, 149);
-
-    /*explanation */
-    --main-title-3-text-color: rgb(118, 149, 183);
-
-    /*summary-1*/
-    --summary-1-text-color: rgb(86, 37, 37);
-    
-    /*icons*/
-    --icons-1-color: black;
-    --icons-1-hover-color: #c4d82b;
-
-    /*header*/
-    --header-button-text-color: rgb(31, 32, 32);
-    --header-button-svg-color: rgb(60, 60, 60);
-    --header-button-hover-background-color: transparent;
-    --header-button-hover-svg-color: #0073ff;
-    --header-input-icon-color: #666666b2;
-
-    /*dropdown*/
-    --dropdown-area-hover-background-color: #0073ff;
-    --dropdown-content-background-color: rgb(225, 225, 225);
-    --dropdown-area-text-color: rgb(31, 32, 32);
-
-    /*scrollbar*/
-    --scrollbar-1-color: rgb(83, 89, 98) rgb(52, 66, 83);
-
-    /*select-1*/
-    --select-1-text-color: rgb(43, 121, 216);
-    --select-1-background-color: rgb(230, 230, 230);
-    --select-1-border-color: rgb(193, 193, 193);
-    --select-1-border-hover-color: rgb(83, 92, 106);
-
-    /*button-2*/
-    --button-2-text-color: rgb(255, 255, 255);
-    --button-2-background: linear-gradient(to right, rgb(26, 121, 68), rgb(29, 136, 77), rgb(26, 121, 68));
-
-    /*button-3*/
-    --buton-3-text-color: rgb(28, 112, 214);
-    --buton-3-hover-background-color: rgba(31, 50, 75, 0.725);
-}
-
-
-/* containers/areas */
+/* containers/areas/headers */
 .container{
     background-color: var(--container-background-color);
     border: var(--container-border-width) solid var(--container-border-color);
@@ -245,6 +197,13 @@
     margin-bottom: var(--section-margin);
     color: var(--section-text-color);
     font-weight: 300;
+}
+.header-1{
+    background-color: var(--header-background-color);
+    border-bottom: var(--container-border-width) solid var(--container-border-color);
+}
+.header-2{
+    background-color: var(--header-2-background-color);
 }
 
 
@@ -282,7 +241,7 @@
     background-color: var(--icons-1-color);
 }
 summary::before{
-    transition: background-color 0.25s;
+    transition: background-color var(--transition-icon-time);
 }
 summary:hover{
     cursor: pointer;
@@ -334,7 +293,7 @@ summary:hover{
     background: var(--button-2-background);
     border: var(--button-2-border);
     border-radius: var(--button-2-border-radius);
-    transition: box-shadow 0.25s;
+    transition: box-shadow var(--transition-shadow-time-2);
 }
 .button-2:hover{
     cursor: pointer;
@@ -344,15 +303,19 @@ summary:hover{
     padding: var(--button-3-padding);
     font-size: var(--button-3-font-size);
     font-weight: var(--button-3-font-weight);
-    color: var(--buton-3-text-color);
+    color: var(--button-3-text-color);
     border: var(--button-3-border);
     border-radius: var(--button-3-border-radius);
     background: var(--button-3-background);
-    transition: all 0.25s;
+    transition: background-color var(--transition-background-time);
 }
 .button-3:hover{
     cursor: pointer;
-    background-color: var(--buton-3-hover-background-color);
+    background-color: var(--button-3-hover-background-color);
+}
+.button-4{
+    background: var(--button-4-background);
+    border: var(--button-4-border);
 }
 
 
