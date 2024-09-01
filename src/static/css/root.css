@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 :root{
     /*root global variables*/
-    --custom-font: "Roboto", sans-serif;
+    --custom-font: "Quicksand", sans-serif;
+    --custom-font-2: "Roboto", sans-serif;
     --backdrop-filter: blur(0.55em);
 
     /*header*/
@@ -29,38 +32,38 @@
     --page-title-font-size: 1.35em;
 
     /* h2 */
-    --main-title-font-size: 1.75em;
-    --main-title-font-weight: 300;
+    --main-title-font-size: 2em;
+    --main-title-font-weight: 500;
     --main-title-margin: 10px;
 
     /* main title 2*/
-    --main-title-2-font-size: 1em;
-    --main-title-2-font-weight: 500;
+    --main-title-2-font-size: 1.2em;
+    --main-title-2-font-weight: 600;
 
     /* main title 3*/
-    --main-title-3-font-size: 12px;
+    --main-title-3-font-size: 14px;
     --main-title-3-font-weight: 500;
 
     /*button-1 used in header*/
     --button-1-width: 100px;
     --button-1-height: auto;
     --button-1-background: rgb(255, 255, 255);
-    --button-1-font-size: 1em;
-    --button-1-font-weight: 300;
+    --button-1-font-size: 0.9em;
+    --button-1-font-weight: 500;
     --button-1-font-style: normal;
     --button-1-border: 1px solid rgba(0, 0, 0, 0);
 
     /*button-2 used as action button (request, filter, apply)*/
     --button-2-padding: 0.5em;
-    --button-2-font-size: 0.85em;
-    --button-2-font-weight: 200;
+    --button-2-font-size: 0.9em;
+    --button-2-font-weight: 500;
     --button-2-border: 1px solid transparent;
     --button-2-border-radius: 5px;
 
     /*button-3 used as default button*/
     --button-3-padding: 0.5em;
-    --button-3-font-size: 0.85em;
-    --button-3-font-weight: 200;
+    --button-3-font-size: 0.9em;
+    --button-3-font-weight: 500;
     --button-3-border: 1px solid transparent;
     --button-3-border-radius: 5px;
     --button-3-background: none;
@@ -75,7 +78,7 @@
     --input-1-height: auto;
     --input-1-background: rgb(255, 255, 255);
     --input-1-font-size: 0.95em;
-    --input-1-font-weight: 300;
+    --input-1-font-weight: 400;
     --input-1-font-style: normal;
     --input-1-border: 0;
     --input-1-outline: 0;
@@ -94,7 +97,7 @@
 
     /*list-1 used as list style in header*/
     --list-1-font-size: 0.95em;
-    --list-1-font-weight: 200;
+    --list-1-font-weight: 600;
     --list-1-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' class='bi bi-geo-alt-fill' viewBox='0 0 16 16'%3E%3Cpath d='M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6' fill='%23d20b15'/%3E%3C/svg%3E");
     --list-1-display: grid;
     --list-1-gap-elements: 1em;
@@ -102,9 +105,8 @@
     --list-1-style-image-error: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' class='bi bi-exclamation-lg' viewBox='0 0 16 16'%3E%3Cpath d='M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0zM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0' fill='%23d20b15' /%3E%3C/svg%3E");
 
     /*select-1 used as select in sidebar*/
-    --select-1-border-radius: 3px;
+    --select-1-border-radius: 5px;
     --select-1-padding: 5px;
-    --select-1-font-family: var(--custom-font);
 
     /*effects*/
     --transition-shadow-time: 0.5s;
@@ -129,13 +131,13 @@
     --page-title-text-color: rgb(68, 68, 68);
     
     /*h2*/
-    --main-title-text-color: rgb(100, 100, 100);
+    --main-title-text-color: rgb(64, 64, 64);
 
     /*main 2*/
     --main-title-2-text-color: rgb(149, 149, 149);
 
     /*explanation */
-    --main-title-3-text-color: rgb(118, 149, 183);
+    --main-title-3-text-color: rgb(91, 144, 202);
 
     /*summary-1*/
     --summary-1-text-color: rgb(71, 71, 71);
@@ -176,6 +178,9 @@
     /*button-3*/
     --button-3-text-color: rgb(28, 112, 214);
     --button-3-hover-background-color: rgb(223, 237, 255);
+
+    /*list-1*/
+    --list-1-text-color: rgb(72, 72, 72);
 }
 
 
@@ -220,6 +225,7 @@
     color: var(--main-title-text-color);
     font-weight: var(--main-title-font-weight);
     margin: var(--main-title-margin) auto;
+    letter-spacing: -1px;
 }
 .main-title-2{
     color: var(--main-title-2-text-color);
@@ -253,7 +259,6 @@ summary:hover{
     width: var(--button-1-width);
     height: var(--button-1-height);
     background: var(--button-1-background);
-    font-family: var(--custom-font);
     font-size: var(--button-1-font-size);
     font-weight: var(--button-1-font-weight);
     font-style: var(--button-1-font-style);
@@ -263,7 +268,6 @@ summary:hover{
     width: var(--input-1-width);
     height: var(--input-1-height);
     background: var(--input-1-background);
-    font-family: var(--custom-font);
     font-size: var(--input-1-font-size); 
     font-weight: var(--input-1-font-weight); 
     font-style: var(--input-1-font-style); 
@@ -280,7 +284,6 @@ summary:hover{
     border: 1px solid var(--select-1-border-color);
     border-radius: var(--select-1-border-radius);
     padding: var(--select-1-padding);
-    font-family: var(--custom-font);
 }
 .select-1:hover{
     border-color: var(--select-1-border-hover-color);
@@ -314,6 +317,7 @@ summary:hover{
     background-color: var(--button-3-hover-background-color);
 }
 .button-4{
+    /* font-family: var(--custom-font-2); */
     background: var(--button-4-background);
     border: var(--button-4-border);
 }
@@ -333,6 +337,7 @@ summary:hover{
     display: var(--result-1-hidden);
 }
 .list-1{
+    color: var(--list-1-text-color);
     font-size: var(--list-1-font-size);
     font-weight: var(--list-1-font-weight);
     list-style-image: var(--list-1-style-image);
@@ -349,6 +354,7 @@ summary:hover{
 .box-shad:hover{
     background-color: #ecececb2;
     box-shadow: 0px 0px 0px 10px #ecececb2;
+    border-radius: 1px;
 }
 .selector:hover{
     cursor: pointer;
@@ -361,7 +367,7 @@ summary:hover{
     padding: 0 !important;
     overflow: hidden;
 }
-.collapsed-width{ /*change to collapsed container */
+.collapsed-width{
     width: 0%;
     padding: 0 !important;
 }
@@ -379,7 +385,6 @@ summary:hover{
     backdrop-filter: var(--backdrop-filter);
 }
 
-
 /*position effects*/
 .d-grid{
     display: grid;
@@ -396,4 +401,30 @@ summary:hover{
 }
 .m-r2{
     margin-right: 2em;
+}
+
+/*titles*/
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease-in 0.55s;
+    visibility: visible;
+}
+[data-title]:after{
+    content: attr(data-title);
+    background-color: #4d4d4d;
+    color: #fff;
+    font-family: var(--custom-font);
+    font-size: 13px;
+    position: absolute;
+    padding: 6px;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #939393;
+    z-index: 99999;
+    visibility: hidden;
+    border-radius: 6px;
+}
+[data-title]{
+    position: relative;
 }

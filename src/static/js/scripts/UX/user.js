@@ -63,6 +63,12 @@ const user_events = () => {
         Areasidebar.classList.toggle('collapsed');
         sidebar.classList.toggle('collapsed-width');
         sidebar.ariaExpanded = sidebar.ariaExpanded !== 'true';
+        if(sidebar.ariaExpanded === "false"){
+            hideSidebar.setAttribute("data-title", "Open panel");
+        }
+        else{
+            hideSidebar.setAttribute("data-title", "Close panel");
+        }
         let containerWindow = document.getElementById('container-window');
         let minWindow = document.getElementById('min-window');
         if(containerWindow != null && minWindow != null && containerWindow.ariaExpanded === "true"){

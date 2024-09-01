@@ -54,8 +54,8 @@ async function main(){
 
 
     // Example
-    const axesHelper = new THREE.AxesHelper(2);
-    scene.add(axesHelper);
+    // const axesHelper = new THREE.AxesHelper(2);
+    // scene.add(axesHelper);
 
     // Background creation
     const stars = meshes.backgroundMesh;
@@ -77,7 +77,6 @@ async function main(){
     const closeBtn = document.getElementById("closeButton");
     closeBtn.addEventListener("pointerdown", _ => {
         labelDiv.classList.add("hidden");
-        labelDivInfo.classList.add("hidden");
         labelDivInfo.ariaExpanded = "false";
     })
 
@@ -103,7 +102,7 @@ async function main(){
         meshPointers = processFireData(user_key, user_data, earth_radius, filtersToApply);
         addObject(scene, meshPointers);
         labelDiv.classList.add("hidden");
-        labelDivInfo.classList.add("hidden");
+        labelDivInfo.ariaExpanded = "false";
     });
 
     // Get and update user data
@@ -130,7 +129,7 @@ async function main(){
                 setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
                 // setInspectData(user_key, user_data, 'summary-section', 'table-section');
                 labelDiv.classList.add("hidden");
-                labelDivInfo.classList.add("hidden");
+                labelDivInfo.ariaExpanded = "false";
                 const coordinatesArr = selectedOptions['coordinates'].split(" ");
                 let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
                 coordinates = coordToCartesian(coordinates, earth_radius)
@@ -206,7 +205,6 @@ async function main(){
 
                     label.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
                     label.element.classList.remove("hidden");
-                    labelDivInfo.classList.remove("hidden");
                     labelDivInfo.ariaExpanded = "true";
                     break
                 }

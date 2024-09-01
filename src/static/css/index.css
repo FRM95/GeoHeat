@@ -24,6 +24,7 @@ body{
     padding: 0;
     overflow: hidden;
     font-family: var(--custom-font);
+    cursor: default;
 }
 .canvas{
     position: fixed; 
@@ -42,10 +43,12 @@ header{
 }
 .header-left{
     display: inherit; 
+    height: inherit;
     margin-left: 1%;
     gap: 1em;
 }
 .header-middle{
+    height: inherit;
     display: inherit; 
     position: absolute; 
     top: 50%; 
@@ -54,16 +57,27 @@ header{
     gap: 1em;
 }
 .header-right{
+    height: inherit;
     display: inherit; 
     margin-right: 1%;
     gap: 1em;
 }
+.header-page-title{
+    font-family: var(--custom-font-2);
+}
+.header-section{
+    height: inherit;
+}
 .header-button{
+    font-family: var(--custom-font);
     color: var(--header-button-text-color);
-    height: var(--header-button-height);
+    height: inherit;
     background: none;
     transition: background-color 0.3s;
     gap: 0.65em;
+}
+.header-button[data-title]:hover:after{
+    top: calc(var(--header-height) * 1.1);
 }
 .header-button > svg, .header-input > svg{
     color: var(--header-button-svg-color);
@@ -77,6 +91,7 @@ header{
     filter: drop-shadow(0px 0px 1px rgba(100, 100, 100, 0.5));
 }
 .header-input{
+    font-family: var(--custom-font);
     height: 30px; 
     width: 240px;
     border-radius: 5px;
@@ -85,7 +100,7 @@ header{
 }
 .header-form-result{
     z-index: 1;
-    top: 85%;
+    top: 90%;
     border-radius: 5px;
     scroll-behavior: smooth;
     scrollbar-width: none;
@@ -170,9 +185,11 @@ header{
 }
 .container-left[aria-expanded = "false"]{
     min-width: 0%;
+    border: none;
 }
 .container-left[aria-expanded = "false"] > .area-sidebar{
     min-width: 0px;
+    border: none;
 }
 .container-middle{
     position: absolute;
@@ -182,17 +199,20 @@ header{
     margin-right: auto;
     width: auto;
     height: auto;
-}
-#container-window{
-    border: none;
-    border-radius: 4px;
-    margin-top: 3%;
-    max-height: 80vh;
     max-width: 35%;
-    transition: width 0.1s ease-out, max-width 0.1s ease-out, left 0.1s ease-out;
 }
 .container-right{
-    float: right;
+    position: absolute;
+    height: 60%;
+    border: none;
+    border-radius: 10px;
+    margin: 3% 1.5% 0% 0%;
+    right: 0;
+    width: 15%;
+    padding: 5px;
+}
+.container-right[aria-expanded = "false"]{
+    display: none;
 }
 
 /********************* AREA SIDEBAR *********************/
@@ -204,11 +224,28 @@ header{
     min-width: 250px;
 }
 .area-section{
-    height: calc(100% - var(--page-title-font-size));
+    height: 100%;
     overflow-y: hidden;
 }
+.explanation-area{
+    font-family: var(--custom-font);
+    margin: 0;
+}
+.explanation-text{
+    font-family: var(--custom-font);
+    letter-spacing: 0;
+}
 .available-requests{
-    margin: 0 auto;
+    font-size: 1.2em;
+}
+.available-requests[data-availability="high"]{
+    color: rgb(6, 174, 103);
+}
+.available-requests[data-availability="medium"]{
+    color: rgb(206, 166, 9);
+}
+.available-requests[data-availability="low"]{
+    color: rgb(206, 9, 9);
 }
 .sidebar-section{
     max-height: calc(100% - 100px);
@@ -216,8 +253,9 @@ header{
     margin-top: 1em;
 }
 .sidebar-details-title{
-    font-size: 1.15em;
-    font-weight: 400;
+    font-size: 1.35em;
+    font-weight: 500;
+    letter-spacing: -0.75px;
     margin-bottom: 0.75em;
 }
 .sidebar-details:hover > .sidebar-details-title::before{
@@ -230,30 +268,49 @@ header{
     gap: 1em;
     font-size: 0.925em;
 }
-.sidebar-details-select{
+.sidebar-details-select, .sidebar-details-detail{
     display: grid;
     gap: 0.35em;
+    font-size: 1.05em;
+    font-family: var(--custom-font);
+    font-weight: 500;
 }
-.available{
-    margin-left: 2em; 
-    max-height: 300px; 
+.details-content{
+    max-height: 320px; 
     scroll-behavior: smooth;
-    margin-top: 0.5em;
+    margin: 1em 2em;
     overflow-y: auto;
-    font-size: 0.85em;
+    font-size: 0.95em;
     font-weight: 400;
     width: 210px;
+    gap: 4px;
+}
+.details-content:not(:has(div)){
+    display: none;
 }
 .request-parameter{
-    font-size: 0.84em;    
-    font-weight: 300;
+    font-family: var(--custom-font);
+    font-size: 0.95em;
+    font-weight: 500;
     padding: 0.3em 0em 0.3em 0.5em;
     transition: border-color 0.25s;
     width: 200px;
+    height: auto;
+    min-height: 20px;
+}
+.request-parameter > option {
+    font-family: var(--custom-font-2);
+    font-weight: 300;
 }
 #requestDate{
-    font-size: 0.9em;
-    width: 192px;
+    padding-left: 0.2em;
+    width: 197px;
+}
+.action-button{
+    font-family: var(--custom-font);
+}
+.default-button{
+    font-family: var(--custom-font);
 }
 .collapse{
     position: absolute;
@@ -265,15 +322,18 @@ header{
     height: 100px;
     width: fit-content;
     padding: 0;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-    background: var(--container-background-color);
-    transition: box-shadow 0.3s ease-out, scale 0.3s ease-out;
-    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: background-color 0.3s ease-out, box-shadow 0.3s 0.001s ease-out, scale 0.3s ease-out;
+    border: 1px solid #cacaca;
+    background-color: #f5f5f5ed;
 }
 #collapse-sidebar:hover{
-    box-shadow: 0px 0px 10px 0px rgba(179, 179, 179, 0.849);
-    cursor: pointer;
+    background: rgb(223, 237, 255);
+    box-shadow: 0px 0px 10px 2px rgba(179, 179, 179, 0.849);
+}
+#collapse-sidebar[data-title]:hover:after{
+    margin-left: 50%;
 }
 #collapse-sidebar:hover > .collapse-icon{
     scale: 1.05;
@@ -314,6 +374,10 @@ header{
 
 
 /********************* WINDOW *********************/
+.area-window{
+    width: 100%;
+    height: auto;
+}
 .area-window-header{
     justify-content: flex-end;
     align-items: center;
@@ -321,10 +385,11 @@ header{
     padding: 0px 5px;
     gap: 5px;
 }
-.area-window{
+.area-window-content{
+    gap: 15px;
     overflow: hidden;
-    width: 100%;
-    height: auto;
+    padding: 5px;
+    background-color: var(--container-background-color);
 }
 .window-button > svg{
     transition: filter var(--transition-shadow-time);
@@ -374,7 +439,7 @@ header{
 }
 .camera-button{
     gap: 10px;
-    font-family: var(--custom-font);
+    /* font-family: var(--custom-font); */
     font-weight: 500;
     width: inherit;
 }
@@ -383,7 +448,6 @@ header{
     align-items: center;
     justify-content: flex-end;
 }
-
 .zoom-button{
     width: 42px;
     height: 38px;
@@ -446,96 +510,45 @@ header{
 
 
 /********************* MARKER INFORMATION *********************/
-.main-2-t{
-    font-size: 1.8em;
-    color: rgb(55, 55, 55);
-    font-weight: 400;
-    margin: 0.5em;
-    letter-spacing: -0.05em;
+.marker-content{
+    gap: 10px;
+    padding: 1px;
+    scrollbar-width: none;
 }
-.main-3-t{
-    font-size: 1.6em;
-    color: #000;
-    font-weight: 300;
-    margin-bottom: 3%;
-    letter-spacing: -0.05em;
+.window-item{
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr;
+    transition: background-color 0.2s;
+    background-color: var(--area-background-color);
+    padding: 10px 0px;
+    border-left: 5px solid #4582e1;
+    box-shadow: 0px 0px 0px 1px #d0d0d07a;
 }
-.marker-info[aria-hidden="false"]{
-    font-size: 13px;
-    color: rgb(0, 0, 0);
-    font-weight: 500;
-    padding: 2.5px;
-    display: flex;
-    gap: 0.4em;
-    height: 15px;
+.window-sub-item{
+    gap: 1.5px;
 }
-.marker-info[aria-hidden="false"]:hover{
-    background-color: #e6e6e6cb;
+.marker-property{
+    padding-left: 8px;
 }
-.marker-info[aria-hidden="true"]{
+.marker-property[aria-hidden="true"]{
     display: none;
 }
-.marker-info > b {
-    color: rgb(0, 102, 228);
+.marker-label{
+    font-size: 0.8em;
+    font-weight: 400;
+    color: rgb(115, 115, 115);
+}
+.marker-info{
+    font-size: 1.1em;
+    font-weight: 400;
+    color: rgb(53, 53, 53);  
 }
 #spot_attributes{
-    margin: 0em 0em 0.5em 0em;
-    font-size: 15px;
-}
-.empty-data{
-    font-size: 18px;
-    color: rgb(179, 0, 0);
-    font-weight: 400;
-}
-.inspect-t{
-    font-size: 16px;
-    color: rgb(58, 58, 58);
-    font-weight: 500;
-    width: 65%;
-}
-.link-url{
-    color: var(--link-txt-color);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-.link-url:hover{
-    color: var(--link-txt-color-hover);
-    cursor: pointer;
-}
-
-
-
-#markerLabel{
-    padding: 5px;
-    background-color: rgba(255, 255, 255, 0.904);
-    border-radius: 5px;
-    border: 1px solid rgba(183, 183, 183, 0.97);
-    font-size: 13px;
+    font-size: 1em;
     display: flex;
-    gap: 1em;
+    justify-content: center;
 }
-#markerLabel button{
-    float: right;
-    border-radius: 5px;
-    transition: all 0.25s;
-    color: #1c70d6;
-    border: none;
-    height: 20px;
-}
-#markerLabel button:hover{
-    cursor: pointer;
-}
-#markerLabelInformation{
-    display: grid;
-}
-#markerInformation{
-    margin-right: 0.85%;
-    margin-top: 0.85%;
-    border-radius: 15px;
-}
-
-
-
 
 
 
@@ -608,9 +621,6 @@ header{
 #dropwdown-notifications[status = "active"] > .menu-button > .bi-bell-fill{
     animation: bell-ring 20s infinite linear;
 }
-
-
-
 
 
 .loader {
