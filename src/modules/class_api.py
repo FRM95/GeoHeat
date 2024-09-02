@@ -84,11 +84,11 @@ class APIOperations():
         
     def createURL(self, api_key:str, endpoint:str, **kwargs) -> (str):
         delimiter = kwargs.get('delimiter')
-        zone = kwargs.get('zone')
+        location = kwargs.get('location')
         source = kwargs.get('source')
         dayrange = kwargs.get('dayrange')
         date = kwargs.get('date')
-        url = f'{endpoint}{delimiter}/csv/{api_key}/{source}/{zone}/{dayrange}/{date}'
+        url = f'{endpoint}{delimiter}/csv/{api_key}/{source}/{location}/{dayrange}/{date}'
         return url
     
     def toDataframe(self, area_data:list) -> (DataFrame|str):
@@ -128,10 +128,10 @@ class APIOperations():
                     else:
                         result_data['delimiter'] = value
 
-                case 'zone':
+                case 'location':
                     if(not isinstance(value, str)):
-                        return f'Invalid zone value: {value}'
-                    result_data['zone'] = value
+                        return f'Invalid location value: {value}'
+                    result_data['location'] = value
 
                 case 'source':
                     if(not isinstance(value, str)):
@@ -167,7 +167,7 @@ class APIOperations():
                     {"date":kwargs.get('date'),
                     "source":kwargs.get('source'),
                     "delimiter":kwargs.get('delimiter'),
-                    "zone":kwargs.get('zone'),
+                    "location":kwargs.get('location'),
                     "dayrange":kwargs.get('dayrange'),
                     "firedata":fireData}
                     ]

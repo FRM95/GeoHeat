@@ -83,7 +83,7 @@ function notification_MESSAGE_DIV(message) {
 /* User notification when request is correct (REQUEST) */
 const setCorrectNotification = (data, requestStatus) => {
     try{
-        const identifier = `notification_id_${data['source']}_${data['full_date']}_${data['zone']}`;
+        const identifier = `notification_id_${data['source']}_${data['full_date']}_${data['location']}`;
         if(document.getElementById(identifier) == null){
             const notification = notification_DIV(requestStatus, identifier);
             const notification_id = notification_ID_DIV(`Requested fire data from FIRMS`, notification);
@@ -100,7 +100,7 @@ const setCorrectNotification = (data, requestStatus) => {
 /* User notification when request is allowed but came with error (REQUEST) */
 const setErrorNotification = (data, requestData, requestStatus) => {
     try{
-        const identifier = `notification_error_id_${data['source']}_${data['full_date']}_${data['zone']}`;
+        const identifier = `notification_error_id_${data['source']}_${data['full_date']}_${data['location']}`;
         if(document.getElementById(identifier) == null){
             const notification = notification_DIV(requestStatus, identifier);
             const notification_id = notification_ID_DIV(`Request from FIRMS error: ${requestData['error']}`, notification);

@@ -10,6 +10,7 @@ const zoomOut = document.getElementById('zoom-out');
 const cameraDefault = document.getElementById('camera-default');
 const labelDivInfo = document.getElementById("markerInformation");
 const headerTabs = document.querySelectorAll('.header-tab');
+const windowItems = document.querySelectorAll('[data-title-2]');
 
 /*TODO: TERMINAR DE PONER NOMBRES BONITOS*/
 const searchInput = document.getElementById('header-input-form');
@@ -162,6 +163,24 @@ const user_events = () => {
                     hideTab.classList.add("hidden");
                 }
             })
+        });
+    });
+
+    /* window item information (marker) */
+    windowItems.forEach(function(hover) {
+        hover.addEventListener("mouseover", () => {
+            const data = hover.getAttribute('data-title-2');
+            const displayData = document.querySelector('.window-item-information');
+            if(displayData != null && data != null){
+                displayData.lastElementChild.innerHTML = data;
+                displayData.ariaHidden = 'false';
+            }
+        });
+        hover.addEventListener("mouseout", () => {
+            const displayData = document.querySelector('.window-item-information');
+            if(displayData != null){
+                displayData.ariaHidden = 'true';
+            }
         });
     });
 }

@@ -18,7 +18,7 @@
             </svg> Data
           </button>
         </div>
-        <div class="header-section d-flex centered" style="justify-content: flex-start;" data-title="Type and select a zone and travel to it">
+        <div class="header-section d-flex centered" style="justify-content: flex-start;" data-title="Type and select a location and travel to it">
           <div class="header-form-input">
             <div class="d-flex centered">
               <input type="search" id="header-input-form" class="header-input input-1" placeholder="Enter a location">
@@ -111,9 +111,9 @@
                         <select id="requestDelimiter" class="select-1 request-parameter" property = "delimiter"></select>
                       </div>
                       <div class="sidebar-details-select">
-                        <span>Zone</span>
-                        <select id="requestArea" class="select-1 request-parameter" property = "zone"></select>
-                        <select id="requestCountry" class="select-1 request-parameter hidden" property = "zone"></select>
+                        <span>Location</span>
+                        <select id="requestArea" class="select-1 request-parameter" property = "location"></select>
+                        <select id="requestCountry" class="select-1 request-parameter hidden" property = "location"></select>
                       </div>
                       <div class="sidebar-details-select">
                         <span>Source</span>
@@ -206,15 +206,32 @@
         <div class="container container-right d-grid" id="markerInformation" aria-hidden="true" data-content = "Marker-Information">
           <div class="header-2 area-window-header d-flex" style="justify-content: space-between; height: 2.5em;">
             <span class="area-window-header-title">SPOT ATTRIBUTES</span>
-            <button class="button-4 window-button selector window-open" action="hide" data-section = "Marker-Information">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
-              </svg>
-            </button>
+            <div>
+              <button class="button-4 window-button selector" action="info" data-title-2="Official fire detection product website. Obtain a full description of attributes used by FIRMS services.">
+                <a class="link-url" href="#" target="_blank" id="spot-attributes-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                  </svg>
+                </a>
+              </button>
+              <button class="button-4 window-button selector window-open" action="hide" data-section = "Marker-Information">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="window-item-information d-grid" aria-hidden="true">
+            <span class="marker-info">Information</span>
+            <span class="marker-label"></span>
           </div>
           <div class="area-window-content d-grid">
             <div class="marker-content d-grid scroll-1">
               <div class="window-item item-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-radar window-item-icon selector box-shad-strong" viewBox="0 0 16 16" 
+                data-title-2="Country, region and sub-region related to heat spot coordinates.">
+                  <path d="M6.634 1.135A7 7 0 0 1 15 8a.5.5 0 0 1-1 0 6 6 0 1 0-6.5 5.98v-1.005A5 5 0 1 1 13 8a.5.5 0 0 1-1 0 4 4 0 1 0-4.5 3.969v-1.011A2.999 2.999 0 1 1 11 8a.5.5 0 0 1-1 0 2 2 0 1 0-2.5 1.936v-1.07a1 1 0 1 1 1 0V15.5a.5.5 0 0 1-1 0v-.518a7 7 0 0 1-.866-13.847"></path>
+                </svg>
                 <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="country">
                   <span class="marker-label" for="country">Country</span>
                   <span class="marker-info d-flex" id="country"></span>
@@ -237,6 +254,11 @@
                 </div>
               </div>
               <div class="window-item item-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event window-item-icon selector box-shad-strong" viewBox="0 0 16 16"
+                data-title-2="Date (yyyy-mm-dd format), time (UTC format) and period (day/night) acquisition.">
+                  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"></path>
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
+                </svg>
                 <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="acq_date">
                   <span class="marker-label" for="acq_date">Date acquisition</span>
                   <span class="marker-info d-flex" id="acq_date"></span>
@@ -251,20 +273,29 @@
                 </div>
               </div>
               <div class="window-item item-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-broadcast-pin window-item-icon selector box-shad-strong" viewBox="0 0 16 16"
+                data-title-2="Fire detection product, version and satellite used to request data.">
+                  <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707m2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708m5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708m2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM6 8a2 2 0 1 1 2.5 1.937V15.5a.5.5 0 0 1-1 0V9.937A2 2 0 0 1 6 8"></path>
+                </svg>
                 <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="instrument">
                   <span class="marker-label" for="instrument">Fire detection product</span>
                   <span class="marker-info d-flex" id="instrument"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="satellite">
-                  <span class="marker-label" for="satellite">Satellite</span>
-                  <span class="marker-info d-flex" id="satellite"></span>
                 </div>
                 <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="version">
                   <span class="marker-label" for="version">Collection version</span>
                   <span class="marker-info d-flex" id="version"></span>
                 </div>
+                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="satellite">
+                  <span class="marker-label" for="satellite">Satellite</span>
+                  <span class="marker-info d-flex" id="satellite"></span>
+                </div>
               </div>
               <div class="window-item item-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half window-item-icon selector box-shad-strong" viewBox="0 0 16 16"
+                data-title-2="Channel brightness temperatures measured by the fire detection product (Kelvin degrees).">
+                  <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415"></path>
+                  <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1"></path>
+                </svg>
                 <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="bright_ti4">
                   <span class="marker-label" for="bright_ti4">I-4 Brightness temperature</span>
                   <span class="marker-info d-flex" id="bright_ti4"></span>
@@ -281,8 +312,16 @@
                   <span class="marker-label" for="brightness">I-21/22 Brightness temperature</span>
                   <span class="marker-info d-flex" id="brightness"></span>
                 </div>
+                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="frp">
+                  <span class="marker-label" for="frp">Fire Radiative Power</span>
+                  <span class="marker-info d-flex" id="frp"></span>
+                </div>
               </div>
               <div class="window-item item-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search window-item-icon selector box-shad-strong" viewBox="0 0 16 16"
+                data-title-2="Pixel size and track path of the heat spot.">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                </svg>
                 <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="scan">
                   <span class="marker-label" for="scan">Along Scan pixel size</span>
                   <span class="marker-info d-flex" id="scan"></span>
@@ -291,30 +330,21 @@
                   <span class="marker-label" for="track">Along Track pixel size</span>
                   <span class="marker-info d-flex" id="track"></span>
                 </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="frp">
-                  <span class="marker-label" for="frp">Fire Radiative Power</span>
-                  <span class="marker-info d-flex" id="frp"></span>
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="d-grid" id="markerLabel" aria-hidden="true" data-content="Marker-Label">
-          <div class="area-window-header d-flex">
-            <button class="button-4 window-button selector window-open" action="hide" data-section = "Marker-Label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+        <div class="container container-label d-grid" aria-hidden="true" data-content="Marker-Label">
+          <div class="label-window-content d-flex">
+            <button class="selector window-open" action="hide" data-section = "Marker-Label">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
               </svg>
             </button>
-          </div>
-          <div class="marker-content d-grid">
-            <div class="window-sub-item d-flex" data-content="spot_attributes">
-              <span class="marker-info d-flex" id="spot_attributes"></span>
-            </div>
-            <div class="window-sub-item d-flex" data-content="idLabel" style="gap: 5px;">
-              <span class="marker-info d-flex" for="idLabel">Spot ID</span>
-              <span class="marker-info d-flex" id="idLabel"></span>
+            <div class="label-content d-grid">
+              <span class="d-flex" for="spot-id-label">Spot ID</span>
+              <span class="d-flex" id="spot-id-label"></span>
             </div>
           </div>
         </div>

@@ -66,7 +66,7 @@ const requestedData = (selectors) => {
         if (!selection.classList.contains("hidden")){
             const property = selection.getAttribute('property');
             result[property] = selection.value;
-            if(property === "zone"){
+            if(property === "location"){
                 const options = selection.options[selection.selectedIndex];
                 result['coordinates'] = options.dataset.coordinates;
             }
@@ -89,10 +89,10 @@ const allowRequest = (userKey, currentData, selectedData) => {
         if(data['date'] == selectedData['date']){
             if(data['source'] == selectedData['source']){
                 if(data['delimiter'] == 'country'){
-                    if(data['zone'] == selectedData['zone']){
+                    if(data['location'] == selectedData['location']){
                         if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
                             result['allowed'] = false;
-                            result['reason_denied'] = `You've already requested data from: ${data['zone']} within ${data['dayrange']} days`;
+                            result['reason_denied'] = `You've already requested data from: ${data['location']} within ${data['dayrange']} days`;
                             break
                         }
                         else if(data['dayrange'] < parseInt(selectedData['dayrange'])){
@@ -102,7 +102,7 @@ const allowRequest = (userKey, currentData, selectedData) => {
                     }
                 }
                 else{
-                    if(data['zone'] == "-180,-90,180,90"){
+                    if(data['location'] == "-180,-90,180,90"){
                         if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
                             result['allowed'] = false;
                             result['reason_denied'] = `You've already requested data from: World within ${data['dayrange']} days`;
@@ -114,10 +114,10 @@ const allowRequest = (userKey, currentData, selectedData) => {
                         }
                     }
                     else{
-                        if(data['zone'] == selectedData['zone']){
+                        if(data['location'] == selectedData['location']){
                             if(data['dayrange'] >= parseInt(selectedData['dayrange'])){
                                 result['allowed'] = false;
-                                result['reason_denied'] = `You've already requested data from: ${data['zone']} within ${data['dayrange']} days`;
+                                result['reason_denied'] = `You've already requested data from: ${data['location']} within ${data['dayrange']} days`;
                                 break
                             }
                             else if(data['dayrange'] < parseInt(selectedData['dayrange'])){

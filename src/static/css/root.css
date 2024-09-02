@@ -360,6 +360,11 @@ summary:hover{
     box-shadow: 0px 0px 0px 10px #ecececb2;
     border-radius: 1px;
 }
+.box-shad-strong:hover {
+    background-color: #ccccccb2;
+    box-shadow: 0px 0px 0px 5px #ccccccb2;
+    border-radius: 1px;
+  }
 .selector:hover{
     cursor: pointer;
 }
@@ -380,6 +385,7 @@ summary:hover{
 .link-url{
     color: var(--link-txt-color);
     transition: color var(--transition-color-time) ease-in;
+    text-decoration: none;
 }
 .link-url:hover{
     color: var(--link-txt-color-hover);

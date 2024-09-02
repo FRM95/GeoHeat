@@ -162,15 +162,15 @@ function displayFireData(dataObject, identifier, markerElement, markerInformatio
             }
             else if(key == 'instrument'){
                 const intrumentRef = `<a target="_blank" href="${instrumentLink}${value}" class="link-url d-flex centered">${value}</a>`;
-                htmlElm.innerHTML = `${intrumentRef}`;
+                htmlElm.innerHTML = intrumentRef;
             }
             else if(key == 'satellite'){
                 const attrObject = checkSatellite(value);
                 const attrLink = attrObject.link;
                 const attrName = attrObject.name;
                 if(attrLink != null){
-                    const satelliteRef = `<a target="_blank" href="${attrLink}" class="link-url d-flex centered" style="display: inherit;gap: 0.5em; align-items: center;">Spot attributes ${questionSVG}</a>`;
-                    attributesLink = satelliteRef;
+                    // const satelliteRef = `<a target="_blank" href="${attrLink}" class="link-url d-flex centered" style="display: inherit;gap: 0.5em; align-items: center;">Spot attributes ${questionSVG}</a>`;
+                    attributesLink = attrLink;
                 }
                 if(attrName != null){
                     htmlElm.innerHTML = attrName;
@@ -190,12 +190,12 @@ function displayFireData(dataObject, identifier, markerElement, markerInformatio
     }
 
     /* Updates values of marker Earth */
-    const idLabel = document.getElementById('idLabel');
-    const attributesLabel = document.getElementById('spot_attributes');
+    const idLabel = document.getElementById('spot-id-label');
+    const attributesLabel = document.getElementById('spot-attributes-link');
     /* If we have the ID and the attributes heat spot, display spot data */
     if(idLabel != null && attributesLink != null){ 
         idLabel.innerHTML = identifier;
-        attributesLabel.innerHTML = attributesLink;
+        attributesLabel.setAttribute("href", attributesLink);
         markerElement.ariaHidden = "false";
         markerInformation.ariaHidden = "false";
     }
