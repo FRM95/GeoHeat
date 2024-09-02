@@ -101,34 +101,42 @@ const noaa21 = 'https://www.earthdata.nasa.gov/learn/find-data/near-real-time/fi
 
 const checkSatellite = (name) => {
     let returnLink = null;
+    let returnName = null;
     switch (name) {
         case 'L8':
             returnLink = landsat;
+            returnName = 'Lansat 8';
             break
         case 'L9':
             returnLink = landsat;
+            returnName = 'Lansat 9';
             break
         case 'Aqua':
             returnLink = modis;
+            returnName = 'Modis Aqua';
             break
         case 'Terra':
             returnLink = modis;
+            returnName = 'Modis Terra';
             break
         case 'N':
             returnLink = viirs;
+            returnName = 'Suomi NPP';
             break
         case 'N20':
             returnLink = noaa20;
+            returnName = 'NOAA-20';
             break
         case 'N21':
             returnLink = noaa21;
+            returnName = 'NOAA-21';
             break
     }
-    return returnLink
+    return {link:returnLink, name:returnName}
 }
 
 /* Display selected data fire point */
-function displayFireData(dataObject, identifier){
+function displayFireData(dataObject, identifier, markerElement, markerInformation){
 
     /* Delete previous marker content */
     const markersGrid = document.querySelectorAll('.marker-property');
@@ -140,46 +148,57 @@ function displayFireData(dataObject, identifier){
         }
     });
 
-    // for(let i = 0; i< markers.length; i++){
-    //     markers[i].ariaHidden = "true";
-    //     markers[i].innerHTML = "";
-    // }
+    /* Spot attributes link */
+    let attributesLink = null;
 
     /* Updates with new marker content */
     for(const[key, value] of Object.entries(dataObject)){
         const htmlElm = document.getElementById(key);
-        const earthLabel = document.getElementById(key + 'Label');
         const markerGrid = document.querySelector(`.marker-property[data-content = ${key}]`);
         if(htmlElm){
-            if(key == 'country'){
-                const wikiRef = `<a target="_blank" href="${wikiLink}${value}" class="link-url">${svgWiki}</a>`;
+            if(key == 'country' || key == 'region' || key == 'subregion'){
+                const wikiRef = `<a target="_blank" href="${wikiLink}${value}" class="link-url d-flex centered">${svgWiki}</a>`;
                 htmlElm.innerHTML = `${value} ${wikiRef}`;
             }
             else if(key == 'instrument'){
-                const intrumentRef = `<a target="_blank" href="${instrumentLink}${value}" class="link-url">${value}</a>`;
+                const intrumentRef = `<a target="_blank" href="${instrumentLink}${value}" class="link-url d-flex centered">${value}</a>`;
                 htmlElm.innerHTML = `${intrumentRef}`;
             }
             else if(key == 'satellite'){
-                htmlElm.innerHTML = `${value}`;
-                const attrLink = checkSatellite(value);
+                const attrObject = checkSatellite(value);
+                const attrLink = attrObject.link;
+                const attrName = attrObject.name;
                 if(attrLink != null){
-                    const satelliteRef = `<a target="_blank" href="${attrLink}" class="link-url" style="display: inherit;gap: 0.5em; align-items: center;">Official attributes description ${questionSVG}</a>`;
-                    const htmlAttr = document.getElementById('spot_attributes');
-                    htmlAttr.innerHTML = satelliteRef;
-                    htmlAttr.ariaHidden = "false";
+                    const satelliteRef = `<a target="_blank" href="${attrLink}" class="link-url d-flex centered" style="display: inherit;gap: 0.5em; align-items: center;">Spot attributes ${questionSVG}</a>`;
+                    attributesLink = satelliteRef;
+                }
+                if(attrName != null){
+                    htmlElm.innerHTML = attrName;
                 }
             }
+            else if(key == 'bright_ti4' || key == 'bright_ti5' || key == 'bright_t31' || key == 'brightness'){
+                htmlElm.innerHTML = `${value} K`;
+            }
+            else if(key == "frp"){
+                htmlElm.innerHTML = `${value} MW`;
+            }
             else{
-                htmlElm.innerHTML = `${value}`;
+                htmlElm.innerHTML = value;
             }
             markerGrid.ariaHidden = "false";
         }
-
-        if(earthLabel){
-            earthLabel.innerHTML = `${value}`;
-        }
     }
-    document.getElementById('idLabel').innerHTML = `<b>Id</b>: ${identifier}`;
+
+    /* Updates values of marker Earth */
+    const idLabel = document.getElementById('idLabel');
+    const attributesLabel = document.getElementById('spot_attributes');
+    /* If we have the ID and the attributes heat spot, display spot data */
+    if(idLabel != null && attributesLink != null){ 
+        idLabel.innerHTML = identifier;
+        attributesLabel.innerHTML = attributesLink;
+        markerElement.ariaHidden = "false";
+        markerInformation.ariaHidden = "false";
+    }
 }
 
 

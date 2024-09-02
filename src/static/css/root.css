@@ -113,6 +113,7 @@
     --transition-shadow-time-2: 0.25s;
     --transition-icon-time: 0.25s;
     --transition-background-time: 0.25s;
+    --transition-color-time: 0.25s;
 }
 
 
@@ -181,6 +182,10 @@
 
     /*list-1*/
     --list-1-text-color: rgb(72, 72, 72);
+
+    /*links*/
+    --link-txt-color: rgb(41, 151, 255);
+    --link-txt-color-hover: rgb(26, 74, 206);
 }
 
 
@@ -317,7 +322,6 @@ summary:hover{
     background-color: var(--button-3-hover-background-color);
 }
 .button-4{
-    /* font-family: var(--custom-font-2); */
     background: var(--button-4-background);
     border: var(--button-4-border);
 }
@@ -372,12 +376,20 @@ summary:hover{
     padding: 0 !important;
 }
 
+/*links*/
+.link-url{
+    color: var(--link-txt-color);
+    transition: color var(--transition-color-time) ease-in;
+}
+.link-url:hover{
+    color: var(--link-txt-color-hover);
+}
 
 /*scrollbar style 1*/
 .scroll-1{
     overflow-y: auto;
     scrollbar-color: var(--scrollbar-1-color);
-    scrollbar-width: thin;
+    scrollbar-width: auto;
 }
 
 /*blur variable*/

@@ -76,13 +76,20 @@ const user_events = () => {
         }
     });
 
-    // Open window
+    // Open/close window
     const openWindow = document.querySelectorAll('.window-open');
     openWindow.forEach(function(open){
         open.addEventListener("click", () => {
-            let containerWindow = document.getElementById('container-window');
+            let section = open.getAttribute("data-section");
+            let action = open.getAttribute("action");
+            let containerWindow = document.querySelector(`[data-content = '${section}']`);
             if(containerWindow != null){
-                containerWindow.classList.toggle('hidden');
+                if(action == "hide"){
+                    containerWindow.ariaHidden = containerWindow.ariaHidden !== 'true';
+                }
+                else if(action === "expand"){
+                    containerWindow.ariaExpanded = containerWindow.ariaExpanded !== 'true';
+                }
             }
         })
     });
