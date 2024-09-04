@@ -18,26 +18,26 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
+<!--Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![MIT License][license-shield]][license-url]-->
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
 <!-- PROJECT LOGO -->
-<br />
+<br/>
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <!--<a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a>-->
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">GeoHeat</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A 3D web platform to visualize NRT active fires across the Earth
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -83,11 +83,39 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+### The first idea
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+This project borns as an old idea of my Master's degree in Big data, where I created a simple web platform with [Streamlit][streamliturl] to collect NASA FIRMS fire data.
+The idea was pretty simple:
+* Collect, process and parse fire data directly from the [FIRMS][firmsurl] NASA API.
+* Display those heat spots with the help of [Open Street Map][opentreetmapurl] 2D maps.
 
-Here's why:
+However this was a pretty simple project, so I was always thinking about make a major improvement on that idea...
+
+Then I started to work as a Data Developer, and one day we needed to create a solution to combine KPI's visualization and geospatial data representation. 
+Our developer stack was just Python and Data libraries (nothing weird for a Data and Analytics department) so we had to enter into web platform.
+
+We decided to start with Flask for the Backend and JavaScript, HTML and CSS for the FrontEnd, and after a long time, we did it, the project was a completely success.
+I was the one in charge to create the platform itself (moreless like a Fullstack Developer), I was super happy about the result, It was my first time into web.
+
+Now we are in 2024, and from time to time I used to remember that old project, so with the new skills learned I decided to get into it. 
+But why should be the same concept as before? I could create a similar (keeping the distance) platform to Carto or Google Maps but no! I must introduce a new area into this project: 3D art.
+
+### Built With
+
+Of course my tech stack was not so different from the last job.
+
+This is what I used to create it:
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Angular][Angular.io]][Angular-url]
+* [![Svelte][Svelte.dev]][Svelte-url]
+* [![Laravel][Laravel.com]][Laravel-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![JQuery][JQuery.com]][JQuery-url]
+
+
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
 * You shouldn't be doing the same tasks over and over like creating a README from scratch
 * You should implement DRY principles to the rest of your life :smile:
@@ -250,8 +278,13 @@ Use this space to list resources you find helpful and would like to give credit 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[linkedin-url]: https://linkedin.com/in/miguelm25m
 [product-screenshot]: images/screenshot.png
+
+[streamliturl]: https://streamlit.io/
+[firmsurl]: https://firms.modaps.eosdis.nasa.gov/
+[opentreetmapurl]: https://www.openstreetmap.org/
+
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
