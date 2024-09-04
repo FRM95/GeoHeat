@@ -1,4 +1,6 @@
 import { moveToPoint } from "./globe.js";
+// import { coordToCartesian } from "../fires/functions.js"
+// import { camera, earth, earth_radius } from "../../main.js"
 
 const sidebar = document.getElementById('container-sidebar');
 const Areasidebar = document.getElementById('area-sidebar');
@@ -13,7 +15,7 @@ const headerTabs = document.querySelectorAll('.header-tab');
 const windowItems = document.querySelectorAll('[data-title-2]');
 
 /*TODO: TERMINAR DE PONER NOMBRES BONITOS*/
-const searchInput = document.getElementById('header-input-form');
+const searchInput = document.getElementById('input-location-search');
 const list = document.getElementById("header-form-list");
 const listDiv = document.getElementById("header-form-result-list");
 
@@ -47,6 +49,14 @@ const setList = (results) =>{
             searchInput.setAttribute("data-coordinates", target.getAttribute("coordinates"));
             searchInput.setAttribute("data-name", target.getAttribute("name"));
             clearList();
+
+            // const coordinatesArr = searchInput.getAttribute('data-coordinates').split(" ");
+            // let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
+            // coordinates = coordToCartesian(coordinates, earth_radius)
+            // const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
+            // const tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
+            // tweenAnimation.start();
+
         })
         list.appendChild(resultItem);
     }

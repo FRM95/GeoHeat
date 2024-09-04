@@ -116,6 +116,25 @@ async function main(){
         setMultipleDates(user_key, user_data, 'availableDate', 'filterDate')
     }
 
+    // Search location 
+    const searchLocation = document.getElementById("input-location-search-button");
+    searchLocation.addEventListener("click", () => {
+        const inputSearch = document.getElementById("input-location-search");
+        if(inputSearch != null){
+            const coordToSearch = inputSearch.getAttribute("data-coordinates");
+            const locationName = inputSearch.getAttribute("data-name");
+            if(inputSearch.value === locationName && coordToSearch!=null){
+                const coordinatesArr = coordToSearch.split(" ");
+                let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
+                coordinates = coordToCartesian(coordinates, earth_radius)
+                const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
+                tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
+                tweenAnimation.start();
+            }
+        }
+    });
+
+    /* Request data */
     requestData.addEventListener("click", async _ => {
         const selectedOptions = requestedData(selectors);
         const flagRequest = allowRequest(user_key, user_data, selectedOptions);

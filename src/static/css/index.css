@@ -85,17 +85,38 @@ header{
 .header-button:hover{
     background-color: var(--header-button-hover-background-color);
 }
-.header-button:hover > svg{
+.header-button:hover > svg, .header-input-button:hover > svg{
     color: var(--header-button-hover-svg-color);
     filter: drop-shadow(0px 0px 1px rgba(100, 100, 100, 0.5));
 }
 .header-input{
     font-family: var(--custom-font);
-    height: 30px; 
-    width: 240px;
-    border-radius: 5px;
-    padding-right: 25px;
+    height: 30px;
+    width: 220px;
+    border-radius: 5px 0px 0px 5px;
     border: var(--result-1-border);
+    border-right: none;
+}
+.header-input-button{
+    background: var(--input-1-background);
+    border: var(--result-1-border);
+    height: 30px;
+    padding: 5px;
+    font-size: var(--input-1-font-size);
+    font-weight: var(--input-1-font-weight);
+    font-style: var(--input-1-font-style);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: var(--header-button-text-color);
+    width: 35px;
+}
+.header-input-button:hover > svg {
+    color: var(--header-button-hover-svg-color);
+    filter: drop-shadow(0px 0px 1px rgba(100, 100, 100, 0.5));
+}
+.header-input-button[data-title]:hover:after{
+    top: var(--header-height);
+    left: 0;
 }
 .header-form-result{
     z-index: 1;
@@ -554,7 +575,7 @@ header{
 .marker-content{
     gap: 12px;
     padding: 1px;
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
 }
 .window-item{
     position: relative;
@@ -565,6 +586,7 @@ header{
     padding: 5px 0px;
     border-left: 5px solid #4582e1;
     box-shadow: 0px 0px 0px 1px #d0d0d07a;
+    margin-right: 5px;
 }
 .window-item-information{
     background-color: var(--area-background-color);

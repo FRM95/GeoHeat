@@ -4,8 +4,7 @@
 		<meta charset="utf-8" name="viewport" content="width=device-width">
 		<title>GeoHeat</title>
     <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
-    <script src="https://cdn.plot.ly/plotly-2.34.0.min.js" charset="utf-8"></script>
+    <!-- <script src="https://cdn.plot.ly/plotly-2.34.0.min.js" charset="utf-8"></script> -->
   </head>
 	<body>
     <header class="header-1 d-flex backdrop" id="header">
@@ -18,11 +17,14 @@
             </svg> Data
           </button>
         </div>
-        <div class="header-section d-flex centered" style="justify-content: flex-start;" data-title="Type and select a location and travel to it">
-          <div class="header-form-input">
-            <div class="d-flex centered">
-              <input type="search" id="header-input-form" class="header-input input-1" placeholder="Enter a location">
-            </div>
+        <div class="header-section d-flex centered" style="justify-content: flex-start;">
+          <div class="header-form-input d-flex centered">
+            <input type="search" id="input-location-search" class="header-input input-1" placeholder="Enter a location">
+            <button id="input-location-search-button" class="header-input-button selector" data-title="Travel to the selected location">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              </svg>
+            </button>
           </div>
           <div class="header-form-result result-1" id="header-form-result-list" aria-hidden="true">
             <ul class="results-list list-1" id="header-form-list"></ul>
@@ -172,9 +174,9 @@
             </div>
             <div class="area-section hidden" data-content="Draw">
               <h2 class="main-title">Draw</h2>
-              <span class="main-title-2 explanation-area">Interact with the 3D representation<br></span>
+              <span class="main-title-2 explanation-area">Interact with the Earth<br></span>
               <span class="main-title-3 explanation-text">Obtain new measurements about your data</span>
-              <div class="sidebar-section scroll-1" id="earth-layers"></div>
+              <div class="sidebar-section scroll-1" id="earth-layers">Soon</div>
             </div>    
           </div>
         </div>
