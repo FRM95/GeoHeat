@@ -90,20 +90,20 @@ The idea was pretty simple:
 * Collect, process and parse fire data directly from the [FIRMS][firmsurl] NASA API.
 * Display those heat spots with the help of [Open Street Map][opentreetmapurl] 2D maps.
 
-However this was a pretty simple project, so I was always thinking about make a major improvement on that idea...
+However this was a pretty simple project, so I was always thinking about making a major improvement on that idea...
 
 Then I started to work as a Data Developer, and one day we needed to create a solution to combine KPI's visualization and geospatial data representation. 
-Our developer stack was just Python and Data libraries (nothing weird for a Data and Analytics department) so we had to enter into web platform.
+Our developer stack was just Python and Data libraries (nothing weird for a Data and Analytics department) so we had to enter into a web platform.
 
-We decided to start with Flask for the Backend and JavaScript, HTML and CSS for the FrontEnd, and after a long time, we did it, the project was a completely success.
-I was the one in charge to create the platform itself (moreless like a Fullstack Developer), I was super happy about the result, It was my first time into web.
+We decided to start with Flask for the Backend and JavaScript, HTML, and CSS for the FrontEnd, and after a long time, we did it, and the project was a complete success.
+I was the one in charge of creating the platform itself (more like a Fullstack Developer), and I was super happy about the result, It was my first time with web development.
 
 Now we are in 2024, and from time to time I used to remember that old project, so with the new skills learned I decided to get into it. 
-But why should be the same concept as before? I could create a similar (keeping the distance) platform to Carto or Google Maps but no! I must introduce a new area into this project: 3D art.
+But why should be the same concept as before? I could create a similar (keeping the distancse) platform to Carto or Google Maps but no! I must introduce a new area into this project: 3D art.
 
 ### Built With
 
-Of course my tech stack was not so different from the last job.
+Of course, my tech stack was not so different from the last job.
 
 This is what I used to create it:
 * [![Next][Next.js]][Next-url]
@@ -284,9 +284,10 @@ Use this space to list resources you find helpful and would like to give credit 
 [streamliturl]: https://streamlit.io/
 [firmsurl]: https://firms.modaps.eosdis.nasa.gov/
 [opentreetmapurl]: https://www.openstreetmap.org/
+[JavaScript]: 
 
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
+[Next-url]: [https://nextjs.org/](https://flask.palletsprojects.com/en/3.0.x/)
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
