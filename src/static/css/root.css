@@ -41,7 +41,7 @@
     --main-title-2-font-weight: 600;
 
     /* main title 3*/
-    --main-title-3-font-size: 14px;
+    --main-title-3-font-size: 13px;
     --main-title-3-font-weight: 500;
 
     /*button-1 used in header*/
@@ -356,15 +356,15 @@ summary:hover{
 
 /*effects*/
 .box-shad:hover{
-    background-color: #ecececb2;
-    box-shadow: 0px 0px 0px 10px #ecececb2;
+    background-color: #ececec70;
+    box-shadow: 0px 0px 0px 10px #ececec70;
     border-radius: 1px;
 }
 .box-shad-strong:hover {
     background-color: #ccccccb2;
     box-shadow: 0px 0px 0px 5px #ccccccb2;
     border-radius: 1px;
-  }
+}
 .selector:hover{
     cursor: pointer;
 }

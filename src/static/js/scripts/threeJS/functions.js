@@ -188,6 +188,7 @@ function setLabelAttributes(label, earth, camera){
             ud.cPosition.copy(label.position).applyMatrix4(ud.mat4.multiplyMatrices(camera.matrixWorldInverse, earth.matrixWorld));
             let d = ud.cPosition.negate().normalize().dot(ud.cNormal);
             d = smoothstep(0.2, 0.7, d);
+            console.log(d);
             label.element.style.opacity = d;
             function smoothstep(min, max, value) {
                 var x = Math.max(0, Math.min(1, (value-min)/(max-min)));

@@ -188,7 +188,7 @@ async function main(){
                     let currIntersection = intersections[0];
                     const vectorTarget = new THREE.Vector3(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
                     tweenAnimation = moveToPoint(vectorTarget, camera, earth, earth_radius);
-                    console.log(tweenAnimation);
+                    // console.log(tweenAnimation);
                     tweenAnimation.start();
                     let meshId = currIntersection.instanceId;
                     let fireInformation = currIntersection.object.userData[meshId];

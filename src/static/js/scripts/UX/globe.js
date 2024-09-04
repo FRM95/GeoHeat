@@ -5,7 +5,7 @@ export const moveToPoint = (vectorTarget, sceneCamera, meshObject, meshRadius) =
     const cameraDistance = sceneCamera.position.distanceTo(meshObject.position) - meshRadius;
     const scalarMultiplier = meshRadius + cameraDistance;
 
-    console.log(sceneCamera.position.distanceTo(vectorTarget));
+    // console.log(sceneCamera.position.distanceTo(vectorTarget));
 
     const tween = new TWEEN.Tween(sceneCamera.position)
         .onStart(() =>{

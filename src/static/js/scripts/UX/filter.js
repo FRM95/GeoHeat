@@ -82,6 +82,7 @@ const insertDateAt = (date, refElement, domElement, parentName) =>{
     const dateUpdated = date.split("-");
     label.innerHTML = dateUpdated[2] + "/" + dateUpdated[1] + "/" + dateUpdated[0];
     const nodeDiv = document.createElement("div");
+    nodeDiv.className = "details-content-option";
     nodeDiv.id = "divFilter-" + date;
     nodeDiv.setAttribute('date', date);
     nodeDiv.appendChild(label);
@@ -137,6 +138,7 @@ const setCheckbox = (boxKey, boxValue) => {
             newNode.checked = true;
             const label = document.createElement("label");
             const nodeDiv = document.createElement("div");
+            nodeDiv.className = "details-content-option";
 
             if('area' in currOpt){
                 if(currOpt['name'] != "World"){

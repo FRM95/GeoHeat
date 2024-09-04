@@ -137,7 +137,7 @@ const allowRequest = (userKey, currentData, selectedData) => {
 const added_data = (userKey, userData, flagRequest, selectedData, newData) => {
     if('error' in newData){
         notificationHandler('request_error', selectedData, newData);
-        console.log(newData)
+        // console.log(newData)
         return false 
     }
     else{
@@ -150,7 +150,7 @@ const added_data = (userKey, userData, flagRequest, selectedData, newData) => {
             pointerReference['dayrange'] = newData[userKey][0]['dayrange'];
         }
         notificationHandler('request_correct', selectedData)
-        console.log(userData)
+        // console.log(userData)
         return true
     }
 }

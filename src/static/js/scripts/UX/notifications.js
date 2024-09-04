@@ -117,9 +117,9 @@ const setErrorNotification = (data, requestData, requestStatus) => {
 /* User notification when request is not allowed (REQUEST) */
 const setDeniedNotification = (data, requestStatus) => {
     try{
-        console.log(requestStatus, data)
+        // console.log(requestStatus, data)
     } catch (error) {
-        console.log(error)
+        // console.log(error)
     }
 }
 

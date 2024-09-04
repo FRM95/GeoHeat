@@ -217,7 +217,10 @@ header{
 .container-right[aria-hidden = "true"]{
     display: none;
 }
-.container-label[aria-hidden="true"]{
+.container-earth-label{
+    border: none;
+}
+.container-earth-label[aria-hidden="true"]{
     display: none;
 }
 
@@ -274,18 +277,23 @@ header{
     font-size: 0.925em;
     margin-top: 1em;
     margin-bottom: 1em;
+    width: 200px;
+    max-width: 200px;
+    transition: background 0.2s ease-out, box-shadow 0.2s 0.05s;
 }
 .sidebar-details-select, .sidebar-details-detail{
     display: grid;
     gap: 0.35em;
-    font-size: 1.05em;
+    font-size: 1em;
     font-family: var(--custom-font);
     font-weight: 500;
+    width: inherit;
+    max-width: inherit;
 }
 .details-content{
     max-height: 320px; 
     scroll-behavior: smooth;
-    margin: 1em 2em;
+    margin: 1em 2em 0em 2em;
     overflow-y: auto;
     font-size: 0.95em;
     font-weight: 400;
@@ -295,13 +303,24 @@ header{
 .details-content:not(:has(div)){
     display: none;
 }
+.details-content-option{
+    display: flex;
+    justify-content: space-between;
+    transition: color 0.2s ease-out;
+}
+.details-content-option:hover{
+    color: #0073ff;
+}
+#availableCountry > .details-content-option {
+    margin-right: 10px;
+}
 .request-parameter{
     font-family: var(--custom-font);
     font-size: 0.95em;
     font-weight: 500;
     padding: 0.3em 0em 0.3em 0.5em;
     transition: border-color 0.25s;
-    width: 200px;
+    width: inherit;
     height: auto;
     min-height: 20px;
 }
@@ -311,7 +330,7 @@ header{
 }
 #requestDate{
     padding-left: 0.2em;
-    width: 197px;
+    max-width: 193px;
 }
 .action-button{
     font-family: var(--custom-font);
@@ -599,13 +618,27 @@ header{
 }
 .marker-info{
     font-size: 1em;
-    font-weight: 500;
+    font-weight: 600;
     color: rgb(53, 53, 53);
     gap: 5px;
     align-items: center;
 }
-
-
+/********************* MARKER EARTH INFORMATION *********************/
+.earth-label-window-content{
+    border: 1px solid #a4a4a4;
+    width: max-content;
+    gap: 10px;
+}
+.earth-label-content{
+    flex-grow: 1;
+    border-left: 5px solid red;
+    padding-left: 5px;
+}
+.earth-label-button{
+    border: none;
+    background: transparent;
+    color: #0fbdbd;
+}
 
 
 #apply-interface-layers:before{

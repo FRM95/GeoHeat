@@ -138,7 +138,7 @@
                     <summary class="summary-1-title sidebar-details-title filter-marker">Filter
                       <br><span class="main-title-3 explanation-text">Choose heat spots to display on earth</span>
                     </summary>
-                    <div class="summary-1-content sidebar-details-content d-grid m-l2 m-r2 box-shad">
+                    <div class="summary-1-content sidebar-details-content d-grid m-l2 m-r2 box-shad" style="max-width: none; width: auto;">
                       <details class="sidebar-details-detail" id="details-date">
                         <summary>Date <input type="checkbox" id="filterDate" class="summary-checkbox checkbox-1" checked="true"></summary>
                         <div class="details-content d-grid scroll-1" name="dates" id="availableDate"></div>
@@ -335,17 +335,17 @@
           </div>
         </div>
 
-        <div class="container container-label d-grid" aria-hidden="true" data-content="Marker-Label">
-          <div class="label-window-content d-flex">
-            <button class="selector window-open" action="hide" data-section = "Marker-Label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
-              </svg>
-            </button>
-            <div class="label-content d-grid">
+        <div class="container container-earth-label d-grid" aria-hidden="true" data-content="Marker-Label">
+          <div class="earth-label-window-content d-flex">            
+            <div class="earth-label-content d-grid">
               <span class="d-flex" for="spot-id-label">Spot ID</span>
               <span class="d-flex" id="spot-id-label"></span>
             </div>
+            <button class="earth-label-button selector window-open" action="hide" data-section = "Marker-Label">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
+              </svg>
+            </button>
           </div>
         </div>
 
