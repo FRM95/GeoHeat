@@ -165,6 +165,7 @@
 
     /*scrollbar*/
     --scrollbar-1-color: rgb(123, 144, 163) rgba(208, 208, 208, 0.58);
+    --scrollbar-2-color: rgb(196, 196, 196) transparent;
 
     /*select-1*/
     --select-1-text-color: rgb(43, 121, 216);
@@ -396,6 +397,11 @@ summary:hover{
     overflow-y: auto;
     scrollbar-color: var(--scrollbar-1-color);
     scrollbar-width: auto;
+}
+.scroll-2{
+    overflow-y: auto;
+    scrollbar-color: var(--scrollbar-2-color);
+    scrollbar-width: thin;
 }
 
 /*blur variable*/

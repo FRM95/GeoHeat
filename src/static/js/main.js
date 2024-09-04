@@ -193,7 +193,6 @@ async function main(){
     // Intersect point with raycast
     let pointer = new THREE.Vector2();
     let raycaster = new THREE.Raycaster();
-
     labelRenderer.domElement.addEventListener("pointerdown", event => {
         if(tweenAnimation instanceof TWEEN.Tween && tweenAnimation._isPlaying){ tweenAnimation.stop(); }
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -205,14 +204,26 @@ async function main(){
                 let intersections = raycaster.intersectObject(meshPointers[i]);
                 if(intersections.length > 0){
                     let currIntersection = intersections[0];
-                    const vectorTarget = new THREE.Vector3(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
-                    tweenAnimation = moveToPoint(vectorTarget, camera, earth, earth_radius);
-                    // console.log(tweenAnimation);
-                    tweenAnimation.start();
                     let meshId = currIntersection.instanceId;
+
+                    /* Change the color */
+                    // console.log(currIntersection);
+                    const color = new THREE.Color();
+                    // console.log(meshPointers[i]);
+                    // console.log(currIntersection);
+                    meshPointers[i].setColorAt(meshId, color.setRGB(0.0, 0.0, 1.0));
+                    meshPointers[i].instanceColor.needsUpdate = true;
+                    // meshPointers[i].instanceMatrix.needsUpdate = true;
+
+                    /* Display data */
                     let fireInformation = currIntersection.object.userData[meshId];
                     displayFireData(fireInformation, meshId, markerElement, markerInformation);
                     markerCSS2.position.set(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
+
+                    /* Start animation */
+                    const vectorTarget = new THREE.Vector3(currIntersection.point.x, currIntersection.point.y, currIntersection.point.z);
+                    tweenAnimation = moveToPoint(vectorTarget, camera, earth, earth_radius);
+                    tweenAnimation.start();
                     break
                 }
             }

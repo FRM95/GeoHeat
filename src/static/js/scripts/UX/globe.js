@@ -8,18 +8,18 @@ export const moveToPoint = (vectorTarget, sceneCamera, meshObject, meshRadius) =
     // console.log(sceneCamera.position.distanceTo(vectorTarget));
 
     const tween = new TWEEN.Tween(sceneCamera.position)
-        .onStart(() =>{
-            console.log(sceneCamera)
-        })
+        // .onStart(() =>{
+        //     console.log(sceneCamera)
+        // })
         .to(vectorTarget, 3000)
         .dynamic(true)
         .easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(() => {
             update();
         })
-        .onComplete(() =>{
-            console.log(sceneCamera);
-        })
+        // .onComplete(() =>{
+        //     console.log(sceneCamera);
+        // })
 
     function update(){
         sceneCamera.position.normalize().multiplyScalar(scalarMultiplier);

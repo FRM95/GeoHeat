@@ -24,8 +24,9 @@ function addCartesian(dataObject, earth_radius){
 
 /* Auxiliar function to create mesh based on object array */
 function createMarkers(dataObject){
+    const color = new THREE.Color(0xff0000);
     const common_geo = new THREE.CircleGeometry(0.0015, 32);
-    const common_mat = new THREE.MeshBasicMaterial({color:0xff0000});
+    const common_mat = new THREE.MeshBasicMaterial({color:0xffffff});
     let dummy = new THREE.Object3D();
     let user_Data = {};
     let markMesh = new THREE.InstancedMesh(common_geo, common_mat, dataObject.length);
@@ -36,6 +37,7 @@ function createMarkers(dataObject){
         dummy.lookAt(dummy.position.clone().setLength(1.5));
         dummy.updateMatrix();
         markMesh.setMatrixAt(i, dummy.matrix);
+        markMesh.setColorAt(i, color);
         user_Data[i] = dataObject[i];
     }
     markMesh.userData = user_Data;

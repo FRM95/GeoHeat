@@ -35,31 +35,32 @@ body{
 /********************* HEADER *********************/
 header{
     height: var(--header-height);
-    justify-content: space-between;
     align-items: center;
     position: relative;
     transition: background-color var(--transition-background-time);
+    flex-flow: row nowrap;
 }
 .header-left{
-    display: inherit; 
+    display: inherit;
     height: inherit;
     margin-left: 1%;
     gap: 1em;
+    flex-basis: 25%;
+    justify-content: flex-start;
 }
 .header-middle{
     height: inherit;
-    display: inherit; 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
+    display: inherit;
     gap: 1em;
+    flex-basis: 50%;
 }
 .header-right{
     height: inherit;
-    display: inherit; 
+    display: inherit;
     margin-right: 1%;
     gap: 1em;
+    flex-basis: 25%;
+    justify-content: flex-end;
 }
 .header-page-title{
     font-family: var(--custom-font-2);
@@ -575,7 +576,6 @@ header{
 .marker-content{
     gap: 12px;
     padding: 1px;
-    /* scrollbar-width: none; */
 }
 .window-item{
     position: relative;
