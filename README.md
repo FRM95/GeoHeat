@@ -123,6 +123,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Initial Data model
 - [x] Home design
 - [ ] Login design
+- [ ] Backend, authentication, and endpoints
+- [ ] MongoDB connection
 - [ ] Deploy platform
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
