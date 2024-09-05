@@ -1,4 +1,3 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
@@ -11,14 +10,14 @@
   <p align="center">
     A web platform to visualize NRT active fires across the Earth
     <br/>
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="#"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="#readme-demo">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="#">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="#">Request Feature</a>
   </p>
 </div>
 
@@ -81,23 +80,23 @@ This is what I used to create it:
 * [![CSS3][cssbadge]][cssurl]
 * [![MongoDB][mongodbbadge]][mongodburl]
 
-No JS frameworks, everything in this project it's built from scratch to maximize the knowledge and simplicity.
+No JS frameworks, everything in this project is built from scratch to maximize knowledge and simplicity.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Before using the platform you must have acquire a FIRMS API key.
+Before using the platform you must have acquired a FIRMS API key.
 
 ### Prerequisites
 
 * Sign up [here][firmskeyurl] with your email. You should receive an API key to request FIRMS data.
 
-**Caution**: This key is essential to use GeoHeat services, keep it secure and do not share it with anyone.
+**Caution**: This key is essential to use GeoHeat services, keep it secure, and do not share it with anyone.
 
 ### Accessing the platform
 
-1. Access to [GeoHeat][geoheaturl] and introduce your key. There is no need to create an user or enter personal information.
+1. Access to [GeoHeat][geoheaturl] and introduce your key. There is no need to create a user or enter personal information.
 2. Enjoy!
 3. Yes, that's all! :smile:
 
@@ -106,7 +105,12 @@ Before using the platform you must have acquire a FIRMS API key.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+GeoHeat platform preview
+<a id="readme-demo"></a>
+
+![geoheat-capture-1](https://github.com/user-attachments/assets/de32545b-04cf-465e-9299-d850cc0f1569)
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples, and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
