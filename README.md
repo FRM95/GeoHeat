@@ -74,15 +74,16 @@
 
 ### The first idea
 
-This project was born as an old idea of my Master's degree in Big data, where I created a simple web platform with [Streamlit][streamliturl] to collect NASA FIRMS fire data.
+This project was born as an old idea during my Master's degree in Big data, where I created a simple web platform with [Streamlit][streamliturl] to collect and display fire spots around the Earth.
 The idea was pretty simple:
 * Collect, process, and parse fire data directly from the [FIRMS][firmsurl] NASA API.
-* Display those heat spots with the help of [Open Street Map][opentreetmapurl] 2D maps.
+* Display those fire spots with the help of [Open Street Map][opentreetmapurl] 2D maps.
 
-However this was a pretty simple project, so I was always thinking about making a major improvement on that idea...
+However this was a simple project, so I was always thinking about making a major improvement on that idea...
 
-Then I started to work as a Data Developer, and one day we needed to create a solution to combine KPI's visualization and geospatial data representation. 
-Our developer stack was just Python and Data libraries (nothing weird for a Data and Analytics department) so we had to enter into a web platform.
+After a few months, I started to work as a Data Developer, and one day we aimed to create a solution to combine machine learning with some KPI's visualization, and geospatial data representation through interactive maps. 
+Our developer stack was just Python and some Data libraries (nothing weird for a Data and Analytics department) and the project started to grow. 
+More and more features, user authentication... forget about using just Python let's move into web development.
 
 We decided to start with Flask for the Backend and JavaScript, HTML, and CSS for the FrontEnd, and after a long time, we did it, and the project was a complete success.
 I was the one in charge of creating the platform itself (more like a Fullstack Developer), and I was super happy about the result, It was my first time with web development.
