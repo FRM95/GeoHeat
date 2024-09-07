@@ -3,7 +3,7 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 import { setOption, requestedData, allowRequest, putData, getData, exportData } from './scripts/requests/functions.js';
 import { processFireData, displayFireData, coordToCartesian } from './scripts/fires/functions.js';
 import { setCheckbox, setNewDate, resetDefault, filteredOptions, setMultipleDates } from './scripts/UX/filter.js';
-import { setInspectData } from './scripts/UX/inspect.js'
+// import { setInspectData } from './scripts/UX/plotly_functions.js'
 import { userInterface } from './scripts/UX/user.js'
 import { notificationHandler } from './scripts/UX/notifications.js'
 import { moveToPoint } from './scripts/UX/globe.js'
@@ -145,7 +145,7 @@ async function main(){
                 meshPointers = processFireData(user_key, user_data, earth_radius);
                 addObject(scene, meshPointers);
                 setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
-                // setInspectData(user_key, user_data, 'summary-section', 'table-section');
+                // here goes the calculation of kpi's
                 markerElement.ariaHidden = "true";
                 markerInformation.ariaHidden = "true";
                 const coordinatesArr = selectedOptions['coordinates'].split(" ");
@@ -179,6 +179,10 @@ async function main(){
     layersApply.addEventListener("click", _ =>{
         textureVisible(texturesProperties, earth, stars);
     });
+    const datitos = document.getElementById("contenidoDatos");
+    datitos.addEventListener("click", () =>{
+        console.log(user_data)
+    })
 
     //Download file data
     const getFiles = document.getElementsByClassName('file-request');
@@ -188,7 +192,6 @@ async function main(){
             await exportData(user_key, user_data, fileType);
         });
     }
-
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();

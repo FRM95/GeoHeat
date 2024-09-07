@@ -171,7 +171,6 @@ function displayFireData(dataObject, identifier, markerElement, markerInformatio
                 const attrLink = attrObject.link;
                 const attrName = attrObject.name;
                 if(attrLink != null){
-                    // const satelliteRef = `<a target="_blank" href="${attrLink}" class="link-url d-flex centered" style="display: inherit;gap: 0.5em; align-items: center;">Spot attributes ${questionSVG}</a>`;
                     attributesLink = attrLink;
                 }
                 if(attrName != null){
@@ -183,6 +182,9 @@ function displayFireData(dataObject, identifier, markerElement, markerInformatio
             }
             else if(key == "frp"){
                 htmlElm.innerHTML = `${value} MW`;
+            }
+            else if(key == "acq_date"){
+                htmlElm.innerHTML = value.split("-").toReversed().join("-");
             }
             else{
                 htmlElm.innerHTML = value;

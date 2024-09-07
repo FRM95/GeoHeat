@@ -133,6 +133,11 @@ class APIOperations():
                         return f'Invalid location value: {value}'
                     result_data['location'] = value
 
+                case 'name':
+                    if(not isinstance(value, str)):
+                        return f'Invalid location name value: {value}'
+                    result_data['name'] = value
+
                 case 'source':
                     if(not isinstance(value, str)):
                         return f'Invalid source value: {value}'
@@ -168,6 +173,7 @@ class APIOperations():
                     "source":kwargs.get('source'),
                     "delimiter":kwargs.get('delimiter'),
                     "location":kwargs.get('location'),
+                    "name":kwargs.get('name'),
                     "dayrange":kwargs.get('dayrange'),
                     "firedata":fireData}
                     ]
