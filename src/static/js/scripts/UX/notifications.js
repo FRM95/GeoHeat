@@ -1,28 +1,28 @@
-const notificationsDropdown = document.getElementById("dropwdown-notifications");
-const notificationDiv = document.getElementById("notifications-layer");
-const notificationsCounter = document.getElementById("notification-counter");
+const dropdown_notifications = document.getElementById("dropwdown-notifications");
+const notifications_layer = document.getElementById("notifications-layer");
+const notifitications_counter_value = document.querySelector(".notifications-counter-value");
 
 
 /* Reset notifications to empty (REQUEST) */
 const setToEmpty = () =>{
-    if(notificationsDropdown.getAttribute("status") == "active"){
-        notificationsDropdown.setAttribute("status", "empty");
-        notificationsDropdown.setAttribute("notifications", "0");
+    if(dropdown_notifications.getAttribute("data-status") == "active"){
+        dropdown_notifications.setAttribute("data-status", "empty");
+        dropdown_notifications.setAttribute("data-notifications", "0");
     }
 }
 
 /* Updates notifications counter (REQUEST) */
 const updateNotificationCounter = (action) => {
-    let currentValue = parseInt(notificationsDropdown.getAttribute("notifications"));
+    let currentValue = parseInt(dropdown_notifications.getAttribute("data-notifications"));
     if(action == "increase"){
         let increasedValue = currentValue + 1;
         let stringIncreased = String(increasedValue);
-        notificationsDropdown.setAttribute("notifications", stringIncreased);
-        notificationsDropdown.setAttribute("status", "active");
+        dropdown_notifications.setAttribute("data-notifications", stringIncreased);
+        dropdown_notifications.setAttribute("data-status", "active");
         if(increasedValue <= 5){
-            notificationsCounter.textContent = stringIncreased;
+            notifitications_counter_value.textContent = stringIncreased;
         } else {
-            notificationsCounter.textContent = "+5";
+            notifitications_counter_value.textContent = "+5";
         }
     }
     else if (action == "decrease"){
@@ -31,9 +31,9 @@ const updateNotificationCounter = (action) => {
             setToEmpty();
         } else{
             let stringDecreased = String(decreasedValue);
-            notificationsDropdown.setAttribute("notifications", stringDecreased);
-            notificationsDropdown.setAttribute("status", "active");
-            notificationsCounter.textContent = stringDecreased;
+            dropdown_notifications.setAttribute("data-notifications", stringDecreased);
+            dropdown_notifications.setAttribute("data-status", "active");
+            notifitications_counter_value.textContent = stringDecreased;
         }
     }
 }
@@ -45,23 +45,25 @@ function closeNotification(notificationElement){
 }
 
 /* Creates div related to a single notification (REQUEST) */
-function notification_DIV(status, divIdentifier){
+function setSingleNotification(status, divIdentifier){
     const notification = document.createElement("div");
     notification.className = "notification d-grid";
     notification.id = divIdentifier;
-    notification.setAttribute('status', status);
+    notification.setAttribute("data-status", status);
     updateNotificationCounter("increase");
     return notification
 }
 
 /* Creates div related to notification ID section (REQUEST) */
-function notification_ID_DIV(message, domElement) {
+function setNotificationId(message, domElement) {
     const notification_id = document.createElement("div");
     notification_id.className = "notification-id";
     const span_message = document.createElement("span");
     span_message.innerText = message;
     const buttonClose = document.createElement("button");
-    buttonClose.textContent = 'X';
+    buttonClose.className = "button-4 window-button selector";
+    buttonClose.setAttribute('action', 'hide');
+    buttonClose.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path></svg>';
     buttonClose.addEventListener("click", _ =>{
         closeNotification(domElement);
     });
@@ -71,7 +73,7 @@ function notification_ID_DIV(message, domElement) {
 }
 
 /* Creates div related to notification message section (REQUEST) */
-function notification_MESSAGE_DIV(message) {
+function setNotificationMessage(message) {
     const notification_message = document.createElement("div");
     notification_message.className = "notification-message";
     const span_hour = document.createElement("span");
@@ -85,12 +87,12 @@ const setCorrectNotification = (data, requestStatus) => {
     try{
         const identifier = `notification_id_${data['source']}_${data['full_date']}_${data['location']}`;
         if(document.getElementById(identifier) == null){
-            const notification = notification_DIV(requestStatus, identifier);
-            const notification_id = notification_ID_DIV(`Requested fire data from FIRMS`, notification);
-            const notification_message = notification_MESSAGE_DIV(data['full_date']);
+            const notification = setSingleNotification(requestStatus, identifier);
+            const notification_id = setNotificationId(`Requested fire data from FIRMS`, notification);
+            const notification_message = setNotificationMessage(data['full_date']);
             notification.appendChild(notification_id);
             notification.appendChild(notification_message);
-            notificationDiv.appendChild(notification);
+            notifications_layer.appendChild(notification);
         }
     } catch(error) {
         console.error(error);
@@ -102,12 +104,12 @@ const setErrorNotification = (data, requestData, requestStatus) => {
     try{
         const identifier = `notification_error_id_${data['source']}_${data['full_date']}_${data['location']}`;
         if(document.getElementById(identifier) == null){
-            const notification = notification_DIV(requestStatus, identifier);
-            const notification_id = notification_ID_DIV(`Request from FIRMS error: ${requestData['error']}`, notification);
-            const notification_message = notification_MESSAGE_DIV(data['full_date']);
+            const notification = setSingleNotification(requestStatus, identifier);
+            const notification_id = setNotificationId(`Request from FIRMS error: ${requestData['error']}`, notification);
+            const notification_message = setNotificationMessage(data['full_date']);
             notification.appendChild(notification_id);
             notification.appendChild(notification_message);
-            notificationDiv.appendChild(notification);
+            notifications_layer.appendChild(notification);
         }
     } catch(error) {
         console.error(error);

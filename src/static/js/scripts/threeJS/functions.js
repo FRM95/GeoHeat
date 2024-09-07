@@ -113,7 +113,7 @@ const buildTextures = (sphereGeometry, texturesObject, texturesQuality) => {
     if(texturesObject.Starfield_map){
         const vertices = [];
         const pointGeometry = new THREE.BufferGeometry();
-        for(let i = 0; i < 2500; i ++) {
+        for(let i = 0; i < 5000; i ++) {
             const x = THREE.MathUtils.randFloatSpread(200);
             const y = THREE.MathUtils.randFloatSpread(200);
             const z = THREE.MathUtils.randFloatSpread(200);

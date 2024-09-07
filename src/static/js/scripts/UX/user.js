@@ -6,7 +6,6 @@ const sidebar = document.getElementById('container-sidebar');
 const Areasidebar = document.getElementById('area-sidebar');
 const hideSidebar = document.getElementById('collapse-sidebar');
 
-
 const zoomIn = document.getElementById('zoom-in');
 const zoomOut = document.getElementById('zoom-out');
 const cameraDefault = document.getElementById('camera-default');

@@ -208,11 +208,11 @@ async function main(){
 
                     /* Change the color */
                     // console.log(currIntersection);
-                    const color = new THREE.Color();
+                    // const color = new THREE.Color();
                     // console.log(meshPointers[i]);
                     // console.log(currIntersection);
-                    meshPointers[i].setColorAt(meshId, color.setRGB(0.0, 0.0, 1.0));
-                    meshPointers[i].instanceColor.needsUpdate = true;
+                    // meshPointers[i].setColorAt(meshId, color.setRGB(0.0, 0.0, 1.0));
+                    // meshPointers[i].instanceColor.needsUpdate = true;
                     // meshPointers[i].instanceMatrix.needsUpdate = true;
 
                     /* Display data */

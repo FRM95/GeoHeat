@@ -141,8 +141,10 @@ header{
 
 
 /********************* DROPDOWN *********************/
-.dropdown{
-    overflow: hidden;
+.dropdown:hover .dropdown-content {
+    display: grid;
+    opacity: 1;
+    visibility: visible;
 }
 .dropdown:has(.dropdown-content:hover) > .header-button > svg{
     color: var(--header-button-hover-svg-color);
@@ -150,11 +152,12 @@ header{
 .dropdown:has(.dropdown-content:hover) > .header-button{
     background-color: var(--header-button-hover-background-color);
 }
-.dropdown:hover .dropdown-content {
-    display: block;
+.dropdown:has(.dropdown-content:hover)::after{
+    opacity: 0;
+    visibility: hidden;
 }
 .dropdown-content {
-    display: none;
+    visibility: hidden;
     position: absolute;
     min-width: 160px;
     z-index: 1;
@@ -162,6 +165,8 @@ header{
     border: 1px solid #d7d7d7;
     top: 90%;
     border-radius: 5px;
+    transition: opacity 0.2s ease-in;
+    opacity: 0;
 }
 .dropdown-area{
     transition: background-color 0.1s ease-out;
@@ -677,19 +682,34 @@ header{
 }
 
 
-
-.notification {
-    color: rgb(255, 255, 255);
-    padding: 12px 16px;
+/********************* USER NOTIFICATIONS  *********************/
+#notifications-layer{
+    border-radius: 5px 0px 5px 5px;
+    right: 1%;
+    max-height: 500px;
+    height: auto;
+    overflow-y: auto;
+    width: max-content;
+    padding: 5px;
+    border: var(--area-border-width) solid var(--area-border-color);
+    background-color: var(--container-background-color);
+    gap: 6px;
+    margin-bottom: 7px;
+}
+.notification{
+    color: rgb(0, 0, 0);
+    padding: 10px;
     text-decoration: none;
     text-align: left;
     font-size: 0.85em;
     font-weight: 300;
     transition: background-color 0.1s ease-out;
     gap: 1em;
+    background-color: var(--area-background-color);
+    border: var(--area-border-width) solid var(--area-border-color);
 }
 .notification:hover{
-    background-color: rgb(0, 102, 228);
+    background-color: rgb(207, 222, 240);
 }
 .notification-id{
     display: flex;
@@ -704,32 +724,32 @@ header{
     transition: color 0.25s;
 }
 .notification-close:hover{
-    color: #c51616;
+    color: rgb(197, 22, 22);
 }
-#dropwdown-notifications[status = "empty"] > #notifications-layer{
+#dropwdown-notifications[data-status = "empty"] > #notifications-layer{
     display: none !important;
 }
-#dropwdown-notifications[status = "empty"] > .menu-button:hover {
-    background-color: transparent;
+.notifications-bell{
+    width: 2em;
+    height: 2em;
 }
-#notification-counter{
-    display: flex;
-    background-color: #d20b15;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    font-size: 13px;
-    justify-content: center;
-    align-items: center;
-    padding: 6px;
-    border: none;
-    margin-top: 5px;
-    font-weight: 600;
+.notifications-counter{
+    background-color: rgb(217, 65, 65);
+    width: 1.8em;
+    height: 1.8em;
+    border-top-left-radius: 999px;
+    border-top-right-radius: 999px;
+    border-bottom-left-radius: 999px;
+    border-bottom-right-radius: 999px;
 }
-#dropwdown-notifications[status = "empty"] > .menu-button > #notification-counter {
+.notifications-counter-value{
+    color: rgb(234, 234, 234);
+    font-weight: 400;
+}
+#dropwdown-notifications[data-status = "empty"] > .header-button > .notifications-bell {
     display: none !important;
 }
-#dropwdown-notifications[status = "active"] > .menu-button > .bi-bell-fill{
+#dropwdown-notifications[data-status = "active"] > .header-button > .bi-bell-fill{
     animation: bell-ring 20s infinite linear;
 }
 
