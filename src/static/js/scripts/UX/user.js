@@ -46,7 +46,7 @@ const setList = (results) =>{
             let target = e.target;
             searchInput.value = target.getAttribute("name");
             searchInput.setAttribute("data-coordinates", target.getAttribute("coordinates"));
-            searchInput.setAttribute("data-name", target.getAttribute("name"));
+            searchInput.setAttribute("data-location_name", target.getAttribute("location_name"));
             clearList();
         })
         list.appendChild(resultItem);

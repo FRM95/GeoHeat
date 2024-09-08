@@ -34,13 +34,13 @@ const setOption = (optKey, optValue) => {
                 newOpt.value = currOpt['area'];
                 newOpt.text = currOpt['name'];
                 newOpt.setAttribute("data-coordinates", currOpt['coordinates']);
-                newOpt.setAttribute("data-name", currOpt['name']);
+                newOpt.setAttribute("data-location_name", currOpt['name']);
             }
             else if('country' in currOpt){
                 newOpt.value = currOpt['country'];
                 newOpt.text = currOpt['name'];
                 newOpt.setAttribute("data-coordinates", currOpt['coordinates']);
-                newOpt.setAttribute("data-name", currOpt['name']);
+                newOpt.setAttribute("data-location_name", currOpt['name']);
             }
             else if('delimiter' in currOpt){
                 newOpt.value = currOpt['delimiter'];
@@ -71,7 +71,7 @@ const requestedData = (selectors) => {
             if(property === "location"){
                 const options = selection.options[selection.selectedIndex];
                 result['coordinates'] = options.dataset.coordinates;
-                result['name'] = options.dataset.name;
+                result['location_name'] = options.dataset['location_name'];
             }
         }
     }

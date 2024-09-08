@@ -9,6 +9,14 @@ import { notificationHandler } from './scripts/UX/notifications.js'
 import { moveToPoint } from './scripts/UX/globe.js'
 import { texturesQuality, texturesProperties, lightProperties } from "./config.js";
 
+const $ = (element) => {
+    document.querySelector(element);
+} 
+
+/* const $ = el => document.querySelector(el);
+    const $$ = el => document.querySelectorAll(el);
+*/
+
 async function main(){
 
     // Renderer creation and DOM append
@@ -122,7 +130,7 @@ async function main(){
         const inputSearch = document.getElementById("input-location-search");
         if(inputSearch != null){
             const coordToSearch = inputSearch.getAttribute("data-coordinates");
-            const locationName = inputSearch.getAttribute("data-name");
+            const locationName = inputSearch.getAttribute("data-location_name");
             if(inputSearch.value === locationName && coordToSearch!=null){
                 const coordinatesArr = coordToSearch.split(" ");
                 let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
