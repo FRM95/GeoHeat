@@ -1,13 +1,17 @@
 services:
   geoheat_database:
-    image: mongodb/mongodb-community-server:latest
+    image: mongo:latest
     container_name: geoheat_mongodb
+    restart: unless-stopped
     ports:
       - 27018:27017
     env_file:
       - .env
     volumes:
-      - D:\WorkSpace\GeoHeat\geoheat_db_data:/data/geoheat_db_data
-      - D:\WorkSpace\GeoHeat\scripts:/data/geoheat_db_scripts
-    command: ./data/geoheat_db_scripts/mongodb.sh
-    restart: unless-stopped
+      - ./scripts:/docker-entrypoint-initdb.d/
+      - ./geoheat_db_data:/data/geoheat_db_data
+    command: 
+      - --storageEngine
+      - wiredTiger
+      - --auth
+    
