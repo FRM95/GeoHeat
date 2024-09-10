@@ -1,46 +1,13 @@
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb_container
-    restart: always
-    env_file:
-      - .env
+  geoheat_database:
+    image: mongodb/mongodb-community-server:latest
+    container_name: geoheat_mongodb
     ports:
       - 27018:27017
-    networks:
-      - mongo_network
-      - app_network
-  mongoseed:
-    container_name: mongoseed_container
     env_file:
       - .env
-    build:
-      context: .
-      dockerfile: seedDockerfile
-    image: mongoseed_image:v.0.1
-    networks:
-      - mongo_network
-    depends_on:
-      - mongodb
-  nrtapp:
-    container_name: nrtapp_container
-    restart: always
-    env_file:
-      - .env
-    ports: 
-      - 5000:5000
-    build:
-      context: .
-      dockerfile: appDockerfile
-    image: nrtapp_image:v.0.1
-    networks:
-      - app_network
-    depends_on:
-      - mongodb
-networks:
-  mongo_network:
-    name: mongo_network
-    driver: bridge
-  app_network:
-    name: app_network
-    driver: bridge
+    volumes:
+      - D:\WorkSpace\GeoHeat\geoheat_db_data:/data/geoheat_db_data
+      - D:\WorkSpace\GeoHeat\scripts:/data/geoheat_db_scripts
+    command: ./data/geoheat_db_scripts/mongodb.sh
+    restart: unless-stopped
