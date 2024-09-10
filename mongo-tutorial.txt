@@ -1,0 +1,12 @@
+When creating a docker mongodb container we must implement two steps to enhance security.
+
+1. Authentication: we need to put some auth security when creating the docker container. Either in docker-compose or dockerfile.
+What I did: In docker-compose, when adding an env file, this file needs to have 3 env variables: MONGO_INITDB_ROOT_USERNAME, MONGO_INITDB_ROOT_PASSWORD, MONGO_INITDB_DATABASE
+
+2. Seeding and creating some database: after creating the container, it would be great to have some databases, collections and data so the app can use them.
+What I did: Create a script file (.sh) which is going to be executed inmediately by the container after being up. 
+Using mongoimport command on the OS cli (container linux OS): 
+mongoimport --authenticationDatabase=$MONGO_INITDB_DATABASE -u=$MONGO_INITDB_ROOT_USERNAME -p=$MONGO_INITDB_ROOT_PASSWORD -d=<database> -c=<collection> --file=<filepath>
+* we can add --drop to erase any old collection and --jsonArray if we have an array of documents (array of js objects/dictionaries)
+
+
