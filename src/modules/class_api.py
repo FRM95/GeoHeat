@@ -6,7 +6,7 @@ from datetime import datetime
 
 class APIOperations():
 
-    def isValidKey(self, api_key:str, endpoint:str, param_val:str = 'MAP_KEY') -> (list|str):
+    def isValidKey(self, api_key:str, endpoint:str, param_val:str = 'MAP_KEY') -> (dict|str):
         if not isinstance(api_key, str):
             return 'Key TypeError exception: api_key parameter must be a string type'
         elif not isinstance(endpoint, str):

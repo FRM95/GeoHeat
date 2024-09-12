@@ -7,7 +7,7 @@ class Firms(APIOperations):
         self.__baseEndpoint = 'https://firms.modaps.eosdis.nasa.gov/api/'
     
     # BASE METHOD TO CHECK USER'S KEY'S
-    def checkKey(self, key:str) -> (list|str):
+    def checkKey(self, key:str) -> (dict|str):
         """Public Method: Check user key used for all operations"""
         private_endpoint = 'https://firms.modaps.eosdis.nasa.gov/mapserver/mapkey_status/'
         key_result = self.isValidKey(key, private_endpoint)
@@ -34,7 +34,7 @@ class Firms(APIOperations):
             return self.processTXT(sources_result)
     
     # BASE METHOD TO OBTAIN FIRES
-    def getFires(self, key:str, **kwargs) -> (list|str):
+    def getFires(self, key:str, **kwargs) -> (dict|str):
         """Public Method: NASA FIRMS fires information based on area/country"""
         fires_url = self.createURL(key, self.__baseEndpoint, **kwargs)
         fires_result = self.getRequest(fires_url)

@@ -1,17 +1,19 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from modules.class_api_firms import Firms
+from modules.class_mongodb_geoheat import GeoHeatDB
 from datetime import datetime
-from pymongo import MongoClient
-from os import getenv
 import secrets
 import json
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger  = logging.getLogger(__name__)
+
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
+
 api = Firms()
+mongodb = GeoHeatDB()
 
 @app.route("/")
 def init():
@@ -24,13 +26,15 @@ def login():
         if input_key in session:
             return redirect(url_for('home', key = input_key))
         else:
-            verified_key = api.checkKey(input_key)
-            if isinstance(verified_key, dict):
-                verified_key['connection'] = datetime.now()
-                session[input_key] = verified_key
+            key_object = api.checkKey(input_key)
+            if isinstance(key_object, dict):
+                key_object['connection'] = datetime.now()
+                session[input_key] = key_object
+                # TODO: add user to users database or extract users_data
+                mongodb.addUser({"firms_key" : input_key})
                 return redirect(url_for('home', key = input_key))
             else:
-                flash(verified_key)
+                flash(key_object)
                 return redirect(url_for('login'))
     else:
         with open('./data/mock_data.json', 'r') as f:
@@ -41,6 +45,7 @@ def login():
 def home(key):
     if key in session:
         active_fires = {key: []}
+        # available_request_data = mongodb.getRequestData()
         with open("./data/request_data.json", 'r') as fp1:
             available_request_data = json.load(fp1)
         # with open("./data/fire_data_example.json", 'r') as fp1:
