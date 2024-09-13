@@ -92,7 +92,11 @@ async function main(){
         setCheckbox(key, value); 
         setOption(key, value);
     }
-
+    
+    console.log('1', user_data_2)
+    console.log('2', countries_data)
+    console.log('3', firms_data)
+    console.log('4', areas_data)
 
     // Request date creation
     const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];

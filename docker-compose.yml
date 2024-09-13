@@ -1,15 +1,15 @@
 services:
-  geoheat_app:
-    build: 
-      dockerfile: ./geoheat.Dockerfile
-    container_name: geoheat_flask
-    restart: unless-stopped
-    ports:
-      - 5001:5000
-    env_file:
-      - .env
-    networks:
-      - geoheat_net
+  # geoheat_app:
+  #   build: 
+  #     dockerfile: ./geoheat.Dockerfile
+  #   container_name: geoheat_flask
+  #   restart: unless-stopped
+  #   ports:
+  #     - 5001:5000
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - geoheat_net
   geoheat_database:
     image: mongo:latest
     container_name: geoheat_mongodb

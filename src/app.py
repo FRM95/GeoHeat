@@ -24,35 +24,58 @@ def login():
     if request.method == 'POST':
         input_key = request.form.get('nasa-FIRMS-value')
         if input_key in session:
-            return redirect(url_for('home', key = input_key))
+            if mongodb.userExists(input_key):
+                return redirect(url_for('home', key = input_key)) 
+            else:
+                # TODO: add message -> can not logging, unable to user (mongodb problem)
+                flash('Unable to check user') 
+                return redirect(url_for('login'))
         else:
             key_object = api.checkKey(input_key)
             if isinstance(key_object, dict):
                 key_object['connection'] = datetime.now()
                 session[input_key] = key_object
-                # TODO: add user to users database or extract users_data
-                mongodb.addUser({"firms_key" : input_key})
+                if mongodb.userExists(input_key) == False:
+                    if mongodb.addUser({"firms_key" : input_key}) == False:
+                        # TODO: add message -> If user couldnt be created (mongodb problem)
+                        flash('Unable to add user') 
+                        return redirect(url_for('login'))
                 return redirect(url_for('home', key = input_key))
             else:
-                flash(key_object)
+                flash('Something wrong with NASA happened') # TODO: add message -> something wrong happened NASA FIRMS key (nasa problem)
                 return redirect(url_for('login'))
     else:
         with open('./data/mock_data.json', 'r') as f:
             mock_data = json.load(f)
         return render_template('login.html', data = mock_data)
     
+    
 @app.route('/home/<key>', methods=['GET'])
 def home(key):
     if key in session:
-        active_fires = {key: []}
-        # available_request_data = mongodb.getRequestData()
-        with open("./data/request_data.json", 'r') as fp1:
-            available_request_data = json.load(fp1)
-        # with open("./data/fire_data_example.json", 'r') as fp1:
-        #     active_fires = json.load(fp1)
-        return render_template('index.html', user_data = active_fires, user_key = key, options_data = available_request_data)
+        user_data_2 = mongodb.getUserData(key)
+        if user_data_2 != None:
+            countries_data, firms_data, areas_data = mongodb.getRequestData()
+            active_fires = {key: []}
+            with open("./data/request_data.json", 'r') as fp1:
+                available_request_data = json.load(fp1)
+            return render_template('index.html', 
+                    user_data = active_fires, 
+                    options_data = available_request_data, 
+                    user_key = key, 
+                    user_data_2 = user_data_2, 
+                    countries_data = countries_data,
+                    firms_data = firms_data,
+                    areas_data = areas_data)
+        else:
+            # TODO: add message -> can not logging, unable to get user data (mongodb problem)
+            flash('Unable to get user info') 
+            return redirect(url_for('login'))
     else:
+        # TODO: add message -> need to login first
+        flash('You need to login first') 
         return redirect(url_for('login'))
+
 
 @app.route("/updateData", methods = ['POST','PUT'])
 def updateData():
