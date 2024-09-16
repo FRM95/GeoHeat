@@ -2,7 +2,7 @@
 const forwardEvent = (domElement) => {
     const htmlElm = document.getElementById(domElement);
     if(htmlElm != null){
-        htmlElm.addEventListener("change", _ =>{
+        htmlElm.addEventListener("change", ()=>{
             let newState = htmlElm.checked;
             let childs = document.getElementsByClassName(htmlElm.id);
             for (let i = 0; i < childs.length; i++) {
@@ -30,7 +30,7 @@ const backwardEvent = (node, parentElem) => {
 }
 
 /* Applies default status (true) to all checkboxes */
-const resetDefault = (domElement, nodesClass) => {
+export const resetFilterOptions = (domElement, nodesClass) => {
     const htmlElm = document.getElementById(domElement);
     const checkboxes = document.getElementsByClassName(nodesClass);
     if (htmlElm != null && checkboxes!=null){
@@ -92,7 +92,7 @@ const insertDateAt = (date, refElement, domElement, parentName) =>{
 }
 
 
-/* Creates a single checkbox date filter from rerquest */
+/* Creates a single checkbox date filter from request */
 const setNewDate = (date, domElement, parentName) =>{
     const htmlElm = document.getElementById(domElement);
     if(htmlElm != null){
@@ -125,60 +125,80 @@ const setMultipleDates = (userKey, data, domElement, parentName) =>{
     }
 }
 
-/* Creates checkbox filters data (source, area, and country) */
-const setCheckbox = (boxKey, boxValue) => {
-    const htmlElm = document.getElementById('available' + boxKey);
-    if(htmlElm != null){
-        const arrValues = boxValue;
-        for(let i = 0; i < arrValues.length; i++){
-
-            const currOpt = arrValues[i];
-            const newNode = document.createElement("input");
-            newNode.setAttribute('type', 'checkbox');
-            newNode.checked = true;
-            const label = document.createElement("label");
-            const nodeDiv = document.createElement("div");
-            nodeDiv.className = "details-content-option";
-
-            if('area' in currOpt){
-                if(currOpt['name'] != "World"){
-                    newNode.value = currOpt['name'];
-                    newNode.setAttribute('property', 'region');
-                    newNode.classList.add('filter' + boxKey, 'input-checkbox', 'checkbox-1');
-                    forwardEvent('filter' + boxKey);
-                    backwardEvent(newNode, 'filter' + boxKey);
-                    label.innerHTML = currOpt['name'];
-                    nodeDiv.appendChild(label);
-                    nodeDiv.appendChild(newNode);
-                    htmlElm.appendChild(nodeDiv); 
-                }
-            }
-
-            else if('country' in currOpt){
-                newNode.value = currOpt['country'];
-                newNode.setAttribute('property', 'nasa_abreviation');
-                newNode.classList.add('filter' + boxKey, 'input-checkbox', 'checkbox-1');
-                forwardEvent('filter' + boxKey);
-                backwardEvent(newNode, 'filter' + boxKey);
-                label.innerHTML = currOpt['name'];
-                nodeDiv.appendChild(label);
-                nodeDiv.appendChild(newNode);
-                htmlElm.appendChild(nodeDiv); 
-            }
-
-            else if('source' in currOpt){
-                newNode.value = currOpt['source'];
-                newNode.setAttribute('property', 'source');
-                newNode.classList.add('filter' + boxKey, 'input-checkbox', 'checkbox-1');
-                forwardEvent('filter' + boxKey);
-                backwardEvent(newNode, 'filter' + boxKey);
-                label.innerHTML = currOpt['source'].replace(/_/g, " ");
-                nodeDiv.appendChild(label);
-                nodeDiv.appendChild(newNode);
-                htmlElm.appendChild(nodeDiv); 
-            }
-        }
-    }
+/* Creates a new details section based on filter category */
+const createDetailsContent = (labelToAdd, nodeToAdd) => {
+    const nodeDiv = document.createElement("div");
+    nodeDiv.className = "details-content-option";
+    nodeDiv.appendChild(labelToAdd);
+    nodeDiv.appendChild(nodeToAdd);
+    return nodeDiv
 }
 
-export {setCheckbox, setNewDate, setMultipleDates, filteredOptions, resetDefault};
+/* Creates a new checkbox */
+const createCheckBox = (value, property, key) => {
+    const newNode = document.createElement("input");
+    newNode.setAttribute('type', 'checkbox');
+    newNode.setAttribute('property', property);
+    newNode.value = value;
+    newNode.checked = true;
+    newNode.classList.add('filter_' + key, 'input-checkbox', 'checkbox-1');
+    forwardEvent('filter_' + key);
+    backwardEvent(newNode, 'filter_' + key); 
+    return newNode
+}
+
+/* Set the options to filter data */
+export const setFilterOptions = (boxKey, boxValue) => {
+    switch (boxKey) { 
+        case "country":
+            const countryElement = document.getElementById('available_' + boxKey);
+            if(countryElement != null) {
+                for(let i = 0; i < boxValue.length; i++) {
+                    const node = createCheckBox(boxValue[i]['country'], 'nasa_abreviation', boxKey);
+                    const label = document.createElement("label");
+                    label.innerHTML = boxValue[i]['name'];
+                    const div = createDetailsContent(label, node);     
+                    countryElement.appendChild(div);
+                }
+            }
+            break
+        case "area":
+            const areaElement = document.getElementById('available_' + boxKey);
+            if(areaElement != null) {
+                for(let i = 0; i < boxValue.length; i++) { 
+                    if(boxValue[i] != "World"){
+                        const node = createCheckBox(boxValue[i]['name'], 'region', boxKey);
+                        const label = document.createElement("label");
+                        label.innerHTML = boxValue[i]['name'];
+                        const div = createDetailsContent(label, node);     
+                        areaElement.appendChild(div);
+                    }
+                }
+            }
+            break
+        case "firms":
+            for(let i = 0; i < boxValue.length; i++) { 
+                const element = boxValue[i]["property"];
+                const values = boxValue[i]["values"];
+                switch (element) {
+                    case "source":
+                        const sourceElement = document.getElementById('available_' + element);
+                        if(sourceElement != null) {
+                            for(let i = 0; i < values.length; i++) { 
+                                const node = createCheckBox(values[i], 'source', element);
+                                const label = document.createElement("label");
+                                label.innerHTML = values[i].replace(/_/g, " ");
+                                const div = createDetailsContent(label, node);     
+                                sourceElement.appendChild(div);
+                            }
+                        }
+                        break
+                }
+            }
+            break
+    }
+
+
+}
+
+export {setNewDate, setMultipleDates, filteredOptions};

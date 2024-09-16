@@ -317,6 +317,12 @@ header{
     width: inherit;
     max-width: inherit;
 }
+.sidebar-details-detail > summary{
+    transition: color 0.2s ease-out;
+}
+.sidebar-details-detail > summary:hover{
+    color: #0073ff;
+}
 .details-content{
     max-height: 320px; 
     scroll-behavior: smooth;
@@ -334,18 +340,16 @@ header{
     display: flex;
     justify-content: space-between;
     transition: color 0.2s ease-out;
+    padding-right: 7px;
 }
 .details-content-option:hover{
     color: #0073ff;
-}
-#availableCountry > .details-content-option {
-    margin-right: 10px;
 }
 .request-parameter{
     font-family: var(--custom-font);
     font-size: 0.95em;
     font-weight: 500;
-    padding: 0.3em 0em 0.3em 0.5em;
+    /* padding: 0.3em 0em 0.3em 0.5em; */
     transition: border-color 0.25s;
     width: inherit;
     height: auto;

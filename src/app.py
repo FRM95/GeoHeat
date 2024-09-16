@@ -53,17 +53,12 @@ def login():
 @app.route('/home/<key>', methods=['GET'])
 def home(key):
     if key in session:
-        user_data_2 = mongodb.getUserData(key)
-        if user_data_2 != None:
+        user_data = mongodb.getUserData(key)
+        if user_data != None:
             countries_data, firms_data, areas_data = mongodb.getRequestData()
-            active_fires = {key: []}
-            with open("./data/request_data.json", 'r') as fp1:
-                available_request_data = json.load(fp1)
             return render_template('index.html', 
-                    user_data = active_fires, 
-                    options_data = available_request_data, 
-                    user_key = key, 
-                    user_data_2 = user_data_2, 
+                    user_fires = {key: []}, 
+                    user_data = user_data, 
                     countries_data = countries_data,
                     firms_data = firms_data,
                     areas_data = areas_data)

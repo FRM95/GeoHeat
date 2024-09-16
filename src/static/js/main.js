@@ -1,9 +1,14 @@
 import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLight, textureVisible, THREE } from './scripts/threeJS/functions.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-import { setOption, requestedData, allowRequest, putData, getData, exportData } from './scripts/requests/functions.js';
+
+/* Request data */
+import { setRequestOptions } from './scripts/requests/ux-functions.js';
+import { requestedData, allowRequest, getData, exportData } from './scripts/requests/functions.js';
+
+/* Filter data */
+import { setFilterOptions, resetFilterOptions, setNewDate, filteredOptions, setMultipleDates } from './scripts/UX/data-filter/ux-functions.js';
+
 import { processFireData, displayFireData, coordToCartesian } from './scripts/fires/functions.js';
-import { setCheckbox, setNewDate, resetDefault, filteredOptions, setMultipleDates } from './scripts/UX/filter.js';
-// import { setInspectData } from './scripts/UX/plotly_functions.js'
 import { userInterface } from './scripts/UX/user.js'
 import { notificationHandler } from './scripts/UX/notifications.js'
 import { moveToPoint } from './scripts/UX/globe.js'
@@ -87,34 +92,35 @@ async function main(){
         markerInformation.ariaHidden = "true";
     })
 
-    // Creates filter data and request data options
-    for(const[key, value] of Object.entries(options_data)){
-        setCheckbox(key, value); 
-        setOption(key, value);
-    }
-    
-    console.log('1', user_data_2)
-    console.log('2', countries_data)
-    console.log('3', firms_data)
-    console.log('4', areas_data)
+    /* Set options to filter data */
+    setFilterOptions("country", countries_data);
+    setFilterOptions("area", areas_data);
+    setFilterOptions("firms", firms_data);
+    resetFilterOptions("reset-button", "summary-checkbox");
 
-    // Request date creation
-    const currDay = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-    document.getElementById('requestDate').max = currDay;
-    document.getElementById('requestDate').value = currDay;
-
-
-    // Applies filter
+    /* Apply filter data */
     const saveFilter = document.getElementById("save-button");
+    const user_key = user_data["firms_key"];
     let boxes = document.getElementsByClassName("summary-checkbox");
     saveFilter.addEventListener("click", _ => {
         let filtersToApply = filteredOptions(boxes);
         removeObject(scene, meshPointers)
-        meshPointers = processFireData(user_key, user_data, earth_radius, filtersToApply);
+        meshPointers = processFireData(user_key, user_fires, earth_radius, filtersToApply);
         addObject(scene, meshPointers);
         markerElement.ariaHidden = "true";
         markerInformation.ariaHidden = "true";
     });
+
+    /* Set options to request data */
+    setRequestOptions("country", countries_data);
+    setRequestOptions("area", areas_data);
+    setRequestOptions("firms", firms_data);
+    setRequestOptions("date", null);
+    
+    console.log('1', user_data)
+    console.log('2', countries_data)
+    console.log('3', firms_data)
+    console.log('4', areas_data)
 
     // Get and update user data
     const requestData = document.getElementById("request-button");
@@ -122,10 +128,10 @@ async function main(){
     let tweenAnimation = null;
 
     // Include it when load windows
-    if(user_data[user_key].length > 0){
-        meshPointers = processFireData(user_key, user_data, earth_radius);
+    if(user_fires[user_key].length > 0){
+        meshPointers = processFireData(user_key, user_fires, earth_radius);
         addObject(scene, meshPointers);
-        setMultipleDates(user_key, user_data, 'availableDate', 'filterDate')
+        setMultipleDates(user_key, user_fires, 'availableDate', 'filterDate')
     }
 
     // Search location 
@@ -149,12 +155,12 @@ async function main(){
     /* Request data */
     requestData.addEventListener("click", async _ => {
         const selectedOptions = requestedData(selectors);
-        const flagRequest = allowRequest(user_key, user_data, selectedOptions);
+        const flagRequest = allowRequest(user_key, user_fires, selectedOptions);
         if(flagRequest.allowed){
-            const addedCorrectly = await getData(user_key, user_data, flagRequest, selectedOptions);
+            const addedCorrectly = await getData(user_key, user_fires, flagRequest, selectedOptions);
             if(addedCorrectly){
                 removeObject(scene, meshPointers);
-                meshPointers = processFireData(user_key, user_data, earth_radius);
+                meshPointers = processFireData(user_key, user_fires, earth_radius);
                 addObject(scene, meshPointers);
                 setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
                 // here goes the calculation of kpi's
@@ -173,9 +179,6 @@ async function main(){
         }
     });
 
-    // Reset filters
-    resetDefault('reset-button', 'summary-checkbox');
-
     const compass = document.getElementById("arrow");
     const vectorUp = new THREE.Vector2(earth.position.x, earth.position.y + 1);
     function updateCompass(){
@@ -186,22 +189,18 @@ async function main(){
     }
 
     // UX-UI Functions
-    userInterface(labelRenderer, controls, texturesProperties);
-    const layersApply = document.getElementById("apply-interface-layers");
-    layersApply.addEventListener("click", _ =>{
-        textureVisible(texturesProperties, earth, stars);
-    });
-    const datitos = document.getElementById("contenidoDatos");
-    datitos.addEventListener("click", () =>{
-        console.log(user_data)
-    })
+    userInterface(labelRenderer, controls);
+    // const layersApply = document.getElementById("apply-interface-layers");
+    // layersApply.addEventListener("click", _ =>{
+    //     textureVisible(texturesProperties, earth, stars);
+    // });
 
     //Download file data
     const getFiles = document.getElementsByClassName('file-request');
     for(let i = 0; i < getFiles.length; i++){
         const fileType = getFiles[i].getAttribute('download-file');
         getFiles[i].addEventListener("click", async _ =>{
-            await exportData(user_key, user_data, fileType);
+            await exportData(user_key, user_fires, fileType);
         });
     }
 

@@ -1,7 +1,3 @@
-import { moveToPoint } from "./globe.js";
-// import { coordToCartesian } from "../fires/functions.js"
-// import { camera, earth, earth_radius } from "../../main.js"
-
 const sidebar = document.getElementById('container-sidebar');
 const Areasidebar = document.getElementById('area-sidebar');
 const hideSidebar = document.getElementById('collapse-sidebar');
@@ -254,48 +250,14 @@ const user_zoom = (labelRenderer, TrackballControls) => {
 }
 
 
-/* Interface select layers */
-const select_layers = (texturesObject) => {
-    const layersDiv = document.getElementById('earth-layers');
-    if(layersDiv!=null){
-
-        for(const[key, value] of Object.entries(texturesObject)){
-            const layerSection = document.createElement("div");
-            layerSection.className = 'section';
-            const newNode = document.createElement("input");
-            newNode.setAttribute('type', 'checkbox');
-            newNode.className = 'checkbox-layer';
-            newNode.checked = value.visible;
-            newNode.setAttribute('property', key);
-            const label = document.createElement("label");
-            label.innerHTML = key;
-            layerSection.appendChild(newNode);
-            layerSection.appendChild(label);
-            layersDiv.appendChild(layerSection);
-        }
-
-        const applyLayers = document.createElement("button");
-        applyLayers.className = "button-2 action-button";
-        applyLayers.textContent = 'Apply layers';
-        applyLayers.id = "apply-interface-layers";
-        const applyLayersDiv = document.createElement("div");
-        applyLayersDiv.appendChild(applyLayers);
-        layersDiv.appendChild(applyLayersDiv);
-    }
-}
-
-
 /* User interface and experience functions */
-function userInterface(labelRenderer, TrackballControls, texturesObject){
+function userInterface(labelRenderer, TrackballControls){
 
     // General UI/UX functions
     user_events();
 
     // Earth 3D Zoom in-out with wheel events
     user_zoom(labelRenderer, TrackballControls);
-
-    // Select layers to apply
-    select_layers(texturesObject);
 
 }
 
