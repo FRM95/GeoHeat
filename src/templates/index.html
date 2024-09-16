@@ -114,24 +114,24 @@
                     <div class="summary-1-content sidebar-details-content d-grid m-r2 m-l2 box-shad">
                       <div class="sidebar-details-select">
                         <span>Delimiter</span>
-                        <select id="requestDelimiter" class="select-1 request-parameter" property = "delimiter"></select>
+                        <select id="request_delimiter" class="select-1 request-parameter" property = "delimiter"></select>
                       </div>
                       <div class="sidebar-details-select">
                         <span>Location</span>
-                        <select id="requestArea" class="select-1 request-parameter" property = "location"></select>
-                        <select id="requestCountry" class="select-1 request-parameter hidden" property = "location"></select>
+                        <select id="request_area" class="select-1 request-parameter" property = "location"></select>
+                        <select id="request_country" class="select-1 request-parameter hidden" property = "location"></select>
                       </div>
                       <div class="sidebar-details-select">
                         <span>Source</span>
-                        <select id="requestSource" class="select-1 request-parameter" property = "source"></select>
+                        <select id="request_source" class="select-1 request-parameter" property = "source"></select>
                       </div>
                       <div class="sidebar-details-select">
                         <span>Range</span>
-                        <select id="requestRange" class="select-1 request-parameter" property = "dayrange"></select>                
+                        <select id="request_dayrange" class="select-1 request-parameter" property = "dayrange"></select>                
                       </div>
                       <div class="sidebar-details-select">
                         <span>Date</span>
-                        <input id="requestDate" type="date" placeholder="YYYY-MM-DD" class="select-1 request-parameter" property = "date">
+                        <input id="request_date" type="date" placeholder="YYYY-MM-DD" class="select-1 request-parameter" property = "date" style="width: 189px;">
                       </div>
                       <div>
                         <button class="button-2 action-button" id="request-button">Get data</button>
@@ -150,16 +150,16 @@
                         <div class="details-content d-grid scroll-1" name="dates" id="availableDate"></div>
                       </details>
                       <details class="sidebar-details-detail" id="details-source">
-                        <summary>Source <input type="checkbox" id="filterSource" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="sources" id="availableSource"></div>
+                        <summary>Source <input type="checkbox" id="filter_source" class="summary-checkbox checkbox-1" checked="true"></summary>
+                        <div class="details-content d-grid scroll-1" name="sources" id="available_source"></div>
                       </details>
                       <details class="sidebar-details-detail" id="details-area">
-                        <summary>Area <input type="checkbox" id="filterArea" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="areas" id="availableArea"></div>
+                        <summary>Area <input type="checkbox" id="filter_area" class="summary-checkbox checkbox-1" checked="true"></summary>
+                        <div class="details-content d-grid scroll-1" name="areas" id="available_area"></div>
                       </details>
                       <details class="sidebar-details-detail" id="details-country">
-                        <summary>Country <input type="checkbox" id="filterCountry" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="countries" id="availableCountry"></div>
+                        <summary>Country <input type="checkbox" id="filter_country" class="summary-checkbox checkbox-1" checked="true"></summary>
+                        <div class="details-content d-grid scroll-1" name="countries" id="available_country"></div>
                       </details>
                       <div>
                         <button class="button-3 default-button" id="reset-button">Reset to default</button>
@@ -404,10 +404,8 @@
       }
     </script>
     <script id="data"> 
-      var user_data = {{ user_data | tojson }}
-      var options_data = {{ options_data | tojson }};
-      var user_key = "{{user_key}}";
-      var user_data_2 = {{ user_data_2 | tojson }};
+      var user_fires = {{ user_fires | tojson }}
+      var user_data = {{ user_data | tojson }};
       var countries_data = {{ countries_data | tojson }};
       var firms_data = {{ firms_data | tojson }};
       var areas_data = {{ areas_data | tojson }};

@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { ArcballControls } from 'three/addons/controls/ArcballControls.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { getFresnelMat } from "./glowMaterial.js";
 
 /* Creates WebGL renderer based on width and height parameters */
@@ -71,86 +70,100 @@ const createSphere = (sphereProperties) => {
     return geometry
 }
 
-/* Creates Textures */
-const buildTextures = (sphereGeometry, texturesObject, texturesQuality) => {
+/* Parse string hexColor to number color */
+const parseColor = (properties) => {
+    if(properties != null) {
+        if("color" in properties) {
+            const stringColor = properties.color;
+            properties.color = Number(stringColor);
+        }
+        if ("emissive" in properties) {
+            const stringEmissiveColor = properties.emissive;
+            properties.emissive = Number(stringEmissiveColor);
+        }
+        return properties
+    }
+}
+
+/* Creates Textures based on textures data*/
+const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
     const loader = new THREE.TextureLoader();
     let returnObject = {};
-    if(texturesObject.Earth_map){
+    for(let i = 0; i < texturesArray.length; i++){
+        const name = texturesArray[i]["name"];
+        const properties = texturesArray[i]["properties"];
+        switch (name) {
+            case "earth_map":
+                const earthMaterial = new THREE.MeshPhongMaterial(properties);
+                const earthQuality = texturesArray[i]["quality"];
+                const earthTexture = loader.load(texturesQuality[name][earthQuality]);
+                earthMaterial.map = earthTexture;
+                const bumpQuality = earthQuality;
+                const bumpTexture = loader.load(texturesQuality.bump_map[bumpQuality]);
+                earthMaterial.bumpMap = bumpTexture;
+                earthMaterial.bumpScale = 1;
+                const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
+                returnObject[name] = earthMesh;
+                break
 
-        const earthMaterial = new THREE.MeshPhongMaterial(texturesObject.Earth_map.properties);
-        const earthQuality = texturesObject.Earth_map.texture_quality;
-        const earthTexture = loader.load(texturesQuality.Earth_map[earthQuality]);
-        earthMaterial.map = earthTexture;
-        
-        const bumpQuality = earthQuality;
-        const bumpTexture = loader.load(texturesQuality.Bump_map[bumpQuality]);
-        earthMaterial.bumpMap = bumpTexture;
-        earthMaterial.bumpScale = 1;
+            case "exosphere_map":
+                const fresnelMat = getFresnelMat();
+                const exosphereMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
+                exosphereMesh.scale.setScalar(texturesArray[i]["scale"]);
+                returnObject[name] = exosphereMesh;
+                break
 
-        const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
-        returnObject.Earth_map = earthMesh;
-    }
+            case "starfield_map":
+                const vertices = [];
+                const pointGeometry = new THREE.BufferGeometry();
+                for(let i = 0; i < 5000; i ++) {
+                    const x = THREE.MathUtils.randFloatSpread(200);
+                    const y = THREE.MathUtils.randFloatSpread(200);
+                    const z = THREE.MathUtils.randFloatSpread(200);
+                    vertices.push(x,y,z);
+                }
+                pointGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+                const starsQuality = texturesArray[i]["quality"];
+                const starsTexture = loader.load(texturesQuality[name][starsQuality]);
+                const starsMaterial = new THREE.PointsMaterial(properties);
+                starsMaterial.map = starsTexture;
+                const points = new THREE.Points(pointGeometry, starsMaterial);
+                returnObject[name] = points;
+                break
 
-    if(texturesObject.Clouds_map){
-
-        const cloudsMat = new THREE.MeshStandardMaterial(texturesObject.Clouds_map.properties);
-        const cloudsQuality = texturesObject.Clouds_map.texture_quality;
-        const cloudsTexture = loader.load(texturesQuality.Clouds_map[cloudsQuality]);
-        cloudsMat.alphaMap = cloudsTexture;
-
-        const cloudsMesh = new THREE.Mesh(sphereGeometry, cloudsMat);
-        cloudsMesh.scale.setScalar(texturesObject.Clouds_map.scale);
-        returnObject.Clouds_map = cloudsMesh;
-    }
-
-    if(texturesObject.Exosphere_map){
-        const fresnelMat = getFresnelMat();
-        const exosphereMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
-        exosphereMesh.scale.setScalar(texturesObject.Exosphere_map.scale);
-        returnObject.Exosphere_map = exosphereMesh;
-    }
-
-    if(texturesObject.Starfield_map){
-        const vertices = [];
-        const pointGeometry = new THREE.BufferGeometry();
-        for(let i = 0; i < 5000; i ++) {
-            const x = THREE.MathUtils.randFloatSpread(200);
-            const y = THREE.MathUtils.randFloatSpread(200);
-            const z = THREE.MathUtils.randFloatSpread(200);
-            vertices.push(x,y,z);
+            case "clouds_map":
+                const cloudsMat = new THREE.MeshStandardMaterial(properties);
+                const cloudsQuality = texturesArray[i]["quality"];
+                const cloudsTexture = loader.load(texturesQuality[name][cloudsQuality]);
+                cloudsMat.alphaMap = cloudsTexture;
+                const cloudsMesh = new THREE.Mesh(sphereGeometry, cloudsMat);
+                cloudsMesh.scale.setScalar(texturesArray[i]["scale"]);
+                returnObject[name] = cloudsMesh;
+                break
         }
-        pointGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-        const starsQuality = texturesObject.Starfield_map.texture_quality;
-        const starsTexture = loader.load(texturesQuality.Starfield_map[starsQuality]);
-        const starsMaterial = new THREE.PointsMaterial(texturesObject.Starfield_map.properties);
-        starsMaterial.map = starsTexture;
-        const points = new THREE.Points(pointGeometry, starsMaterial);
-        returnObject.Starfield_map = points;
     }
-
     return returnObject
 }
 
-/* Apply visible property to texture Object */
-const textureVisible = (texturesObject, groupMesh, backgroundMesh) =>{
-    const checkBoxLayers = document.getElementsByClassName("checkbox-layer");
-    for(let i = 0; i < checkBoxLayers.length; i++){
-        const layerProp = checkBoxLayers[i].getAttribute('property');
-        const ischecked = checkBoxLayers[i].checked;
-        texturesObject[layerProp].visible = ischecked;
-        if(backgroundMesh.name == layerProp){
-            backgroundMesh.visible = ischecked
-        }
-        else{
-            const meshes = groupMesh.children;
-            for(let j=0; j < meshes.length; j++){
-                if(meshes[j].name == layerProp){
-                    meshes[j].visible = ischecked;
-                    break;
-                }
-            }
+
+/* Creates lights based on lights data */
+const buildLights = (lightArray) => {
+    let returnObject = {};
+    for(let i = 0; i < lightArray.length; i++){ 
+        const name = lightArray[i]["name"];
+        const properties = lightArray[i]["properties"];
+        switch (name) {
+            case "ambient_light":
+                const ambientLight = new THREE.AmbientLight(properties["color"], properties["intensity"]);
+                returnObject[name] = ambientLight;
+                break
+            case "directional_light":
+                const directionalLight = new THREE.DirectionalLight(properties["color"], properties["intensity"]);
+                returnObject[name] = directionalLight;
+                break
         }
     }
+    return returnObject
 }
 
 
@@ -160,7 +173,7 @@ const createGroup = (texturesObject) =>{
     group.name = "groupMesh";
     for(const [key, value] of Object.entries(texturesObject)){
         value.name = key;
-        if(key != 'Starfield_map'){
+        if(key != 'starfield_map'){
             group.add(value);
         }
     }
@@ -173,7 +186,7 @@ const Group = (sphereProperties, texturesObject, texturesQuality) => {
     const sphere = createSphere(sphereProperties);
     const textures = buildTextures(sphere, texturesObject, texturesQuality);
     const groupMesh = createGroup(textures);
-    return {groupMesh: groupMesh, backgroundMesh: textures.Starfield_map}
+    return {groupMesh: groupMesh, backgroundMesh: textures["starfield_map"]}
 }
 
 /* Add Earth label functionality */
@@ -188,7 +201,6 @@ function setLabelAttributes(label, earth, camera){
             ud.cPosition.copy(label.position).applyMatrix4(ud.mat4.multiplyMatrices(camera.matrixWorldInverse, earth.matrixWorld));
             let d = ud.cPosition.negate().normalize().dot(ud.cNormal);
             d = smoothstep(0.2, 0.7, d);
-            // console.log(d);
             label.element.style.opacity = d;
             function smoothstep(min, max, value) {
                 var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
@@ -196,26 +208,6 @@ function setLabelAttributes(label, earth, camera){
                 };
             }
     };
-}
-
-/* Creates lights from scene */
-const buildLight = (lightObject) => {
-    let returnObject = {};
-    if(lightObject.ambient_light.visible){
-        const ambientLight = new THREE.AmbientLight(
-            lightObject.ambient_light.properties.color, 
-            lightObject.ambient_light.properties.intensity
-        );
-        returnObject.ambientLight = ambientLight;
-    }
-    if(lightObject.directional_light.visible){
-        const directionalLight = new THREE.DirectionalLight(
-            lightObject.directional_light.properties.color, 
-            lightObject.directional_light.properties.intensity
-        );
-        returnObject.directionalLight = directionalLight;
-    }
-    return returnObject
 }
 
 
@@ -252,8 +244,7 @@ export {
     setLabelAttributes,
     addObject,
     removeObject,
-    buildLight,
-    textureVisible,
-    THREE,
+    buildLights,
+    THREE
 };
 

@@ -1,4 +1,4 @@
-import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLight, textureVisible, THREE } from './scripts/threeJS/functions.js';
+import { createRenderer, createCamera, createControls, Group, setLabelAttributes, removeObject, addObject, buildLights, THREE } from './scripts/threeJS/functions.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 /* Request data */
@@ -8,15 +8,18 @@ import { requestedData, allowRequest, getData, exportData } from './scripts/requ
 /* Filter data */
 import { setFilterOptions, resetFilterOptions, setNewDate, filteredOptions, setMultipleDates } from './scripts/UX/data-filter/ux-functions.js';
 
+/* Layers data */
+import { setTexturesOptions } from './scripts/user_data/layers.js';
+
 import { processFireData, displayFireData, coordToCartesian } from './scripts/fires/functions.js';
 import { userInterface } from './scripts/UX/user.js'
 import { notificationHandler } from './scripts/UX/notifications.js'
 import { moveToPoint } from './scripts/UX/globe.js'
-import { texturesQuality, texturesProperties, lightProperties } from "./config.js";
+import { texturesQuality } from "./config.js";
 
-const $ = (element) => {
-    document.querySelector(element);
-} 
+// const $ = (element) => {
+//     document.querySelector(element);
+// } 
 
 /* const $ = el => document.querySelector(el);
     const $$ = el => document.querySelectorAll(el);
@@ -29,14 +32,14 @@ async function main(){
     const width = window.innerWidth;
     const height = window.innerHeight + yOffset;
     const renderer = createRenderer(width, height);
-    const container = document.getElementById('threejs-canvas');
+    const container = document.getElementById("threejs-canvas");
     container.appendChild(renderer.domElement);
 
     // Label Render creation
     const labelRenderer = new CSS2DRenderer();
     labelRenderer.setSize(width, height);
-    labelRenderer.domElement.style.position = 'absolute';
-    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.position = "absolute";
+    labelRenderer.domElement.style.top = "0px";
     container.appendChild(labelRenderer.domElement);   
     
     // Scene creation
@@ -45,10 +48,12 @@ async function main(){
     // Camera creation
     const camera = createCamera(75, width/height, 0.1, 1000, 0, 0, 3);
 
-    // Earth creation
+    // Earth and textures creation
     const earth_radius = 1.0;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const meshes = Group(sphereProperties, texturesProperties, texturesQuality);
+    const userTextures = user_data["threejs_configuration"]["textures"];
+    const meshes = Group(sphereProperties, userTextures, texturesQuality);
+
     const earth = meshes.groupMesh;
     scene.add(earth);
     camera.lookAt(earth.position);
@@ -57,14 +62,14 @@ async function main(){
     const controls = createControls(camera, labelRenderer.domElement, earth);
 
     // Lights creation
-    const lightObject = buildLight(lightProperties); 
-    const sphereLight = lightObject.ambientLight;
-    const sunLight = lightObject.directionalLight;
+    const userLights = user_data["threejs_configuration"]["lights"];
+    const lightObject = buildLights(userLights); 
+    const sphereLight = lightObject["ambient_light"];
+    const sunLight = lightObject["directional_light"];
     sunLight.position.set(-4, 3, 2);
     scene.add(sphereLight);
     camera.add(sunLight);
     scene.add(camera);
-
 
     // Example
     // const axesHelper = new THREE.AxesHelper(2);
@@ -73,6 +78,9 @@ async function main(){
     // Background creation
     const stars = meshes.backgroundMesh;
     scene.add(stars);
+
+    /* Set options to select layers data */
+    setTexturesOptions(userTextures, earth, stars);
 
     // Default data
     let meshPointers = [];
@@ -83,7 +91,6 @@ async function main(){
     const earthMesh = earth.children[0];
     setLabelAttributes(markerCSS2, earthMesh, camera)
     scene.add(markerCSS2);
-
 
     // Mark information functionality
     const closeMarker = document.querySelector("[data-section = 'Marker-Label']");
@@ -117,11 +124,6 @@ async function main(){
     setRequestOptions("firms", firms_data);
     setRequestOptions("date", null);
     
-    console.log('1', user_data)
-    console.log('2', countries_data)
-    console.log('3', firms_data)
-    console.log('4', areas_data)
-
     // Get and update user data
     const requestData = document.getElementById("request-button");
     const selectors = document.getElementsByClassName("request-parameter");
@@ -190,10 +192,6 @@ async function main(){
 
     // UX-UI Functions
     userInterface(labelRenderer, controls);
-    // const layersApply = document.getElementById("apply-interface-layers");
-    // layersApply.addEventListener("click", _ =>{
-    //     textureVisible(texturesProperties, earth, stars);
-    // });
 
     //Download file data
     const getFiles = document.getElementsByClassName('file-request');

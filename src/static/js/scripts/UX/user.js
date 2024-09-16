@@ -42,7 +42,7 @@ const setList = (results) =>{
             let target = e.target;
             searchInput.value = target.getAttribute("name");
             searchInput.setAttribute("data-coordinates", target.getAttribute("coordinates"));
-            searchInput.setAttribute("data-location_name", target.getAttribute("location_name"));
+            searchInput.setAttribute("data-location_name", target.getAttribute("name"));
             clearList();
         })
         list.appendChild(resultItem);
@@ -124,13 +124,13 @@ const user_events = () => {
         let value = e.target.value;
         if(value.trim()){
             value = value.trim().toLowerCase();
-            let countries = setList(options_data['Country'].filter(country => {
+            let countries = setList(countries_data.filter(country => {
                 return country["name"].toLowerCase().includes(value)
             })); 
             if(countries){
                 listDiv.ariaHidden = "false";
             } else {
-                let areas = setList(options_data['Area'].filter(area => {
+                let areas = setList(areas_data.filter(area => {
                     return area["name"].toLowerCase().includes(value)
                 }));
                 if(areas){
