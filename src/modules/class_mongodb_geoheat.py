@@ -91,9 +91,9 @@ class GeoHeatDB(MongoDB):
     def getRequestData(self):
         try:
             database = self.getDatabase(getenv("REQUESTDB"))
-            countries_cursor = self.getCollection(database, getenv("REQUESTDB_countries")).find({}, {'_id': 0})
+            countries_cursor = self.getCollection(database, getenv("REQUESTDB_countries")).find({}, {'_id': 0}).sort({'name':1})
             firms_cursor = self.getCollection(database, getenv("REQUESTDB_firms")).find({}, {'_id': 0})
-            areas_cursor = self.getCollection(database, getenv("REQUESTDB_areas")).find({}, {'_id': 0})
+            areas_cursor = self.getCollection(database, getenv("REQUESTDB_areas")).find({}, {'_id': 0}).sort({'name':1})
         except Exception as getRequestDataException:
             raise Exception(f'GeoHeatDB Get Request Data exception: {getRequestDataException}')
         else:

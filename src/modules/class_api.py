@@ -165,23 +165,5 @@ class APIOperations():
                     result_data['date'] = value
 
         return result_data
-    
-    def createJSON(self, userKey, fireData, **kwargs):
-        try:
-            json_data = {userKey : [
-                    {"date":kwargs.get('date'),
-                    "source":kwargs.get('source'),
-                    "delimiter":kwargs.get('delimiter'),
-                    "location":kwargs.get('location'),
-                    "location_name":kwargs.get('location_name'),
-                    "dayrange":kwargs.get('dayrange'),
-                    "firedata":fireData}
-                    ]
-                }
-        except Exception as e:
-            return f'JSON creation exception: {e}'
-        else:
-            return json_data
-
 
     

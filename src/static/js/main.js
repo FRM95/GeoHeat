@@ -3,7 +3,7 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 
 /* Request data */
 import { setRequestOptions } from './scripts/requests/ux-functions.js';
-import { requestedData, allowRequest, getData } from './scripts/requests/functions.js';
+import { requestData } from './scripts/requests/functions.js';
 
 /* Filter data */
 import { setFilterOptions, resetFilterOptions, setNewDate, filteredOptions, setMultipleDates } from './scripts/UX/data-filter/ux-functions.js';
@@ -53,7 +53,6 @@ async function main(){
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
     const userTextures = user_data["threejs_configuration"]["textures"];
     const meshes = Group(sphereProperties, userTextures, texturesQuality);
-
     const earth = meshes.groupMesh;
     scene.add(earth);
     camera.lookAt(earth.position);
@@ -124,12 +123,9 @@ async function main(){
     setRequestOptions("firms", firms_data);
     setRequestOptions("date", null);
     
-    // Get and update user data
-    const requestData = document.getElementById("request-button");
-    const selectors = document.getElementsByClassName("request-parameter");
-    let tweenAnimation = null;
 
     // Search location 
+    let tweenAnimation = null;
     const searchLocation = document.getElementById("input-location-search-button");
     searchLocation.addEventListener("click", () => {
         const inputSearch = document.getElementById("input-location-search");
@@ -148,9 +144,12 @@ async function main(){
     });
 
     /* Request FIRMS data */
-    requestData.addEventListener("click", async () => { 
-
+    const requestButton = document.getElementById("request-button");
+    requestButton.addEventListener("click", async () => { 
+        const requestResponse = await requestData(userKey);
+        console.log(requestResponse);
     });
+    
     // requestData.addEventListener("click", async () => {
     //     const selectedOptions = requestedData(selectors);
     //     const flagRequest = allowRequest(userKey, user_fires, selectedOptions);

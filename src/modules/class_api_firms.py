@@ -46,6 +46,4 @@ class Firms(APIOperations):
         else:
             fires_df = self.toDataframe(fires_list)
             fires_data = self.mergeCountry(fires_df)
-            if isinstance(fires_data, list):
-                fires_data = self.createJSON(key, fires_data, **kwargs)
             return fires_data

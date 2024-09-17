@@ -32,9 +32,10 @@ export const setRequestOptions = (optKey, optValue) => {
             const countryElement = document.getElementById('request_' + optKey);
             if(countryElement != null) {
                 for(let i = 0; i < optValue.length; i++) {
-                    const option = createOption(countryElement, optValue[i]['country'], optValue[i]['name']);
+                    const option = createOption(countryElement, optValue[i]['value'], optValue[i]['name']);
                     option.setAttribute("data-coordinates", optValue[i]['coordinates']);
                     option.setAttribute("data-location_name", optValue[i]['name']);
+                    option.setAttribute("data-area_name", optValue[i]['area-name']);
                 }
             }
             break
@@ -43,7 +44,7 @@ export const setRequestOptions = (optKey, optValue) => {
             const areaElement = document.getElementById('request_' + optKey);
             if(areaElement!=null){
                 for(let i = 0; i < optValue.length; i++) {
-                    const option = createOption(areaElement, optValue[i]['area'], optValue[i]['name']);
+                    const option = createOption(areaElement, optValue[i]['value'], optValue[i]['name']);
                     option.setAttribute("data-coordinates", optValue[i]['coordinates']);
                     option.setAttribute("data-location_name", optValue[i]['name']);
                 }

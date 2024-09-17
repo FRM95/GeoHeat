@@ -16,7 +16,7 @@ const forwardEvent = (domElement) => {
 const backwardEvent = (node, parentElem) => {
     const parentNode = document.getElementById(parentElem);
     if(node != null && parentNode != null){
-        node.addEventListener("click", _ => {
+        node.addEventListener("click", () => {
             let newState = false;
             let equalNodes = document.getElementsByClassName(node.className);
             for (let i = 0; i < equalNodes.length; i++) {
@@ -35,7 +35,7 @@ export const resetFilterOptions = (domElement, nodesClass) => {
     const checkboxes = document.getElementsByClassName(nodesClass);
     if (htmlElm != null && checkboxes!=null){
         let event = new Event("change");
-        htmlElm.addEventListener("click", _ => {
+        htmlElm.addEventListener("click", () => {
             for(let i = 0; i<checkboxes.length; i++){
                 checkboxes[i].checked = true;
                 checkboxes[i].dispatchEvent(event);
@@ -154,7 +154,7 @@ export const setFilterOptions = (boxKey, boxValue) => {
             const countryElement = document.getElementById('available_' + boxKey);
             if(countryElement != null) {
                 for(let i = 0; i < boxValue.length; i++) {
-                    const node = createCheckBox(boxValue[i]['country'], 'nasa_abreviation', boxKey);
+                    const node = createCheckBox(boxValue[i]['value'], 'country', boxKey);
                     const label = document.createElement("label");
                     label.innerHTML = boxValue[i]['name'];
                     const div = createDetailsContent(label, node);     
@@ -166,10 +166,11 @@ export const setFilterOptions = (boxKey, boxValue) => {
             const areaElement = document.getElementById('available_' + boxKey);
             if(areaElement != null) {
                 for(let i = 0; i < boxValue.length; i++) { 
-                    if(boxValue[i] != "World"){
-                        const node = createCheckBox(boxValue[i]['name'], 'region', boxKey);
+                    const areaName = boxValue[i]['name'];
+                    if(areaName != "World"){
+                        const node = createCheckBox(boxValue[i]['value'], 'area', boxKey);
                         const label = document.createElement("label");
-                        label.innerHTML = boxValue[i]['name'];
+                        label.innerHTML = areaName;
                         const div = createDetailsContent(label, node);     
                         areaElement.appendChild(div);
                     }
