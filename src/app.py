@@ -50,7 +50,7 @@ def login():
         return render_template('login.html', data = mock_data)
     
     
-@app.route('/home/<key>', methods=['GET'])
+@app.route('/home/user/<key>', methods=['GET'])
 def home(key):
     if key in session:
         user_data = mongodb.getUserData(key)
@@ -72,42 +72,107 @@ def home(key):
         return redirect(url_for('login'))
 
 
-@app.route("/updateData", methods = ['POST','PUT'])
-def updateData():
-    if request.method == 'POST':
-        request_data = request.json
-        request_key = request_data.get('key')
-        if request_key in session:
-            validated_data = api.isvalidRequest(request_data)
-            if isinstance(validated_data, str):
-                return {'error': f'Unable to request new data, {validated_data}'}
-            else:
-                api_result = api.getFires(request_key, **validated_data)
-                if isinstance(api_result, str):
-                    return {'error': f'Unable to request new data, {api_result}'}
-                else:
-                    try:
-                        json_result = json.dumps(api_result)
-                    except Exception as e:
-                        return {'error': f'Unable to parse JSON new data, {e}'}
-                    else:
-                        return json_result
-        else:
-            return {'error': f'Unable to request new data, invalid MAP_KEY {request_key}'}
-    
-    elif request.method == 'PUT':
-        return 'soon'
-        request_data = request.json
-        request_key = [*request_data][0]
-        if request_key in session:
+@app.route("/updateUserData/<key>/", methods = ['PUT'])
+def updateUserData(key):
+    if request.method == "PUT":
+        if key in session:
             try:
-                newData = json.dumps(request.json)
-                with open("./data/fires_data.json", "w") as newFile:
-                    newFile.write(newData)
-            except Exception as e:
-                return f'Unable to update data, {e}'
+                query_string = request.args
+                dataToUpdate = request.json
+            except:
+                return "unable to read data"
             else:
-                return f'Data was successfully updated'
+                updateData = mongodb.updateUserData(key, query_string, dataToUpdate)
+                return updateData
         else:
-            return f'Unable to update data, invalid MAP_KEY {request_key}'
+            # TODO: add message -> need to login first
+            flash('You need to login first') 
+            return redirect(url_for('login'))
+
+
+@app.route("/addUserData/<key>/", methods = ['POST'])
+def addUserData(key):
+    if request.method == "POST":
+        if key in session:
+            try:
+                query_string = request.args
+                dataToUpdate = request.json
+            except:
+                return "unable to read data"
+            else:
+                updateData = mongodb.updateUserData(key, query_string, dataToUpdate)
+                return updateData
+        else:
+            # TODO: add message -> need to login first
+            flash('You need to login first') 
+            return redirect(url_for('login'))
+
+
+@app.route("/getFirmsData/<key>/", methods = ['GET'])     
+def getFirmsData(key):
+    if request.method == 'GET':
+        if key in session:
+            try:
+                query_parameters = request.args
+            except:
+                return "unable to read data"
+            else:
+                validated_data = api.isvalidRequest(query_parameters)
+                if isinstance(validated_data, str):
+                    return {'error': f'Unable to request new data, {validated_data}'}
+                else:
+                    api_result = api.getFires(key, **validated_data)
+                    if isinstance(api_result, str):
+                        return {'error': f'Unable to request new data, {api_result}'}
+                    else:
+                        try:
+                            json_result = json.dumps(api_result)
+                        except Exception as e:
+                            return {'error': f'Unable to parse JSON new data, {e}'}
+                        else:
+                            return json_result
+        else:
+            # TODO: add message -> need to login first
+            flash('You need to login first') 
+            return redirect(url_for('login'))
+
+
+# @app.route("/updateData", methods = ['POST','PUT'])
+# def updateData():
+#     if request.method == 'POST':
+#         request_data = request.json
+#         request_key = request_data.get('key')
+#         if request_key in session:
+#             validated_data = api.isvalidRequest(request_data)
+#             if isinstance(validated_data, str):
+#                 return {'error': f'Unable to request new data, {validated_data}'}
+#             else:
+#                 api_result = api.getFires(request_key, **validated_data)
+#                 if isinstance(api_result, str):
+#                     return {'error': f'Unable to request new data, {api_result}'}
+#                 else:
+#                     try:
+#                         json_result = json.dumps(api_result)
+#                     except Exception as e:
+#                         return {'error': f'Unable to parse JSON new data, {e}'}
+#                     else:
+#                         return json_result
+#         else:
+#             return {'error': f'Unable to request new data, invalid MAP_KEY {request_key}'}
+    
+#     elif request.method == 'PUT':
+#         return 'soon'
+#         request_data = request.json
+#         request_key = [*request_data][0]
+#         if request_key in session:
+#             try:
+#                 newData = json.dumps(request.json)
+#                 with open("./data/fires_data.json", "w") as newFile:
+#                     newFile.write(newData)
+#             except Exception as e:
+#                 return f'Unable to update data, {e}'
+#             else:
+#                 return f'Data was successfully updated'
+#         else:
+#             return f'Unable to update data, invalid MAP_KEY {request_key}'
         

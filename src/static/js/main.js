@@ -3,7 +3,7 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 
 /* Request data */
 import { setRequestOptions } from './scripts/requests/ux-functions.js';
-import { requestedData, allowRequest, getData, exportData } from './scripts/requests/functions.js';
+import { requestedData, allowRequest, getData } from './scripts/requests/functions.js';
 
 /* Filter data */
 import { setFilterOptions, resetFilterOptions, setNewDate, filteredOptions, setMultipleDates } from './scripts/UX/data-filter/ux-functions.js';
@@ -80,7 +80,8 @@ async function main(){
     scene.add(stars);
 
     /* Set options to select layers data */
-    setTexturesOptions(userTextures, earth, stars);
+    const userKey = user_data["firms_key"];
+    setTexturesOptions(userKey, userTextures, earth, stars);
 
     // Default data
     let meshPointers = [];
@@ -107,12 +108,11 @@ async function main(){
 
     /* Apply filter data */
     const saveFilter = document.getElementById("save-button");
-    const user_key = user_data["firms_key"];
     let boxes = document.getElementsByClassName("summary-checkbox");
-    saveFilter.addEventListener("click", _ => {
+    saveFilter.addEventListener("click", () => {
         let filtersToApply = filteredOptions(boxes);
         removeObject(scene, meshPointers)
-        meshPointers = processFireData(user_key, user_fires, earth_radius, filtersToApply);
+        meshPointers = processFireData(userKey, user_fires, earth_radius, filtersToApply);
         addObject(scene, meshPointers);
         markerElement.ariaHidden = "true";
         markerInformation.ariaHidden = "true";
@@ -128,13 +128,6 @@ async function main(){
     const requestData = document.getElementById("request-button");
     const selectors = document.getElementsByClassName("request-parameter");
     let tweenAnimation = null;
-
-    // Include it when load windows
-    if(user_fires[user_key].length > 0){
-        meshPointers = processFireData(user_key, user_fires, earth_radius);
-        addObject(scene, meshPointers);
-        setMultipleDates(user_key, user_fires, 'availableDate', 'filterDate')
-    }
 
     // Search location 
     const searchLocation = document.getElementById("input-location-search-button");
@@ -154,32 +147,35 @@ async function main(){
         }
     });
 
-    /* Request data */
-    requestData.addEventListener("click", async _ => {
-        const selectedOptions = requestedData(selectors);
-        const flagRequest = allowRequest(user_key, user_fires, selectedOptions);
-        if(flagRequest.allowed){
-            const addedCorrectly = await getData(user_key, user_fires, flagRequest, selectedOptions);
-            if(addedCorrectly){
-                removeObject(scene, meshPointers);
-                meshPointers = processFireData(user_key, user_fires, earth_radius);
-                addObject(scene, meshPointers);
-                setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
-                // here goes the calculation of kpi's
-                markerElement.ariaHidden = "true";
-                markerInformation.ariaHidden = "true";
-                const coordinatesArr = selectedOptions['coordinates'].split(" ");
-                let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
-                coordinates = coordToCartesian(coordinates, earth_radius)
-                const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
-                tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
-                tweenAnimation.start();
-            }
-        }
-        else{
-            notificationHandler('request_denied', flagRequest, selectedOptions);
-        }
+    /* Request FIRMS data */
+    requestData.addEventListener("click", async () => { 
+
     });
+    // requestData.addEventListener("click", async () => {
+    //     const selectedOptions = requestedData(selectors);
+    //     const flagRequest = allowRequest(userKey, user_fires, selectedOptions);
+    //     if(flagRequest.allowed){
+    //         const addedCorrectly = await getData(userKey, user_fires, flagRequest, selectedOptions);
+    //         if(addedCorrectly){
+    //             removeObject(scene, meshPointers);
+    //             meshPointers = processFireData(userKey, user_fires, earth_radius);
+    //             addObject(scene, meshPointers);
+    //             setNewDate(selectedOptions['date'], 'availableDate', 'filterDate');
+    //             // here goes the calculation of kpi's
+    //             markerElement.ariaHidden = "true";
+    //             markerInformation.ariaHidden = "true";
+    //             const coordinatesArr = selectedOptions['coordinates'].split(" ");
+    //             let coordinates = {latitude: parseFloat(coordinatesArr[0]), longitude: parseFloat(coordinatesArr[1])};
+    //             coordinates = coordToCartesian(coordinates, earth_radius)
+    //             const vectorRequest = new THREE.Vector3(coordinates.x, coordinates.y, coordinates.z);
+    //             tweenAnimation = moveToPoint(vectorRequest, camera, earth, earth_radius);
+    //             tweenAnimation.start();
+    //         }
+    //     }
+    //     else{
+    //         notificationHandler('request_denied', flagRequest, selectedOptions);
+    //     }
+    // });
 
     const compass = document.getElementById("arrow");
     const vectorUp = new THREE.Vector2(earth.position.x, earth.position.y + 1);
@@ -192,15 +188,6 @@ async function main(){
 
     // UX-UI Functions
     userInterface(labelRenderer, controls);
-
-    //Download file data
-    const getFiles = document.getElementsByClassName('file-request');
-    for(let i = 0; i < getFiles.length; i++){
-        const fileType = getFiles[i].getAttribute('download-file');
-        getFiles[i].addEventListener("click", async _ =>{
-            await exportData(user_key, user_fires, fileType);
-        });
-    }
 
     // Intersect point with raycast
     let pointer = new THREE.Vector2();

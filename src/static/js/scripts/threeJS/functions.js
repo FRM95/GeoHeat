@@ -70,21 +70,6 @@ const createSphere = (sphereProperties) => {
     return geometry
 }
 
-/* Parse string hexColor to number color */
-const parseColor = (properties) => {
-    if(properties != null) {
-        if("color" in properties) {
-            const stringColor = properties.color;
-            properties.color = Number(stringColor);
-        }
-        if ("emissive" in properties) {
-            const stringEmissiveColor = properties.emissive;
-            properties.emissive = Number(stringEmissiveColor);
-        }
-        return properties
-    }
-}
-
 /* Creates Textures based on textures data*/
 const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
     const loader = new THREE.TextureLoader();
@@ -92,6 +77,7 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
     for(let i = 0; i < texturesArray.length; i++){
         const name = texturesArray[i]["name"];
         const properties = texturesArray[i]["properties"];
+        const isVisible = texturesArray[i]["visible"];
         switch (name) {
             case "earth_map":
                 const earthMaterial = new THREE.MeshPhongMaterial(properties);
@@ -103,6 +89,7 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
                 earthMaterial.bumpMap = bumpTexture;
                 earthMaterial.bumpScale = 1;
                 const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
+                earthMesh.visible = isVisible;
                 returnObject[name] = earthMesh;
                 break
 
@@ -110,6 +97,7 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
                 const fresnelMat = getFresnelMat();
                 const exosphereMesh = new THREE.Mesh(sphereGeometry, fresnelMat);
                 exosphereMesh.scale.setScalar(texturesArray[i]["scale"]);
+                exosphereMesh.visible = isVisible;
                 returnObject[name] = exosphereMesh;
                 break
 
@@ -128,6 +116,7 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
                 const starsMaterial = new THREE.PointsMaterial(properties);
                 starsMaterial.map = starsTexture;
                 const points = new THREE.Points(pointGeometry, starsMaterial);
+                points.visible = isVisible;
                 returnObject[name] = points;
                 break
 
@@ -138,6 +127,7 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
                 cloudsMat.alphaMap = cloudsTexture;
                 const cloudsMesh = new THREE.Mesh(sphereGeometry, cloudsMat);
                 cloudsMesh.scale.setScalar(texturesArray[i]["scale"]);
+                cloudsMesh.visible = isVisible;
                 returnObject[name] = cloudsMesh;
                 break
         }

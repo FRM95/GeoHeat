@@ -1,3 +1,5 @@
+import { updateUserData } from "../fetch/functions.js"
+
 /* Creates a textures input checkbox */
 const createTextureSection = (name, isVisible, textures, texturesBackground) =>{
     const layerSection = document.createElement("div");
@@ -31,17 +33,20 @@ const createTextureSection = (name, isVisible, textures, texturesBackground) =>{
 }
 
 /* Apply visibility property to texture Object */
-const saveLayers = (texturesArray) => {
+function saveLayers(key, texturesArray){
+    let objectBody = [];
+    let params = { "field" : "threejs_configuration", "subfield" : "textures" };
     for(let i = 0; i < texturesArray.length; i++) {
         const layerData = texturesArray[i]["name"];
         const optionChecked = document.querySelector(`.checkbox-layer[property = '${layerData}']`).checked;
         texturesArray[i]["visible"] = optionChecked;
-        // here we should make a fetch
+        objectBody.push({"name": layerData, "visible" : optionChecked});
     }
+    return updateUserData(key, params, objectBody);
 }
 
 /* Set layers options to display based on user data */
-export const setTexturesOptions = (texturesArray, groupMesh, backgroundMesh) => {
+export const setTexturesOptions = (userKey, texturesArray, groupMesh, backgroundMesh) => {
     const layersDiv = document.getElementById("earth-layers");
     if(layersDiv != null){
         for(let i = 0; i < texturesArray.length; i++){
@@ -56,7 +61,7 @@ export const setTexturesOptions = (texturesArray, groupMesh, backgroundMesh) => 
         applyLayers.textContent = "Save layers";
         applyLayers.id = "save-interface-layers";
         applyLayers.addEventListener("click", () => {
-            saveLayers(texturesArray);
+            const response = saveLayers(userKey, texturesArray);
         });
         const applyLayersDiv = document.createElement("div");
         applyLayersDiv.appendChild(applyLayers);

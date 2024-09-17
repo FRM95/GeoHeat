@@ -1,5 +1,4 @@
 from modules.class_mongodb import MongoDB
-from bson.json_util import dumps
 from dotenv import load_dotenv
 from os import getenv
 import logging
@@ -7,6 +6,16 @@ import logging
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def setArrayFilters(variable: str = "name", d: dict = None) -> list:
+    return [ { "elem.name" : d.get(variable) } ]
+
+def nestedSet(queryValues: dict, dataValue: dict):
+    setValue = f"{queryValues.get('field')}.{queryValues.get('subfield','')}.$[elem]."
+    for key, value in dataValue.items():
+        if(key != "name"):
+            dictValue = { setValue + key : value}
+    return dictValue
 
 class GeoHeatDB(MongoDB):
 
@@ -97,3 +106,38 @@ class GeoHeatDB(MongoDB):
             else:
                 return countries, firms, areas
 
+    def updateUserData(self, key: str, query: dict, data: list):
+        try:
+            database = self.getDatabase(getenv("USERSDB"))
+            users_data = self.getCollection(database, getenv("USERSDB_data"))
+            result = 0
+            for item in data:
+                item_result = users_data.update_one(
+                    filter = {"firms_key" : key},
+                    update = {"$set" : nestedSet(query, item)},
+                    array_filters = setArrayFilters("name", item)
+                )
+                result += item_result.modified_count
+        except Exception as updateUserDataException:
+            raise Exception(f'GeoHeatDB Update User Data exception: {updateUserDataException}')
+        else:
+            return f"Updated {result} documents"
+        
+    def addUserArray(self, key: str, array_field:str, data: dict):
+        try:
+            database = self.getDatabase(getenv("USERSDB"))
+            users_data = self.getCollection(database, getenv("USERSDB_data"))
+            item_result = users_data.update_one(
+                filter = {"firms_key" : key},
+                update = {"$push" : {
+                        array_field : {
+                            "$each" : [data],
+                            "$sort" : { "full_utc_date" : 1 }
+                        }
+                    }
+                }
+            )
+        except Exception as addUserArrayException:
+            raise Exception(f'GeoHeatDB Push Array Data exception: {addUserArrayException}')
+        else:
+            return f"Updated {item_result.modified_count} documents"
