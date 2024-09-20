@@ -37,4 +37,15 @@ class MongoDB:
         else: 
             raise Exception(f'MongoDB Client exception: Client is None')
         
+    def listCollections(self, database: database.Database, **kwargs):
+        if(self.client_mongodb != None):
+            try:
+                collections = database.list_collection_names(**kwargs)
+            except Exception as CollectionsException:
+                raise Exception(f'MongoDB Collections exception: {CollectionsException}')
+            else:
+                return collections
+        else: 
+            raise Exception(f'MongoDB Client exception: Client is None')
+        
 

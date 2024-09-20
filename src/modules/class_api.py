@@ -102,7 +102,7 @@ class APIOperations():
         else:
             return dataframe
 
-    def mergeCountry(self, area_data) -> (list|str):
+    def mergeCountry(self, area_data) -> (dict|str):
         if isinstance(area_data, DataFrame):
             try:
                 geodataframe = GeoDataFrame(area_data, geometry=points_from_xy(area_data.longitude, area_data.latitude), crs="EPSG:4326")
@@ -111,10 +111,11 @@ class APIOperations():
                 geodataframe = geodataframe.drop(columns=['index_right', 'geometry'], errors = 'ignore')
                 geodataframe = geodataframe.fillna('unknown')
                 geodataframe = geodataframe.reset_index(drop=True)
+                geodataframe = geodataframe.groupby("country")
             except Exception as e:
                 return f'Geodataframe Merge exception: {e}'
             else:
-                return geodataframe.to_dict('records')
+                return {name: group.to_dict('records') for name, group in geodataframe}
         else:
             return area_data
         

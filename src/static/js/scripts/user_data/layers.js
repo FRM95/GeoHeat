@@ -35,7 +35,7 @@ const createTextureSection = (name, isVisible, textures, texturesBackground) =>{
 /* Apply visibility property to texture Object */
 function saveLayers(key, texturesArray){
     let objectBody = [];
-    let params = { "field" : "threejs_configuration", "subfield" : "textures" };
+    let params = { "collection" : "threejs", "array": "textures" };
     for(let i = 0; i < texturesArray.length; i++) {
         const layerData = texturesArray[i]["name"];
         const optionChecked = document.querySelector(`.checkbox-layer[property = '${layerData}']`).checked;

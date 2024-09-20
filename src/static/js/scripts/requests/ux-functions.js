@@ -54,7 +54,7 @@ export const setRequestOptions = (optKey, optValue) => {
         case "firms":
             for(let i = 0; i < optValue.length; i++) {
                 const object = optValue[i];
-                const element = object["property"];
+                const element = object["parameter"];
                 const values = object["values"];
                 switch (element) {
                     case "delimiter":

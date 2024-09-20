@@ -179,7 +179,7 @@ export const setFilterOptions = (boxKey, boxValue) => {
             break
         case "firms":
             for(let i = 0; i < boxValue.length; i++) { 
-                const element = boxValue[i]["property"];
+                const element = boxValue[i]["parameter"];
                 const values = boxValue[i]["values"];
                 switch (element) {
                     case "source":

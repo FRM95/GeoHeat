@@ -51,7 +51,7 @@ async function main(){
     // Earth and textures creation
     const earth_radius = 1.0;
     const sphereProperties = {radius: earth_radius, widthSegments : 64, heightSegments: 32};
-    const userTextures = user_data["threejs_configuration"]["textures"];
+    const userTextures = user_data["threejs"]["textures"];
     const meshes = Group(sphereProperties, userTextures, texturesQuality);
     const earth = meshes.groupMesh;
     scene.add(earth);
@@ -61,7 +61,7 @@ async function main(){
     const controls = createControls(camera, labelRenderer.domElement, earth);
 
     // Lights creation
-    const userLights = user_data["threejs_configuration"]["lights"];
+    const userLights = user_data["threejs"]["lights"];
     const lightObject = buildLights(userLights); 
     const sphereLight = lightObject["ambient_light"];
     const sunLight = lightObject["directional_light"];
@@ -79,11 +79,11 @@ async function main(){
     scene.add(stars);
 
     /* Set options to select layers data */
-    const userKey = user_data["firms_key"];
-    setTexturesOptions(userKey, userTextures, earth, stars);
+    setTexturesOptions(user_data["threejs"]["firms_key"], userTextures, earth, stars);
 
     // Default data
     let meshPointers = [];
+    let user_fires;
 
     // Globe mark label functionality
     const markerElement = document.querySelector("[data-content='Marker-Label']");
@@ -100,9 +100,9 @@ async function main(){
     })
 
     /* Set options to filter data */
-    setFilterOptions("country", countries_data);
-    setFilterOptions("area", areas_data);
-    setFilterOptions("firms", firms_data);
+    setFilterOptions("country", firms_data["countries"]);
+    setFilterOptions("area", firms_data["areas"]);
+    setFilterOptions("firms", firms_data["parameters"]);
     resetFilterOptions("reset-button", "summary-checkbox");
 
     /* Apply filter data */
@@ -111,16 +111,16 @@ async function main(){
     saveFilter.addEventListener("click", () => {
         let filtersToApply = filteredOptions(boxes);
         removeObject(scene, meshPointers)
-        meshPointers = processFireData(userKey, user_fires, earth_radius, filtersToApply);
+        meshPointers = processFireData(user_data.data.firms_key, user_fires, earth_radius, filtersToApply);
         addObject(scene, meshPointers);
         markerElement.ariaHidden = "true";
         markerInformation.ariaHidden = "true";
     });
 
     /* Set options to request data */
-    setRequestOptions("country", countries_data);
-    setRequestOptions("area", areas_data);
-    setRequestOptions("firms", firms_data);
+    setRequestOptions("country", firms_data["countries"]);
+    setRequestOptions("area", firms_data["areas"]);
+    setRequestOptions("firms", firms_data["parameters"]);
     setRequestOptions("date", null);
     
 
@@ -146,7 +146,7 @@ async function main(){
     /* Request FIRMS data */
     const requestButton = document.getElementById("request-button");
     requestButton.addEventListener("click", async () => { 
-        const requestResponse = await requestData(userKey);
+        const requestResponse = await requestData(user_data.data.firms_key, null);
         console.log(requestResponse);
     });
     
