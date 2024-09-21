@@ -11,7 +11,7 @@
       <div class="header-left centered">
         <h1 class="page-title header-page-title">GeoHeat</h1>
         <div class="header-section d-flex centered" data-title="Inspect your requested data">
-          <button class="button-1 selector d-flex centered header-button window-open" action="hide" data-section="Data">
+          <button class="button-1 selector d-flex centered header-button ux-event" data-action="hide-element" data-section="Data">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-fill" viewBox="0 0 17 17">
               <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3m-8.322.12q.322-.119.684-.12h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981z"/>
             </svg> Data
@@ -33,14 +33,14 @@
       </div>
       <div class="header-middle centered">
         <div class="header-section d-flex centered" data-title="Obtain new heat spots">
-          <button class="button-1 selector d-flex centered header-button header-tab" data-section="Explore">
+          <button class="button-1 selector d-flex centered header-button ux-event" data-action="change-sidebar" data-section="Explore">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe-europe-africa" viewBox="0 0 17 17">
               <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M3.668 2.501l-.288.646a.847.847 0 0 0 1.479.815l.245-.368a.81.81 0 0 1 1.034-.275.81.81 0 0 0 .724 0l.261-.13a1 1 0 0 1 .775-.05l.984.34q.118.04.243.054c.784.093.855.377.694.801-.155.41-.616.617-1.035.487l-.01-.003C8.274 4.663 7.748 4.5 6 4.5 4.8 4.5 3.5 5.62 3.5 7c0 1.96.826 2.166 1.696 2.382.46.115.935.233 1.304.618.449.467.393 1.181.339 1.877C6.755 12.96 6.674 14 8.5 14c1.75 0 3-3.5 3-4.5 0-.262.208-.468.444-.7.396-.392.87-.86.556-1.8-.097-.291-.396-.568-.641-.756-.174-.133-.207-.396-.052-.551a.33.33 0 0 1 .42-.042l1.085.724c.11.072.255.058.348-.035.15-.15.415-.083.489.117.16.43.445 1.05.849 1.357L15 8A7 7 0 1 1 3.668 2.501"/>
             </svg> Explore
           </button>
         </div>
         <div class="header-section d-flex centered" data-title="Modify the aspect of the scene">
-          <button class="button-1 selector d-flex centered header-button header-tab" data-section="Layers">
+          <button class="button-1 selector d-flex centered header-button ux-event" data-action="change-sidebar" data-section="Layers">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stack" viewBox="0 0 17 17">
               <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z"/>
               <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z"/>
@@ -48,7 +48,7 @@
           </button>
         </div>
         <div class="header-section d-flex centered" data-title="Interact with the Earth">
-          <button class="button-1 selector d-flex centered header-button header-tab" data-section="Draw">
+          <button class="button-1 selector d-flex centered header-button ux-event" data-action="change-sidebar" data-section="Draw">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 17 17">
               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
             </svg> Draw
@@ -98,7 +98,7 @@
             </button>
           </div>
           <div class="area area-sidebar" id="area-sidebar"> 
-            <div class="area-section" data-content="Explore">
+            <div class="area-section" aria-hidden="false" data-content="Explore">
               <h2 class="main-title">Explore</h2>
               <div class="d-flex" style="gap: 5px; align-items: center;">
                 <span class="main-title-2 explanation-area">Available requests:</span>
@@ -134,7 +134,7 @@
                         <input id="request_date" type="date" placeholder="YYYY-MM-DD" class="select-1 request-parameter" property = "date" style="width: 189px;">
                       </div>
                       <div>
-                        <button class="button-2 action-button" id="request-button">Get data</button>
+                        <button class="button-2 data-action-button" id="request-button">Get data</button>
                       </div>
                     </div>
                   </details>
@@ -163,20 +163,20 @@
                       </details>
                       <div>
                         <button class="button-3 default-button" id="reset-button">Reset to default</button>
-                        <button class="button-2 action-button" id="save-button">Save</button>
+                        <button class="button-2 data-action-button" id="save-button">Save</button>
                       </div>
                     </div>
                   </details>
                 </div> 
               </div>
             </div>
-            <div class="area-section hidden" data-content="Layers">
+            <div class="area-section" aria-hidden="true" data-content="Layers">
               <h2 class="main-title">Layers</h2>
               <span class="main-title-2 explanation-area">Display multiple layers<br></span>
               <span class="main-title-3 explanation-text">Change how the earth is displayed</span>
               <div class="sidebar-section scroll-1" id="earth-layers"></div>
             </div>
-            <div class="area-section hidden" data-content="Draw">
+            <div class="area-section" aria-hidden="true" data-content="Draw">
               <h2 class="main-title">Draw</h2>
               <span class="main-title-2 explanation-area">Interact with the Earth<br></span>
               <span class="main-title-3 explanation-text">Obtain new measurements about your data</span>
@@ -187,17 +187,17 @@
         <div class="container container-middle" id="container-window" aria-hidden="true" data-content="Data">
           <div class="area area-window d-grid" id="area-window">
             <div class="header-2 area-window-header d-flex">
-              <button class="button-4 window-button selector window-open" action="hide" data-section="Data">
+              <button class="button-4 window-button selector ux-event" data-action="hide-element" data-section="Data">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
                 </svg>
               </button>
-              <button class="button-4 window-button selector" id="min-window" action="minimize">
+              <button class="button-4 window-button selector" id="min-window" data-action="minimize">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 17 17">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"/>
                 </svg>
               </button>
-              <button class="button-4 window-button selector" id="max-window" action="maximize">
+              <button class="button-4 window-button selector" id="max-window" data-action="maximize">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 17 17">
                   <circle cx="8" cy="8" r="8"/>
                 </svg>
@@ -212,14 +212,14 @@
           <div class="header-2 area-window-header d-flex" style="justify-content: space-between; height: 2.5em;">
             <span class="area-window-header-title">SPOT ATTRIBUTES</span>
             <div>
-              <button class="button-4 window-button selector" action="info" data-title-2="Official fire detection product website. Obtain a full description of attributes used by FIRMS services.">
+              <button class="button-4 window-button selector" data-action="info" data-title-2="Official fire detection product website. Obtain a full description of attributes used by FIRMS services.">
                 <a class="link-url" href="#" target="_blank" id="spot-attributes-link">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 17 17">
                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
                   </svg>
                 </a>
               </button>
-              <button class="button-4 window-button selector window-open" action="hide" data-section = "Marker-Information">
+              <button class="button-4 window-button selector ux-event" data-action="hide-element" data-section = "Marker-Information">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
                 </svg>
@@ -345,7 +345,7 @@
               <span class="d-flex" for="spot-id-label">Spot ID</span>
               <span class="d-flex" id="spot-id-label"></span>
             </div>
-            <button class="earth-label-button selector window-open" action="hide" data-section = "Marker-Label">
+            <button class="earth-label-button selector ux-event" data-action="hide-element" data-section = "Marker-Label">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
               </svg>
@@ -404,7 +404,6 @@
       }
     </script>
     <script id="data"> 
-      var user_fires = {{ user_fires | tojson }}
       var user_data = {{ user_data | tojson }};
       var firms_data = {{ firms_data | tojson }};
     </script>

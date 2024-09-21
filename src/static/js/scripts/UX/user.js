@@ -74,22 +74,41 @@ const user_events = () => {
         }
     });
 
-    // Open/close window
-    const openWindow = document.querySelectorAll('.window-open');
-    openWindow.forEach(function(open){
-        open.addEventListener("click", () => {
-            let section = open.getAttribute("data-section");
-            let action = open.getAttribute("action");
-            let containerWindow = document.querySelector(`[data-content = '${section}']`);
-            if(containerWindow != null){
-                if(action == "hide"){
-                    containerWindow.ariaHidden = containerWindow.ariaHidden !== 'true';
-                }
-                else if(action === "expand"){
-                    containerWindow.ariaExpanded = containerWindow.ariaExpanded !== 'true';
-                }
+    /* Add events to every data-action and data-section HTML element */
+    const uxElements = document.querySelectorAll('.ux-event');
+    uxElements.forEach( function(element) {
+        const section = element.getAttribute("data-section");
+        const action = element.getAttribute("data-action");
+        const elementToEvent = document.querySelector(`[data-content = '${section}']`);
+        if(elementToEvent != null) {
+            switch (action) {
+                case "hide-element":
+                    element.addEventListener("click", () => {
+                        elementToEvent.ariaHidden = elementToEvent.ariaHidden !== 'true'; })
+                    break
+                case "expand-element":
+                    element.addEventListener("click", () => {
+                        elementToEvent.ariaExpanded = elementToEvent.ariaExpanded !== 'true'; })
+                    break
+                case "change-sidebar":
+                    element.addEventListener("click", () => {
+                        if(elementToEvent.ariaHidden == 'true'){
+                            elementToEvent.ariaHidden = 'false';
+                            const areaSections = document.querySelectorAll(".area-section");
+                            areaSections.forEach(function(areaToShow){
+                                if(areaToShow.getAttribute("data-content") != section){
+                                    areaToShow.ariaHidden = 'true';
+                                }
+                            });
+                        }
+                        if(sidebar.ariaExpanded == 'false'){
+                            hideSidebar.dispatchEvent(new Event("click"));
+                        }
+                    })
+                    break
+                }   
+                
             }
-        })
     });
 
     // Maximize window
@@ -142,25 +161,6 @@ const user_events = () => {
         } else {
             clearList();
         }
-    });
-
-    // Change between navbar tabs
-    headerTabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            const contentKey = tab.getAttribute('data-section');
-            const areaSections = document.querySelectorAll(".area-section");
-            areaSections.forEach(function(hideTab){
-                const contentToShow = hideTab.getAttribute("data-content");
-                if(contentKey === contentToShow){
-                    hideTab.classList.remove("hidden");
-                    if(sidebar.ariaExpanded === "false"){
-                        hideSidebar.dispatchEvent(new Event("click"));
-                    }
-                } else {
-                    hideTab.classList.add("hidden");
-                }
-            })
-        });
     });
 
     /* window item information (marker) */

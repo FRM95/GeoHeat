@@ -208,13 +208,14 @@ header{
     border-bottom: none;
     border-left: none;
     float: left;
+    width: 15.5%;
 }
 .container-left[aria-expanded = "false"]{
     min-width: 0%;
     border: none;
+    width: 0%;
 }
 .container-left[aria-expanded = "false"] > .area-sidebar{
-    min-width: 0px;
     border: none;
 }
 .container-middle{
@@ -253,15 +254,18 @@ header{
 
 /********************* AREA SIDEBAR *********************/
 .area-sidebar{
-    padding: 1em;
     border-radius: 0px;
     border-top: none;
     border-bottom: none;
-    min-width: 250px;
+    width: 100%;
 }
 .area-section{
     height: 100%;
     overflow-y: hidden;
+    padding: 1em;
+}
+.area-section[aria-hidden = "true"]{
+    display: none;
 }
 .explanation-area{
     font-family: var(--custom-font);
