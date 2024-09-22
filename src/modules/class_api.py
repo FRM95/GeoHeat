@@ -111,11 +111,12 @@ class APIOperations():
                 geodataframe = geodataframe.drop(columns=['index_right', 'geometry'], errors = 'ignore')
                 geodataframe = geodataframe.fillna('unknown')
                 geodataframe = geodataframe.reset_index(drop=True)
-                geodataframe = geodataframe.groupby("country")
+                # geodataframe = geodataframe.groupby("country")
             except Exception as e:
                 return f'Geodataframe Merge exception: {e}'
             else:
-                return {name: group.to_dict('records') for name, group in geodataframe}
+                return geodataframe.to_dict('records')
+                # return {name: group.to_dict('records') for name, group in geodataframe}
         else:
             return area_data
         
