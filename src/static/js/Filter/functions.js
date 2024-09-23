@@ -208,10 +208,10 @@ export function FilterOptions() {
     /* HTML Filter options for countries */
     setFilterOptions("country", firms_data["countries"]);
 
-    /* HTML Filter options for countries */
+    /* HTML Filter options for areas */
     setFilterOptions("area", firms_data["areas"]);
 
-    /* HTML Filter options for countries */
+    /* HTML Filter options for prameters */
     setFilterOptions("firms", firms_data["parameters"]);
 
     /* HTML Reset Filter options every checkbox */

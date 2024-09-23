@@ -132,12 +132,6 @@ def getFirmsData(key):
                         return {'error': f'Unable to request new data, {api_result}'}
                     else:
                         return api_result
-                        try:
-                            json_result = json.dumps(api_result)
-                        except Exception as e:
-                            return {'error': f'Unable to parse JSON new data, {e}'}
-                        else:
-                            return json_result
         else:
             # TODO: add message -> need to login first
             flash('You need to login first') 

@@ -90,9 +90,9 @@
     <main>
       <div class="application-container">
         <div class="canvas" id="threejs-canvas"></div>
-        <div class="container container-left" id="container-sidebar" aria-expanded="true"> 
+        <div class="container container-left" id="container-sidebar" aria-expanded="true" data-content="Sidebar"> 
           <div class="collapse">
-            <button class="selector" id="collapse-sidebar" data-title="Close panel">
+            <button class="selector ux-event" id="collapse-sidebar" data-title="Close panel" data-action="expand-element" data-section="Sidebar">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-short collapse-icon" viewBox="0 0 17 17">
                 <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
               </svg>
@@ -140,7 +140,7 @@
                     </div>
                   </details>
                 </div>
-                <div class="section">
+                <!-- <div class="section">
                   <details class="sidebar-details">
                     <summary class="summary-1-title sidebar-details-title filter-marker">Filter
                       <br><span class="main-title-3 explanation-text">Choose heat spots to display on earth</span>
@@ -168,7 +168,7 @@
                       </div>
                     </div>
                   </details>
-                </div> 
+                </div>  -->
               </div>
             </div>
             <div class="area-section" aria-hidden="true" data-content="Layers">
@@ -185,28 +185,37 @@
             </div>    
           </div>
         </div>
+        <div class="container container-dropdown" id="container-dropdown" style="float: left;position: relative;margin: 20px 50px;display: grid;">
+          <div class="header-2 area-window-header d-flex">
+            <button class="button-4 window-button selector ux-event" data-action="expand-element" data-section="Filter">
+              Close
+            </button>
+          </div>
+          <div class="area area-window area-window-filter d-grid" aria-expanded="false" data-content="Filter"> 
+            <div class="window-filter-item d-flex" name="dates" id="dropdown_date"></div>
+            <div class="window-filter-item d-grid" name="sources" id="dropdown_source"></div>
+          </div>
+        </div>
         <div class="container container-middle" id="container-window" aria-hidden="true" data-content="Data">
+          <div class="header-2 area-window-header d-flex">
+            <button class="button-4 window-button selector ux-event" data-action="hide-element" data-section="Data">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+              </svg>
+            </button>
+            <button class="button-4 window-button selector" id="min-window" data-action="minimize">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 17 17">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"/>
+              </svg>
+            </button>
+            <button class="button-4 window-button selector" id="max-window" data-action="maximize">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 17 17">
+                <circle cx="8" cy="8" r="8"/>
+              </svg>
+            </button>
+          </div>
           <div class="area area-window d-grid" id="area-window">
-            <div class="header-2 area-window-header d-flex">
-              <button class="button-4 window-button selector ux-event" data-action="hide-element" data-section="Data">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                </svg>
-              </button>
-              <button class="button-4 window-button selector" id="min-window" data-action="minimize">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 17 17">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"/>
-                </svg>
-              </button>
-              <button class="button-4 window-button selector" id="max-window" data-action="maximize">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 17 17">
-                  <circle cx="8" cy="8" r="8"/>
-                </svg>
-              </button>
-            </div>
-            <div class="area-window-content">
-              <button id="contenidoDatos">Contenido</button>
-            </div>
+            content
           </div>
         </div>
         <div class="container container-right d-grid" id="markerInformation" aria-hidden="true" data-content = "Marker-Information">

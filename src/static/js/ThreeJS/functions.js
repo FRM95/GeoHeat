@@ -249,6 +249,29 @@ const buildLights = (lightArray) => {
     return returnObject
 }
 
+/* ---------------------------- POINTS/MARKERS ---------------------------- */
+/* Creates threejs points material for heat spots */
+export const createMarkers = (dataObject) => {
+    const color = new THREE.Color(0xff0000);
+    const common_geo = new THREE.CircleGeometry(0.0015, 32);
+    const common_mat = new THREE.MeshBasicMaterial({color:0xffffff});
+    const dummy = new THREE.Object3D();
+    const user_Data = {};
+    const markMesh = new THREE.InstancedMesh(common_geo, common_mat, dataObject.length);
+    for(let i = 0; i < dataObject.length; i++){
+        dummy.position.x = dataObject[i].cartesian_points[0];
+        dummy.position.y = dataObject[i].cartesian_points[1];
+        dummy.position.z = dataObject[i].cartesian_points[2];
+        dummy.lookAt(dummy.position.clone().setLength(1.5));
+        dummy.updateMatrix();
+        markMesh.setMatrixAt(i, dummy.matrix);
+        markMesh.setColorAt(i, color);
+        user_Data[i] = dataObject[i];
+    }
+    markMesh.userData = user_Data;
+    return markMesh
+}
+
 /* ---------------------------- LAYERS ---------------------------- */
 /* Creates HTML layers section based on textures, apply visibility event */
 const createLayersSection = (name, isVisible, textures, texturesBackground) =>{
@@ -319,6 +342,30 @@ const setLayersOptions = (userKey, texturesArray, groupMesh, backgroundMesh) => 
     }
 }
 
+/* ---------------------------- SCENE OBJECTS ---------------------------- */
+/* Remove object from scene */
+export const removeObject = (sceneObject, object) => {
+    if(object instanceof Array){
+        for(let i= 0; i < object.length; i++){
+            object[i].dispose();
+            sceneObject.remove(object[i]);
+        }
+    } else {
+        object.dispose();
+        sceneObject.remove(object);
+    }
+}
+
+/* Add object to scene */
+export const addObject = (sceneObject, object) => {
+    if(object instanceof Array){
+        for(let i = 0; i < object.length; i++){
+            sceneObject.add(object[i]);
+        }
+    } else {
+        sceneObject.add(object);
+    }
+}
 
 /* ---------------------------- MAIN ---------------------------- */
 export function setThreeJS() {
@@ -362,6 +409,7 @@ export function setThreeJS() {
     /* Adding layer options based on textures */
     setLayersOptions(user_data["threejs"]["firms_key"], userTextures, sceneObjects.earth, sceneObjects.stars)
 
+    /* Animation loop */
     const animate = () => { 
         requestAnimationFrame(animate);
         heatSpotLabel.userData.trackVisibility();
@@ -370,5 +418,17 @@ export function setThreeJS() {
         controls.update();
     }
 
-    animate()
+    animate();
+
+    /* Window resize scene update */
+    const onWindowResize = () => {
+        camera.aspect = innerWidth / (innerHeight + yOffset);
+        camera.updateProjectionMatrix();
+        rendersObject.renderer.setSize(innerWidth, (innerHeight + yOffset)); 
+        rendersObject.labelRenderer.setSize(innerWidth, (innerHeight + yOffset));
+    }
+
+    window.addEventListener("resize", onWindowResize);
+
+    return scene
 }

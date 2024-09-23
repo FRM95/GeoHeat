@@ -17,3 +17,13 @@ NASA_TYPES = {
     'instrument':str,
     'version':str
 }
+
+NASA_SOURCES = [
+    "VIIRS_SNPP_NRT",
+    "VIIRS_SNPP_SP",
+    "VIIRS_NOAA20_NRT",
+    "VIIRS_NOAA21_NRT",
+    "MODIS_NRT",
+    "MODIS_SP",
+    "LANDSAT_NRT"
+]

@@ -30,24 +30,8 @@ const dataToRequest = (requestClassNodes) => {
     return result
 }
 
-/* Set the query paramters to create the URL */
-const setQueryParameters = (requestObject) => {
-    let queryParams = {}
-    try { 
-        queryParams['delimiter'] = requestObject['delimiter']
-        queryParams['location'] = requestObject['location']
-        queryParams['source'] = requestObject['source']
-        queryParams['dayrange'] = requestObject['dayrange']
-        queryParams['date'] = requestObject['date']
-    } catch (error) {
-        return error
-    }
-    return queryParams
-}
-
 /* Make a new request */
 async function requestData(key, data){
-
     if(data == null){
         const classNodes = document.getElementsByClassName("request-parameter");
         if(classNodes != null) {
@@ -56,13 +40,10 @@ async function requestData(key, data){
             return 'Error'
         }
     } 
-
     const date = new Date();
     data['dateOfRequest'] = date.toISOString().split("T")[0];
     data['timeOfRequest'] = date.toTimeString().slice(0, 8);
     data['validUntil'] = new Date(date.setHours(23, 59, 59)).toUTCString();
-    const urlParams = setQueryParameters(data);
-
     const response = await getFirmsData(key, urlParams);
     data["heatspots"] = response;
     return data
