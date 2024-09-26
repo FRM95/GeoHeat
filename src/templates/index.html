@@ -140,35 +140,6 @@
                     </div>
                   </details>
                 </div>
-                <!-- <div class="section">
-                  <details class="sidebar-details">
-                    <summary class="summary-1-title sidebar-details-title filter-marker">Filter
-                      <br><span class="main-title-3 explanation-text">Choose heat spots to display on earth</span>
-                    </summary>
-                    <div class="summary-1-content sidebar-details-content d-grid m-l2 m-r2 box-shad" style="max-width: none; width: auto;">
-                      <details class="sidebar-details-detail" id="details-date">
-                        <summary>Date <input type="checkbox" id="filterDate" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="dates" id="availableDate"></div>
-                      </details>
-                      <details class="sidebar-details-detail" id="details-source">
-                        <summary>Source <input type="checkbox" id="filter_source" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="sources" id="available_source"></div>
-                      </details>
-                      <details class="sidebar-details-detail" id="details-area">
-                        <summary>Area <input type="checkbox" id="filter_area" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="areas" id="available_area"></div>
-                      </details>
-                      <details class="sidebar-details-detail" id="details-country">
-                        <summary>Country <input type="checkbox" id="filter_country" class="summary-checkbox checkbox-1" checked="true"></summary>
-                        <div class="details-content d-grid scroll-1" name="countries" id="available_country"></div>
-                      </details>
-                      <div>
-                        <button class="button-3 default-button" id="reset-button">Reset to default</button>
-                        <button class="button-2 data-action-button" id="save-button">Save</button>
-                      </div>
-                    </div>
-                  </details>
-                </div>  -->
               </div>
             </div>
             <div class="area-section" aria-hidden="true" data-content="Layers">
@@ -185,15 +156,26 @@
             </div>    
           </div>
         </div>
-        <div class="container container-dropdown" id="container-dropdown" style="float: left;position: relative;margin: 20px 50px;display: grid;">
+        <div class="container container-dropdown" id="container-dropdown">
           <div class="header-2 area-window-header d-flex">
-            <button class="button-4 window-button selector ux-event" data-action="expand-element" data-section="Filter">
-              Close
+            <button class="button-4 window-button area-window-button selector ux-event" data-action="expand-element" data-section="Filter" data-title="Open filter HeatSpots">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-filter-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M3.5 5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1M5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5"/>
+              </svg>
             </button>
           </div>
-          <div class="area area-window area-window-filter d-grid" aria-expanded="false" data-content="Filter"> 
-            <div class="window-filter-item d-flex" name="dates" id="dropdown_date"></div>
-            <div class="window-filter-item d-grid" name="sources" id="dropdown_source"></div>
+          <div class="window-item-filter-information d-grid" aria-hidden="true">
+            <span class="marker-info">Information</span>
+            <div class="filter-dates-info-items d-grid" id="filter-dates-info"></div>
+          </div>
+          <div class="area area-window-filter d-grid" aria-expanded="false" data-content="Filter"> 
+            <div class="d-flex">
+              <button id="currentDay" data-selected="true" data-text="From today (00:00) UTC to now" class="filter-dates">Today</button>
+              <button id="completeDay" data-selected="false" data-text="From yesterday (00:00) UTC to now" class="filter-dates">Last 24 Hours</button>
+            </div>
+            <span class="main-title-3 explanation-text filter-explanation">From today (00:00) UTC to now</span>
+            <div id="currentDay-spots" class="filter-spots-number d-grid" data-value="" aria-hidden="false">Today Spots</div>
+            <div id="completeDay-spots" class="filter-spots-number d-grid" data-value="" aria-hidden="true">Last 24 Hours Spots</div>
           </div>
         </div>
         <div class="container container-middle" id="container-window" aria-hidden="true" data-content="Data">
@@ -214,7 +196,7 @@
               </svg>
             </button>
           </div>
-          <div class="area area-window d-grid" id="area-window">
+          <div class="area d-grid" id="area-window">
             content
           </div>
         </div>

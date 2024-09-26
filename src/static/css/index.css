@@ -209,9 +209,15 @@ header{
 }
 .container-dropdown{
     float: left;
-    position: relative;
-    margin: 20px 50px;
+    margin: 40px 0px 0px 40px;
     display: grid;
+}
+.container-dropdown:has(.area-window-filter[aria-expanded = "false"]){
+    background-color: transparent;
+    border: transparent;
+}
+.container-dropdown:has(.area-window-filter[aria-expanded = "false"]) > .area-window-header{
+    background-color: transparent;
 }
 .container-middle{
     position: absolute;
@@ -448,8 +454,14 @@ header{
     font-weight: 500;
     color: #4a4a4a;
 }
+.area-window-content{
+    overflow: hidden;
+    padding: 0px 5px;
+    background-color: var(--container-background-color);
+    margin-bottom: 7px;
+}
 .window-button > svg{
-    transition: filter var(--transition-shadow-time);
+    transition: filter var(--transition-shadow-time), color var(--transition-shadow-time);
 }
 .window-button:hover > svg{
     filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.9));
@@ -466,18 +478,59 @@ header{
 .window-button[data-action="info"]{
     color: rgb(29, 178, 202);
 }
+.window-button[data-section="Filter"]{
+    color: rgb(236, 236, 236);
+}
+.window-button[data-section="Filter"] > svg{
+    filter: drop-shadow(0px 0px 2px rgba(130, 130, 130, 0.9));
+}
+.window-button[data-section="Filter"]:hover > svg{
+    color: rgb(223, 237, 255);
+    filter: drop-shadow(0px 0px 3px rgba(128, 128, 128, 0.9)) !important;
+}
 
 
 /********************* FILTER WINDOW *********************/
-.area-window-filter{
-    gap: 10px;
+.area-window-filter[aria-expanded="false"]{
+    display: none;
+}
+.area-window-button[data-title]:hover:after{
+    top: 5px;
+    margin-left: 10px;
+}
+.area-window-button[data-title]:has(.bi-x-circle-fill):hover:after{
+    top: 5px;
+    margin-left: 20px;
+}
+.filter-dates[data-selected="true"]{
+    background-color: rgb(66, 134, 223);
+}
+.filter-dates[data-selected="false"]{
+    background-color: rgb(168, 168, 168);
+}
+.filter-spots-number[aria-hidden="true"]{
+    display: none;
+}
+.window-item-filter-information{
+    background-color: var(--area-background-color);
+    position: absolute;
+    right: calc(var(--container-right-width) * 1.07);
+    opacity: 1;
+    transition: opacity 0.1s ease-in 0.55s;
+    visibility: visible;
     padding: 10px;
-}
-.window-filter-item[name = "dates"]{
     gap: 10px;
+    width: 60%;
+    border-radius: 2px;
+    border: 1px solid var(--container-border-color);
 }
-.window-filter-item[name = "sources"]{
-    gap: 5px;
+.window-item-filter-information > .marker-info{
+    color: #ea0f8a;
+    font-weight: 600;
+}
+.window-item-filter-information[aria-hidden="true"]{
+    opacity: 0;
+    visibility: hidden;
 }
 
 /********************* EARTH TOOLS *********************/

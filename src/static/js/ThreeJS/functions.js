@@ -2,7 +2,10 @@ import { CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.
 import { ArcballControls } from 'three/addons/controls/ArcballControls.js';
 import { updateUserData } from "../Fetch/functions.js"
 import { texturesQualityPath } from "./config.js";
+import { meshPointers } from '../main.js';
+import { displayFireData } from '../UX/functions.js'
 import * as THREE from "three";
+
 
 /* ---------------------------- RENDERS ---------------------------- */
 /* Creates WebGL and Label renderer based on width and height parameters */
@@ -251,7 +254,7 @@ const buildLights = (lightArray) => {
 
 /* ---------------------------- POINTS/MARKERS ---------------------------- */
 /* Creates threejs points material for heat spots */
-export const createMarkers = (dataObject) => {
+export const createMarkers = (dataObject, nameMesh) => {
     const color = new THREE.Color(0xff0000);
     const common_geo = new THREE.CircleGeometry(0.0015, 32);
     const common_mat = new THREE.MeshBasicMaterial({color:0xffffff});
@@ -269,8 +272,10 @@ export const createMarkers = (dataObject) => {
         user_Data[i] = dataObject[i];
     }
     markMesh.userData = user_Data;
+    markMesh.name = nameMesh;
     return markMesh
 }
+
 
 /* ---------------------------- LAYERS ---------------------------- */
 /* Creates HTML layers section based on textures, apply visibility event */
@@ -344,12 +349,12 @@ const setLayersOptions = (userKey, texturesArray, groupMesh, backgroundMesh) => 
 
 /* ---------------------------- SCENE OBJECTS ---------------------------- */
 /* Remove object from scene */
-export const removeObject = (sceneObject, object) => {
-    if(object instanceof Array){
-        for(let i= 0; i < object.length; i++){
-            object[i].dispose();
-            sceneObject.remove(object[i]);
-        }
+export const removeObject = (sceneObject, object, multiple = false) => {
+    if(multiple){
+        Object.values(object).forEach(objectToRemove => {
+            objectToRemove.dispose();
+            sceneObject.remove(objectToRemove);
+        });
     } else {
         object.dispose();
         sceneObject.remove(object);
@@ -357,14 +362,37 @@ export const removeObject = (sceneObject, object) => {
 }
 
 /* Add object to scene */
-export const addObject = (sceneObject, object) => {
-    if(object instanceof Array){
-        for(let i = 0; i < object.length; i++){
-            sceneObject.add(object[i]);
-        }
+export const addObject = (sceneObject, object, multiple = false) => {
+    if(multiple){
+        Object.values(object).forEach(objectToAdd => {
+            sceneObject.add(objectToAdd);
+        });
     } else {
         sceneObject.add(object);
     }
+}
+
+/* Ray cast objects in Earth Threejs */
+export const rayCast = (rendersObject, yOffset, sceneObjects, meshPointers) => {
+    const pointer = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+    rendersObject.labelRenderer.domElement.addEventListener("pointerdown", event => { 
+        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        if(raycaster.intersectObject(sceneObjects.earth).length > 0){ 
+            for(let i = 0; i < meshPointers.length; i++){
+                const intersections = raycaster.intersectObject(meshPointers[i]);
+                if(intersections.length > 0) {
+                    const nearest = intersections[0];
+                    const meshId = nearest.instanceId;
+                    const fireInformation = nearest.object.userData[meshId];
+                    console.log(fireInformation);
+                    break
+                }
+            }
+        }
+    });
 }
 
 /* ---------------------------- MAIN ---------------------------- */
@@ -407,7 +435,7 @@ export function setThreeJS() {
     const controls = createControls(camera, rendersObject.labelRenderer.domElement, sceneObjects.earth);
 
     /* Adding layer options based on textures */
-    setLayersOptions(user_data["threejs"]["firms_key"], userTextures, sceneObjects.earth, sceneObjects.stars)
+    setLayersOptions(user_data["threejs"]["firms_key"], userTextures, sceneObjects.earth, sceneObjects.stars);
 
     /* Animation loop */
     const animate = () => { 
@@ -429,6 +457,42 @@ export function setThreeJS() {
     }
 
     window.addEventListener("resize", onWindowResize);
+
+    /* Ray Caster to Heat Spots */
+    const pointer = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+    const markerInformation = document.querySelector("[data-content = 'Marker-Information']");
+    rendersObject.labelRenderer.domElement.addEventListener("pointerdown", event => { 
+        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        if(raycaster.intersectObject(sceneObjects.earth).length > 0){
+            Object.values(meshPointers).forEach(mesh => {
+                const intersection = raycaster.intersectObject(mesh);
+                if(intersection.length > 0){
+                    const nearest = intersection[0];
+                    const meshId = nearest.instanceId;
+                    const fireInformation = nearest.object.userData[meshId];
+                    displayFireData(fireInformation, meshId, markerElement, markerInformation);
+                    heatSpotLabel.position.set(nearest.point.x, nearest.point.y, nearest.point.z);
+                }
+            });
+        }
+
+        // if(raycaster.intersectObject(sceneObjects.earth).length > 0){ 
+        //     for(let i = 0; i < meshPointers.length; i++){
+        //         const intersections = raycaster.intersectObject(meshPointers[i]);
+        //         if(intersections.length > 0) {
+        //             const nearest = intersections[0];
+        //             const meshId = nearest.instanceId;
+        //             const fireInformation = nearest.object.userData[meshId];
+        //             displayFireData(fireInformation, meshId, markerElement, markerInformation);
+        //             heatSpotLabel.position.set(nearest.point.x, nearest.point.y, nearest.point.z);
+        //             break
+        //         }
+        //     }
+        // }
+    });
 
     return scene
 }

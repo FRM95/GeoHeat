@@ -1,13 +1,16 @@
 import { getFirmsData } from '../Fetch/functions.js'
 import { createMarkers, addObject, removeObject } from '../ThreeJS/functions.js'
-
+import { meshPointers } from '../main.js'
 
 /* ---------------------------- WORLD HEAT SPOTS ---------------------------- */
+/* UTC DATE/TIME VARIABLES */
+const date = new Date();
+const last24H = new Date(date.setUTCDate(date.getUTCDate() - 1)).toISOString().slice(0, 10); 
+
 /* Set Request data to display heat spots on earth */
 const heatSpotsParams = (dayrange) => {
 
-    const date = new Date();
-    const dateRequested = date.toISOString().split("T")[0];
+    const dateRequested = date.toISOString().slice(0, 10); /* UTC FORMAT */
     const delimiter = "area";
     const time = date.toTimeString().slice(0, 8);
     const validUntil = new Date(date.setHours(23, 59, 59)).toUTCString();
@@ -42,137 +45,156 @@ const heatSpotsParams = (dayrange) => {
 }
 
 /* ---------------------------- MESHES ---------------------------- */
-/* Process requested World data by adding a Mesh to each data */
+/* Create a mesh object (points material) for each fetched data */
 const setMeshes = (geoHeatObject) => {
-    Object.values(geoHeatObject).forEach(source => {
-        if(source instanceof Object){
-            for(const[date, arraySpots] of Object.entries(source)){
-                const mesh = createMarkers(arraySpots);
-                source[date] = mesh;
+    for(const[sourceName, value] of Object.entries(geoHeatObject)){
+        if(value instanceof Object){
+            for(const[dateSource, arraySpots] of Object.entries(value)){
+                const meshName = sourceName + '#' + dateSource;
+                const mesh = createMarkers(arraySpots, meshName);
+                meshPointers[meshName] = mesh;
             }
         }
-    });
+    }
 }
 
 /* ---------------------------- FILTER MESHES ---------------------------- */
-const setDatesFilter = (divElement, dataArray, dataObject, sceneObject, meshArray) => {
-    for(let i = 0; i < dataArray.length; i++){
-        const button = document.createElement("button");
-        button.textContent = dataArray[i]["text"];
-        button.setAttribute("data-value", dataArray[i]["value"]);
-        button.setAttribute("data-selected", dataArray[i]["selected"]);
-        button.className = "filter-dates";
-
-        button.addEventListener("click", () => {
-            if("meshes" in dataObject){
-                const selected = button.getAttribute("data-selected");
-                if(selected != true){
-                    const dates = button.getAttribute("data-value").split(";");
-                    const sources = document.querySelectorAll(".source-element-name");
-                    removeObject(sceneObject, meshArray);
-                    const meshes = [];
-                    sources.forEach(source => {
-                        const sourceName = source.getAttribute("data-value");
-                        const dataSource = dataObject["heatspots"][sourceName];
-                        if(dataSource instanceof Object){
-                            let heatSpots = 0;
-                            dates.forEach(date => {
-                                heatSpots += dataSource[date].length;
-                                meshes.push(dataObject["meshes"][sourceName][date])
-                            });
-                            const spotsNumber = document.getElementById(sourceName + '-heatspots-number');
-                            spotsNumber.innerHTML = heatSpots;
-                        }
-                    });
-                    addObject(sceneObject, meshes);
-                    meshArray = meshes
-                    const buttons = document.querySelectorAll(".filter-dates");
-                    buttons.forEach(buttonElement => {
-                        if(buttonElement != button){
-                            buttonElement.setAttribute("selected", false);
-                        } else {
-                            buttonElement.setAttribute("selected", true);
-                        }
-                    })
-                }
+/* Extract sorted dates (descendant) from the fetched response */
+const descendantDates = (dataObject) => {
+    if("heatspots" in dataObject){
+        const dateSet = new Set();
+        Object.values(dataObject["heatspots"]).forEach(value => {
+            if(value instanceof Object){
+                Object.keys(value).forEach(date => dateSet.add(date));
             }
         });
+        const unsortedArray = Array.from(dateSet);
+        const sortedArray = unsortedArray.map((x) => new Date(x)).reverse().map((x) => x.toISOString().slice(0, 10)); 
+        return sortedArray
+    }
+    return []
+}
 
-        divElement.appendChild(button);
+/* Construction of dateObject which is used to populate filter HTML element */
+const createDateObject = (dateArray, dataObject) => {
+    const returnObject = {
+        "currentDay-spots": {  },
+        "completeDay-spots" : {  },
+        "filter-dates-info" : { }
+    }
+    if("heatspots" in dataObject){
+        if(dateArray.length > 1){
+            returnObject["currentDay-spots"]["data-value"] = dateArray[0];
+            returnObject["completeDay-spots"]["data-value"] = dateArray[0] + ";" + dateArray[1];
+            returnObject["filter-dates-info"]["UTC today:"] = new Date(dateArray[0]).toUTCString();
+            returnObject["filter-dates-info"]["UTC yesterday:"] = new Date(dateArray[1]).toUTCString();
+            returnObject["filter-dates-info"]["Local today:"] = new Date(dateArray[0]).toString();
+            returnObject["filter-dates-info"]["Local yesterday:"] = new Date(dateArray[1]).toString();
+            for(const [source, data] of Object.entries(dataObject["heatspots"])){
+                const current = returnObject["currentDay-spots"];
+                const complete = returnObject["completeDay-spots"];
+                current[source] = 0
+                complete[source] = 0
+                if(data instanceof Object){
+                    for(const [date, spots] of Object.entries(data)){
+                        if(date === dateArray[0]){
+                            current[source] += spots.length;
+                            complete[source] += spots.length;
+                        } 
+                        else if (date === dateArray[1]){
+                            complete[source] += spots.length;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    return returnObject
+}
+
+/* Update content of filter HTML element */
+const updateFilterInfo = (dateObject) => {
+    for(const [id, data] of Object.entries(dateObject)){
+        const element = document.getElementById(id);
+        if(element!= null){
+            element.innerHTML = "";
+            for(const [key, value] of Object.entries(data)){
+                if(key != "data-value"){
+                    const span = document.createElement("span");
+                    span.className = "marker-label";
+                    span.textContent = `${key} ${value}`;
+                    element.appendChild(span);
+                } else {
+                    element.setAttribute("data-value", value);
+                }
+            }
+        }
     }
 }
 
-const setSourcesData = (divElement, dataArray) => {
-    for(let i = 0; i < dataArray.length; i++){
-        const sourceName = document.createElement("span");
-        sourceName.setAttribute("data-value", dataArray[i]);
-        sourceName.className = "source-element-name";
-        sourceName.textContent = dataArray[i].replace(/_/g, " ");
-
-        const meshLegend = document.createElement("div");
-        meshLegend.className = "source-element-mesh-color";
-
-        const heatSpots = document.createElement("span");
-        heatSpots.textContent = "Heat Spots: "
-        heatSpots.className = "source-element-heatspots";
-
-        const numberHeatSpots = document.createElement("span");
-        numberHeatSpots.id = dataArray[i] + '-heatspots-number';
-        numberHeatSpots.setAttribute("data-value", 0);
-        numberHeatSpots.textContent = 0;
-        numberHeatSpots.className = "source-element-heatspots-number";
-
-        const divSource = document.createElement("div");
-        divSource.className = "source-element d-flex";
-        divSource.append(sourceName, meshLegend, heatSpots, numberHeatSpots)
-        divElement.appendChild(divSource);
-    }
+/* Update current heat Spots mesh */
+const updateSpotsinScene = (scene) => {
+    const buttons = document.querySelectorAll(".filter-dates");
+    buttons.forEach(button => {
+        button.addEventListener("change", () => {
+            const spotsDiv = document.getElementById(button.id + "-spots");
+            if(spotsDiv!= null){
+                removeObject(scene, meshPointers, true);
+                const filterDate = spotsDiv.getAttribute("data-value").split(";");
+                for(const [key, value] of Object.entries(meshPointers)){
+                    if(filterDate.includes(key.split("#")[1])){
+                        addObject(scene, value);
+                    }
+                }
+            }
+        })
+    });
 }
 
-/* Set filter options for World data */
-const setDropdownFilterOptions = (datesArray, sourcesArray, dataObject, sceneObject, meshArray) => { 
-    const datesDiv = document.getElementById("dropdown_date");
-    if(datesDiv != null){
-        setDatesFilter(datesDiv, datesArray, dataObject, sceneObject, meshArray);
-    }
-    const sourcesDiv = document.getElementById("dropdown_source");
-    if(sourcesDiv !=null){
-        setSourcesData(sourcesDiv, sourcesArray);
-    }
-}
 
 /* ---------------------------- MAIN ---------------------------- */
-export async function HeatSpots(sceneObject){
-
-    /* Get user key to make the request */
-    const userKey = user_data["threejs"]["firms_key"];
+export async function RequestHeatSpots(scene){
 
     /* Set heat spots parameters to request */
     const last24HData = heatSpotsParams(2);
-
-    /* Mesh pointers */
-    let meshPointers = [];
-
-    /* Add geoheat world data filter options */
-    const today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-    const last24H = new Date(new Date().getTime() - (24 * 60 * 60 * 1000) - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-    const dates = [{"value": today, "text": "Today", "selected": false}, {"value": `${today};${last24H}`, "text": "24 Hours", "selected": false}];
-    const sources = ["VIIRS_SNPP_NRT", "VIIRS_SNPP_SP", "VIIRS_NOAA20_NRT", "VIIRS_NOAA21_NRT", "MODIS_NRT", "MODIS_SP", "LANDSAT_NRT"];
-    setDropdownFilterOptions(dates, sources, last24HData, sceneObject, meshPointers);
     
-    /* GeoHeat dict spots construction */
-    const geoHeatObject = await getFirmsData(userKey, last24HData);
+    /* Get user key to make the request */
+    const userKey = user_data["threejs"]["firms_key"];
 
-    /* Create meshes object for each source and date*/
-    let meshObject = JSON.parse(JSON.stringify(geoHeatObject))
-    setMeshes(meshObject);
+    /* Fetch world data with HTTP request */
+    const geoHeatObject = await getFirmsData(userKey, last24HData);
 
     /* Add geoheat spots object to data */
     last24HData["heatspots"] = geoHeatObject;
 
-    /* Add geoheat meshes object to data */
-    last24HData["meshes"] = meshObject;
-    console.log(last24HData);
+    /* Removes previous values of meshPointers from scene and object*/
+    for(let key in meshPointers){if(meshPointers.hasOwnProperty(key)){delete meshPointers[key];}}
+    removeObject(scene, meshPointers, true);
 
-    return last24HData
+    /* Creates a new mesh for every fetched source/date*/
+    setMeshes(geoHeatObject);
+    console.log(last24HData)
+    console.log(meshPointers);
+
+    /* Find out what dates we have downloaded */
+    const sortedDates = descendantDates(last24HData);
+
+    /* Add heat spots related to 'Today' date */
+    for(const [key, value] of Object.entries(meshPointers)){
+        if(key.split("#")[1] === sortedDates[0]){
+            addObject(scene, value);
+        }
+    }
+
+    /* Create a filter object to pass as data */
+    const filterDateObject = createDateObject(sortedDates, last24HData);
+
+    console.log(filterDateObject);
+
+    /* Seed filter element with data */
+    updateFilterInfo(filterDateObject);
+
+    /* Update spots mesh functionality */
+    updateSpotsinScene(scene);
 }
