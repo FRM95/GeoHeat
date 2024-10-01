@@ -1,17 +1,12 @@
-import { CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
-import { ArcballControls } from 'three/addons/controls/ArcballControls.js';
-import { updateUserData } from "../Fetch/functions.js"
+import { CSS2DRenderer, CSS2DObject} from "three/addons/renderers/CSS2DRenderer.js";
+import { ArcballControls } from "three/addons/controls/ArcballControls.js";
 import { texturesQualityPath } from "./config.js";
-import { meshPointers } from '../main.js';
-import { displayFireData } from '../UX/functions.js'
 import * as THREE from "three";
-
 
 /* ---------------------------- RENDERS ---------------------------- */
 /* Creates WebGL and Label renderer based on width and height parameters */
 const setRender = (sceneWidth, sceneHeight) => {
     try {
-
         const renderer = new THREE.WebGLRenderer({antialias:true});
         renderer.setSize(sceneWidth, sceneHeight);
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -20,12 +15,7 @@ const setRender = (sceneWidth, sceneHeight) => {
         labelRenderer.setSize(sceneWidth, sceneHeight);
         labelRenderer.domElement.style.position = "absolute";
         labelRenderer.domElement.style.top = "0px";
-        labelRenderer.domElement.addEventListener("pointerup", () => {
-            labelRenderer.domElement.style.cursor = 'default';
-        });
-
-        return {'renderer' : renderer, 'labelRenderer': labelRenderer}
-
+        return {"renderer" : renderer, "labelRenderer": labelRenderer}
     } catch(error) {
         console.log(error)
     }
@@ -175,7 +165,7 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
                     const z = THREE.MathUtils.randFloatSpread(200);
                     vertices.push(x,y,z);
                 }
-                pointGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+                pointGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
                 const starsQuality = texturesArray[i]["quality"];
                 const starsTexture = loader.load(texturesQuality[name][starsQuality]);
                 const starsMaterial = new THREE.PointsMaterial(properties);
@@ -211,7 +201,7 @@ const createGroup = (texturesObject, earthGroupName) =>{
     const group = new THREE.Group();
     group.name = earthGroupName;
     for(const [key, value] of Object.entries(texturesObject)){
-        if(key != 'starfield_map'){
+        if(key != "starfield_map"){
             group.add(value);
         }
     }
@@ -277,132 +267,15 @@ export const createMarkers = (dataObject, nameMesh) => {
 }
 
 
-/* ---------------------------- LAYERS ---------------------------- */
-/* Creates HTML layers section based on textures, apply visibility event */
-const createLayersSection = (name, isVisible, textures, texturesBackground) =>{
-    const layerSection = document.createElement("div");
-    layerSection.className = 'section';
-    const newNode = document.createElement("input");
-    newNode.setAttribute('type', 'checkbox');
-    newNode.className = 'checkbox-layer';
-    newNode.checked = isVisible;
-    if(name != "starfield_map") {
-        newNode.addEventListener("change", (event) => {
-            const meshes = textures.children;
-            for(let j=0; j < meshes.length; j++){
-                if(meshes[j].name == name){
-                    meshes[j].visible = event.target.checked;
-                    break;
-                }
-            }
-        });
-    } else {
-        newNode.addEventListener("change", (event) => {
-            texturesBackground.visible = event.target.checked;
-        });
-    }
-    newNode.setAttribute('property', name);
-    const label = document.createElement("label");
-    const labelName = name.replace(/_/g, " ");
-    label.innerHTML = labelName[0].toUpperCase() + labelName.substring(1);
-    layerSection.appendChild(newNode);
-    layerSection.appendChild(label);
-    return layerSection
-}
-
-/* Save layer visibility status on mongodb */
-function saveLayers(key, texturesArray){
-    let objectBody = [];
-    let params = { "collection" : "threejs", "array": "textures" };
-    for(let i = 0; i < texturesArray.length; i++) {
-        const layerData = texturesArray[i]["name"];
-        const optionChecked = document.querySelector(`.checkbox-layer[property = '${layerData}']`).checked;
-        texturesArray[i]["visible"] = optionChecked;
-        objectBody.push({"name": layerData, "visible" : optionChecked});
-    }
-    return updateUserData(key, params, objectBody);
-}
-
-/* Set layers options to display based on user data */
-const setLayersOptions = (userKey, texturesArray, groupMesh, backgroundMesh) => {
-    const layersDiv = document.getElementById("earth-layers");
-    if(layersDiv != null){
-        for(let i = 0; i < texturesArray.length; i++){
-            const textureOption = createLayersSection(texturesArray[i]["name"], 
-                                                        texturesArray[i]["visible"], 
-                                                        groupMesh, 
-                                                        backgroundMesh);
-            layersDiv.appendChild(textureOption);
-        }
-        const applyLayers = document.createElement("button");
-        applyLayers.className = "button-2 action-button";
-        applyLayers.textContent = "Save layers";
-        applyLayers.id = "save-interface-layers";
-        applyLayers.addEventListener("click", () => {
-            const response = saveLayers(userKey, texturesArray);
-        });
-        const applyLayersDiv = document.createElement("div");
-        applyLayersDiv.appendChild(applyLayers);
-        layersDiv.appendChild(applyLayersDiv);
-    }
-}
-
-/* ---------------------------- SCENE OBJECTS ---------------------------- */
-/* Remove object from scene */
-export const removeObject = (sceneObject, object, multiple = false) => {
-    if(multiple){
-        Object.values(object).forEach(objectToRemove => {
-            objectToRemove.dispose();
-            sceneObject.remove(objectToRemove);
-        });
-    } else {
-        object.dispose();
-        sceneObject.remove(object);
-    }
-}
-
-/* Add object to scene */
-export const addObject = (sceneObject, object, multiple = false) => {
-    if(multiple){
-        Object.values(object).forEach(objectToAdd => {
-            sceneObject.add(objectToAdd);
-        });
-    } else {
-        sceneObject.add(object);
-    }
-}
-
-/* Ray cast objects in Earth Threejs */
-export const rayCast = (rendersObject, yOffset, sceneObjects, meshPointers) => {
-    const pointer = new THREE.Vector2();
-    const raycaster = new THREE.Raycaster();
-    rendersObject.labelRenderer.domElement.addEventListener("pointerdown", event => { 
-        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1;
-        raycaster.setFromCamera(pointer, camera);
-        if(raycaster.intersectObject(sceneObjects.earth).length > 0){ 
-            for(let i = 0; i < meshPointers.length; i++){
-                const intersections = raycaster.intersectObject(meshPointers[i]);
-                if(intersections.length > 0) {
-                    const nearest = intersections[0];
-                    const meshId = nearest.instanceId;
-                    const fireInformation = nearest.object.userData[meshId];
-                    console.log(fireInformation);
-                    break
-                }
-            }
-        }
-    });
-}
-
 /* ---------------------------- MAIN ---------------------------- */
 export function setThreeJS() {
+
     /* HTML Renders */
-    const yOffset = document.getElementById("header").offsetHeight;
+    const yOffset = document.querySelector("header").offsetHeight + document.querySelector("footer").offsetHeight;
     const width = window.innerWidth;
-    const height = window.innerHeight + yOffset;
+    const height = window.innerHeight - yOffset;
     const rendersObject = setRender(width, height);
-    const container = document.getElementById("threejs-canvas");
+    const container = document.querySelector(".scene-canvas");
     container.appendChild(rendersObject.renderer.domElement);
     container.appendChild(rendersObject.labelRenderer.domElement);
 
@@ -426,16 +299,13 @@ export function setThreeJS() {
     scene.add(camera);
 
     /* Adding label for heat spots */
-    const markerElement = document.querySelector("[data-content='Marker-Label']");
+    const markerElement = document.querySelector(".spot-label");
     const earthMesh = sceneObjects.earth.children[0];
     const heatSpotLabel = setHeatSpotLabel(markerElement, earthMesh, camera);
     scene.add(heatSpotLabel);
 
     /* Set controls for Scene */
     const controls = createControls(camera, rendersObject.labelRenderer.domElement, sceneObjects.earth);
-
-    /* Adding layer options based on textures */
-    setLayersOptions(user_data["threejs"]["firms_key"], userTextures, sceneObjects.earth, sceneObjects.stars);
 
     /* Animation loop */
     const animate = () => { 
@@ -450,49 +320,13 @@ export function setThreeJS() {
 
     /* Window resize scene update */
     const onWindowResize = () => {
-        camera.aspect = innerWidth / (innerHeight + yOffset);
+        camera.aspect = innerWidth / (innerHeight - yOffset);
         camera.updateProjectionMatrix();
-        rendersObject.renderer.setSize(innerWidth, (innerHeight + yOffset)); 
-        rendersObject.labelRenderer.setSize(innerWidth, (innerHeight + yOffset));
+        rendersObject.renderer.setSize(innerWidth, (innerHeight - yOffset)); 
+        rendersObject.labelRenderer.setSize(innerWidth, (innerHeight - yOffset));
     }
 
     window.addEventListener("resize", onWindowResize);
-
-    /* Ray Caster to Heat Spots */
-    const pointer = new THREE.Vector2();
-    const raycaster = new THREE.Raycaster();
-    const markerInformation = document.querySelector("[data-content = 'Marker-Information']");
-    rendersObject.labelRenderer.domElement.addEventListener("pointerdown", event => { 
-        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = - (event.clientY / (window.innerHeight + yOffset)) * 2 + 1;
-        raycaster.setFromCamera(pointer, camera);
-        if(raycaster.intersectObject(sceneObjects.earth).length > 0){
-            Object.values(meshPointers).forEach(mesh => {
-                const intersection = raycaster.intersectObject(mesh);
-                if(intersection.length > 0){
-                    const nearest = intersection[0];
-                    const meshId = nearest.instanceId;
-                    const fireInformation = nearest.object.userData[meshId];
-                    displayFireData(fireInformation, meshId, markerElement, markerInformation);
-                    heatSpotLabel.position.set(nearest.point.x, nearest.point.y, nearest.point.z);
-                }
-            });
-        }
-
-        // if(raycaster.intersectObject(sceneObjects.earth).length > 0){ 
-        //     for(let i = 0; i < meshPointers.length; i++){
-        //         const intersections = raycaster.intersectObject(meshPointers[i]);
-        //         if(intersections.length > 0) {
-        //             const nearest = intersections[0];
-        //             const meshId = nearest.instanceId;
-        //             const fireInformation = nearest.object.userData[meshId];
-        //             displayFireData(fireInformation, meshId, markerElement, markerInformation);
-        //             heatSpotLabel.position.set(nearest.point.x, nearest.point.y, nearest.point.z);
-        //             break
-        //         }
-        //     }
-        // }
-    });
 
     return scene
 }

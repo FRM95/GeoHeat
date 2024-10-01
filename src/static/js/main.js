@@ -1,17 +1,11 @@
-import { RequestOptions } from './Request/functions.js'
-// import { FilterOptions } from './Filter/functions.js'
-import { setThreeJS } from './ThreeJS/functions.js'
-import { DocumentUX } from './UX/functions.js'
-import { RequestHeatSpots } from './HeatSpots/functions.js'
-
+import { setThreeJS } from "./ThreeJS/functions.js"
+import { populateHTML } from "./HTML/explore.js"
 export let meshPointers = {};
 
 /* Main method to load JS scripts */
 function main(){
-    RequestOptions();
     const scene = setThreeJS();
-    DocumentUX();
-    RequestHeatSpots(scene);
+    populateHTML();
 }
 
 /* Executes main method after window load */
