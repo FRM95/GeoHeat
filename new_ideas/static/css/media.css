@@ -1,0 +1,34 @@
+:root{
+  --sub-content-min-width : 350px;
+  --header-height: 45px;
+}
+/*Media queries to change minwidth of main-subcontent */
+@media screen and (width < 1440px) {
+  :root{
+    --sub-content-min-width : 300px;
+  }
+}
+@media screen and (width < 1260px) {
+  :root{
+    --sub-content-min-width : 280px;
+  }
+}
+@media screen and (width < 1120px) {
+  :root{
+    --sub-content-min-width : 250px;
+  }
+}
+/*Media queries to search header */
+@media screen and (width < 500px) {
+  .header-search {
+    z-index: 1;
+    position: absolute;
+    top: var(--header-height);
+  }
+  .sidebar {
+    z-index: 2;
+  }
+  .doc-header{
+    position: relative;
+  }
+}

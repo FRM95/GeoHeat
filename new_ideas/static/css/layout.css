@@ -1,0 +1,56 @@
+:root{
+    --header-height: 45px;
+    --main-height: 100%;
+    --footer-height: 20px;
+    --custom-font: "Quicksand", system-ui, sans-serif;
+}
+.doc-header{
+    grid-area: header;
+    background-color: green;
+}
+.doc-main{
+    grid-area: main;
+    position: relative;
+    height: var(--main-height);
+}
+.doc-footer{
+    grid-area: footer;
+    background-color: purple;
+}
+.doc-wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-height) auto var(--footer-height);
+    grid-template-areas:
+    "header header header" 
+    "main   main   main  " 
+    "footer footer footer";
+}
+/* .scene-canvas{
+    grid-area: canvas;
+} */
+.sidebar{
+    grid-area: sidebar;
+    position: inherit;
+    height: inherit;
+    min-width: var(--sub-content-min-width);
+}
+.heatspots{
+    grid-area: heatspots;
+    position: inherit;
+    min-width: var(--sub-content-min-width);
+}
+.compass{
+    grid-area: compass;
+    position: inherit;
+    min-width: var(--sub-content-min-width);
+}
+.doc-main{
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas:
+    "sidebar canvas heatspots" 
+    "sidebar canvas heatspots" 
+    "sidebar canvas heatspots"
+    "sidebar canvas compass";
+}

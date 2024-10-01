@@ -1,0 +1,124 @@
+:root{
+    --header-content-gap: 20px;
+    --header-subcontent-gap: 20px;
+    --header-subcontent-buttons-gap: 20px;
+    --header-subcontent-search-with: 100%;
+    --header-subcontent-search-height: 65%;
+    --header-subcontent-button-height: 100%;
+    --main-content-margin: 10px;
+    --main-button-left: 100%;
+    --main-button-bottom: 50%;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: var(--custom-font);
+    cursor: default;
+}
+header{
+    display: block;
+}
+.header-content{
+    display: flex;
+    height: 100%;
+    padding: 0px 10px;
+    gap: var(--header-content-gap);
+}
+.head-left{
+    flex-grow: 2;
+    justify-content: flex-start;
+}
+.head-right{
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+.header-subcontent{
+    border: 1px solid white;
+    display: flex;
+    gap: var(--header-subcontent-gap);
+}
+.header-subcontent * {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.header-home{
+    flex: 0.25 1 auto;
+}
+.header-search{
+    flex: 0.5 1 auto;
+}
+.header-buttons{
+    flex: 5 1 auto;
+    gap: var(--header-subcontent-buttons-gap);
+}
+.header-input{
+    width: var(--header-subcontent-search-with);
+    height: var(--header-subcontent-search-height);
+}
+
+
+
+
+
+
+
+.scene-canvas{
+    position: fixed;
+}
+.sidebar{
+    border: 1px solid white;
+    background-color: rgb(22, 104, 76);
+}
+.main-button{
+    position: absolute;
+    bottom: var(--main-button-bottom);
+    left: var(--main-button-left);
+    align-content: center;
+}
+.main-content{
+    margin: var(--main-content-margin);
+    height: calc(100% - var(--main-content-margin) * 2);
+    background-color: cornflowerblue;
+}
+.heatspots{
+    background-color: aqua;
+    display: grid;
+    grid-template-rows: 30px auto;
+}
+.compass{
+    background-color: pink;
+}
+.compass-info{
+    grid-template-rows: 70% auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+[data-expanded]{
+    transition: 0.075s width ease-in;
+}
+[data-expanded="false"]{
+    width: 0;
+    min-width: 0;
+}
+[data-expanded="false"]:has([data-hidden = "false"]) > [data-hidden = "false"]{
+    display: none;
+}
+
+[data-hidden = "true"]{
+    display: none;
+}
+[data-visible="false"]{
+    visibility: hidden;
+    content: none;
+}
