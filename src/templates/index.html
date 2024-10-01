@@ -1,405 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" name="viewport" content="width=device-width">
-		<title>GeoHeat</title>
-    <link rel="stylesheet" href="/static/css/root.css">
-    <link rel="stylesheet" href="/static/css/animations.css">
-    <link rel="stylesheet" href="/static/css/index.css">
-  </head>
-	<body data-theme="light-soft">
-    <header class="header-1 d-flex backdrop" id="header">
-      <div class="header-left centered">
-        <h1 class="page-title header-page-title">GeoHeat</h1>
-        <div class="header-section d-flex centered" data-title="Inspect your requested data">
-          <button class="button-1 selector d-flex centered header-button ux-event" data-action="hide-element" data-section="Data">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-fill" viewBox="0 0 17 17">
-              <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3m-8.322.12q.322-.119.684-.12h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981z"/>
-            </svg> Data
-          </button>
-        </div>
-        <div class="header-section d-flex centered" style="justify-content: flex-start;">
-          <div class="header-form-input d-flex centered">
-            <input type="search" id="input-location-search" class="header-input input-1" placeholder="Enter a location">
-            <button id="input-location-search-button" class="header-input-button selector" data-title="Travel to the selected location">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 17 17">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-              </svg>
-            </button>
-          </div>
-          <div class="header-form-result result-1" id="header-form-result-list" aria-hidden="true">
-            <ul class="results-list list-1" id="header-form-list"></ul>
-         </div>
-        </div>
-      </div>
-      <div class="header-middle centered">
-        <div class="header-section d-flex centered" data-title="Obtain new heat spots">
-          <button class="button-1 selector d-flex centered header-button ux-event" data-action="change-sidebar" data-section="Explore">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe-europe-africa" viewBox="0 0 17 17">
-              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M3.668 2.501l-.288.646a.847.847 0 0 0 1.479.815l.245-.368a.81.81 0 0 1 1.034-.275.81.81 0 0 0 .724 0l.261-.13a1 1 0 0 1 .775-.05l.984.34q.118.04.243.054c.784.093.855.377.694.801-.155.41-.616.617-1.035.487l-.01-.003C8.274 4.663 7.748 4.5 6 4.5 4.8 4.5 3.5 5.62 3.5 7c0 1.96.826 2.166 1.696 2.382.46.115.935.233 1.304.618.449.467.393 1.181.339 1.877C6.755 12.96 6.674 14 8.5 14c1.75 0 3-3.5 3-4.5 0-.262.208-.468.444-.7.396-.392.87-.86.556-1.8-.097-.291-.396-.568-.641-.756-.174-.133-.207-.396-.052-.551a.33.33 0 0 1 .42-.042l1.085.724c.11.072.255.058.348-.035.15-.15.415-.083.489.117.16.43.445 1.05.849 1.357L15 8A7 7 0 1 1 3.668 2.501"/>
-            </svg> Explore
-          </button>
-        </div>
-        <div class="header-section d-flex centered" data-title="Modify the aspect of the scene">
-          <button class="button-1 selector d-flex centered header-button ux-event" data-action="change-sidebar" data-section="Layers">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stack" viewBox="0 0 17 17">
-              <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z"/>
-              <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z"/>
-            </svg> Layers
-          </button>
-        </div>
-        <div class="header-section d-flex centered" data-title="Interact with the Earth">
-          <button class="button-1 selector d-flex centered header-button ux-event" data-action="change-sidebar" data-section="Draw">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 17 17">
-              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-            </svg> Draw
-          </button>
-        </div>
-      </div>
-      <div class="header-right centered">
-        <div class="header-section dropdown" id="dropwdown-help">
-          <button class="header-button button-1 d-flex centered">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 17 17">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"/>
-            </svg> Help
-          </button>
-          <div class="dropdown-content">
-            <div class="dropdown-area">
-              <a href="#" class="dropdown-area-a">How to request data?</a>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" name="viewport" content="IE=edge">
+    <title>GeoHeat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/reset.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/layout.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/css/media.css">
+</head>
+<body class="doc-wrapper">
+    <header class="doc-header">
+        <div class="header-content">
+            <div class="header-subcontent head-left">
+                <a class="header-home" href="#">GeoHeat LOGO</a>
+                <div class="header-search">
+                    <input class="header-input searcher"></input>
+                </div>
+                <div class="header-buttons">
+                    <button sidebar-section="Explore">Explore</button>
+                    <button sidebar-section="Layers">Layers</button>
+                    <button sidebar-section="Draw">Draw</button>
+                </div>
             </div>
-            <div class="dropdown-area">
-              <a href="#" class="dropdown-area-a">How to download data?</a>
+            <div class="header-subcontent head-right">
+                <a href="#">Help</a>
+                <div>bell</div>
             </div>
-          </div>
         </div>
-        <div class="header-section d-flex centered dropdown" id="dropwdown-notifications" data-status = "empty" data-notifications = "0" data-title="Notifications">
-          <button class="header-button button-1 d-flex centered" style="gap: 3px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 17 17">
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
-            </svg>
-            <div class="notifications-bell d-flex centered">
-              <div class="notifications-counter d-flex centered">
-                <span class="notifications-counter-value"></span>
-              </div>
-            </div>
-          </button>
-          <div id="notifications-layer" class="dropdown-content"></div>
-        </div>
-      </div>
     </header>
-    <main>
-      <div class="application-container">
-        <div class="canvas" id="threejs-canvas"></div>
-        <div class="container container-left" id="container-sidebar" aria-expanded="true" data-content="Sidebar"> 
-          <div class="collapse">
-            <button class="selector ux-event" id="collapse-sidebar" data-title="Close panel" data-action="expand-element" data-section="Sidebar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-short collapse-icon" viewBox="0 0 17 17">
-                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
-              </svg>
-            </button>
-          </div>
-          <div class="area area-sidebar" id="area-sidebar"> 
-            <div class="area-section" aria-hidden="false" data-content="Explore">
-              <h2 class="main-title">Explore</h2>
-              <div class="d-flex" style="gap: 5px; align-items: center;">
-                <span class="main-title-2 explanation-area">Available requests:</span>
-                <span class="main-title-2 available-requests" data-availability="high" id="available-requests"> 1000</span>
-              </div>
-              <span class="main-title-3 explanation-text">The limit of requests is 1000 per 10 minutes</span>
-              <div class="sidebar-section scroll-1">
-                <div class="section">
-                  <details class="sidebar-details">
-                    <summary class="summary-1-title sidebar-details-title request-marker">Request
-                      <br><span class="main-title-3 explanation-text">Obtain new heat spots from FIRMS</span>
-                    </summary>
-                    <div class="summary-1-content sidebar-details-content d-grid m-r2 m-l2 box-shad">
-                      <div class="sidebar-details-select">
-                        <span>Delimiter</span>
-                        <select id="request_delimiter" class="select-1 request-parameter" property = "delimiter"></select>
-                      </div>
-                      <div class="sidebar-details-select">
-                        <span>Location</span>
-                        <select id="request_area" class="select-1 request-parameter" property = "location"></select>
-                        <select id="request_country" class="select-1 request-parameter hidden" property = "location"></select>
-                      </div>
-                      <div class="sidebar-details-select">
-                        <span>Source</span>
-                        <select id="request_source" class="select-1 request-parameter" property = "source"></select>
-                      </div>
-                      <div class="sidebar-details-select">
-                        <span>Range</span>
-                        <select id="request_dayrange" class="select-1 request-parameter" property = "dayrange"></select>                
-                      </div>
-                      <div class="sidebar-details-select">
-                        <span>Date</span>
-                        <input id="request_date" type="date" placeholder="YYYY-MM-DD" class="select-1 request-parameter" property = "date" style="width: 189px;">
-                      </div>
-                      <div>
-                        <button class="button-2 data-action-button" id="request-button">Get data</button>
-                      </div>
-                    </div>
-                  </details>
-                </div>
-              </div>
-            </div>
-            <div class="area-section" aria-hidden="true" data-content="Layers">
-              <h2 class="main-title">Layers</h2>
-              <span class="main-title-2 explanation-area">Display multiple layers<br></span>
-              <span class="main-title-3 explanation-text">Change how the earth is displayed</span>
-              <div class="sidebar-section scroll-1" id="earth-layers"></div>
-            </div>
-            <div class="area-section" aria-hidden="true" data-content="Draw">
-              <h2 class="main-title">Draw</h2>
-              <span class="main-title-2 explanation-area">Interact with the Earth<br></span>
-              <span class="main-title-3 explanation-text">Obtain new measurements about your data</span>
-              <div class="sidebar-section scroll-1" id="earth-layers">Soon</div>
-            </div>    
-          </div>
+    <main class="doc-main">
+        <div class="scene-canvas"></div>
+        <div class="spot-label">spoty</div>
+        <div class="main-subcontent sidebar" data-expanded="true" expand-content="Sidebar">
+            <div class="main-button"><button expand-section="Sidebar" style="color: red;">close</button></div>
+            <div class="main-content explore" sidebar-content="Explore" data-hidden="false">Explore</div>
+            <div class="main-content layers" sidebar-content="Layers" data-hidden="true">Layers</div>
+            <div class="main-content draw" sidebar-content="Draw" data-hidden="true">Draw</div>
         </div>
-        <div class="container container-dropdown" id="container-dropdown">
-          <div class="header-2 area-window-header d-flex">
-            <button class="button-4 window-button area-window-button selector ux-event" data-action="expand-element" data-section="Filter" data-title="Open filter HeatSpots">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-filter-circle-fill" viewBox="0 0 16 16">
-                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M3.5 5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1M5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5"/>
-              </svg>
-            </button>
-          </div>
-          <div class="window-item-filter-information d-grid" aria-hidden="true">
-            <span class="marker-info">Information</span>
-            <div class="filter-dates-info-items d-grid" id="filter-dates-info"></div>
-          </div>
-          <div class="area area-window-filter d-grid" aria-expanded="false" data-content="Filter"> 
-            <div class="d-flex">
-              <button id="currentDay" data-selected="true" data-text="From today (00:00) UTC to now" class="filter-dates">Today</button>
-              <button id="completeDay" data-selected="false" data-text="From yesterday (00:00) UTC to now" class="filter-dates">Last 24 Hours</button>
-            </div>
-            <span class="main-title-3 explanation-text filter-explanation">From today (00:00) UTC to now</span>
-            <div id="currentDay-spots" class="filter-spots-number d-grid" data-value="" aria-hidden="false">Today Spots</div>
-            <div id="completeDay-spots" class="filter-spots-number d-grid" data-value="" aria-hidden="true">Last 24 Hours Spots</div>
-          </div>
+        <div class="main-subcontent heatspots" data-visible="true" navbar-content="Heatspots">
+            <div class="navbar-button"><button navbar-section="Heatspots">close</button></div>
+            <div class="main-content spot-info">Spot info</div>
         </div>
-        <div class="container container-middle" id="container-window" aria-hidden="true" data-content="Data">
-          <div class="header-2 area-window-header d-flex">
-            <button class="button-4 window-button selector ux-event" data-action="hide-element" data-section="Data">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-              </svg>
-            </button>
-            <button class="button-4 window-button selector" id="min-window" data-action="minimize">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 17 17">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"/>
-              </svg>
-            </button>
-            <button class="button-4 window-button selector" id="max-window" data-action="maximize">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 17 17">
-                <circle cx="8" cy="8" r="8"/>
-              </svg>
-            </button>
-          </div>
-          <div class="area d-grid" id="area-window">
-            content
-          </div>
+        <div class="main-subcontent compass">
+            <div class="main-content compass-info">
+                <div class="camera-position"></div>
+                <div class="cursor-coordinates"></div>
+            </div>
         </div>
-        <div class="container container-right d-grid" id="markerInformation" aria-hidden="true" data-content = "Marker-Information">
-          <div class="header-2 area-window-header d-flex" style="justify-content: space-between; height: 2.5em;">
-            <span class="area-window-header-title">SPOT ATTRIBUTES</span>
-            <div>
-              <button class="button-4 window-button selector" data-action="info" data-title-2="Official fire detection product website. Obtain a full description of attributes used by FIRMS services.">
-                <a class="link-url" href="#" target="_blank" id="spot-attributes-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 17 17">
-                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                  </svg>
-                </a>
-              </button>
-              <button class="button-4 window-button selector ux-event" data-action="hide-element" data-section = "Marker-Information">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div class="window-item-information d-grid" aria-hidden="true">
-            <span class="marker-info">Information</span>
-            <span class="marker-label"></span>
-          </div>
-          <div class="area-window-content d-grid">
-            <div class="marker-content d-grid scroll-2">
-              <div class="window-item item-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-radar window-item-icon selector box-shad-strong" viewBox="0 0 17 17" 
-                data-title-2="Country, region and sub-region related to heat spot coordinates.">
-                  <path d="M6.634 1.135A7 7 0 0 1 15 8a.5.5 0 0 1-1 0 6 6 0 1 0-6.5 5.98v-1.005A5 5 0 1 1 13 8a.5.5 0 0 1-1 0 4 4 0 1 0-4.5 3.969v-1.011A2.999 2.999 0 1 1 11 8a.5.5 0 0 1-1 0 2 2 0 1 0-2.5 1.936v-1.07a1 1 0 1 1 1 0V15.5a.5.5 0 0 1-1 0v-.518a7 7 0 0 1-.866-13.847"></path>
-                </svg>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="country">
-                  <span class="marker-label" for="country">Country</span>
-                  <span class="marker-info d-flex" id="country"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="region">
-                  <span class="marker-label" for="region">Region</span>
-                  <span class="marker-info d-flex" id="region"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="subregion">
-                  <span class="marker-label" for="subregion">Sub-Region</span>   
-                  <span class="marker-info d-flex" id="subregion"></span>  
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="latitude">
-                  <span class="marker-label" for="latitude">Latitude</span>
-                  <span class="marker-info d-flex" id="latitude"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="longitude">
-                  <span class="marker-label" for="longitude">Longitude</span>
-                  <span class="marker-info d-flex" id="longitude"></span>
-                </div>
-              </div>
-              <div class="window-item item-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event window-item-icon selector box-shad-strong" viewBox="0 0 17 17"
-                data-title-2="Date (dd-mm-yyyy format), time (UTC format) and period (day/night) acquisition.">
-                  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"></path>
-                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path>
-                </svg>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="acq_date">
-                  <span class="marker-label" for="acq_date">Date acquisition</span>
-                  <span class="marker-info d-flex" id="acq_date"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="acq_time">
-                  <span class="marker-label" for="acq_time">Time acquisition (UTC)</span>
-                  <span class="marker-info d-flex" id="acq_time"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="daynight">
-                  <span class="marker-label" for="daynight">Period</label>
-                  <span class="marker-info d-flex" id="daynight"></span>
-                </div>
-              </div>
-              <div class="window-item item-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-broadcast-pin window-item-icon selector box-shad-strong" viewBox="0 0 17 17"
-                data-title-2="Fire detection product, version and satellite used to request data.">
-                  <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707m2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708m5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708m2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM6 8a2 2 0 1 1 2.5 1.937V15.5a.5.5 0 0 1-1 0V9.937A2 2 0 0 1 6 8"></path>
-                </svg>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="instrument">
-                  <span class="marker-label" for="instrument">Fire detection product</span>
-                  <span class="marker-info d-flex" id="instrument"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="version">
-                  <span class="marker-label" for="version">Collection version</span>
-                  <span class="marker-info d-flex" id="version"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="satellite">
-                  <span class="marker-label" for="satellite">Satellite</span>
-                  <span class="marker-info d-flex" id="satellite"></span>
-                </div>
-              </div>
-              <div class="window-item item-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-thermometer-half window-item-icon selector box-shad-strong" viewBox="0 0 17 17"
-                data-title-2="Channel brightness temperatures measured by the fire detection product (Kelvin degrees). Fire radiative power of the heat spot (Megawatts)">
-                  <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415"></path>
-                  <path d="M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1"></path>
-                </svg>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="bright_ti4">
-                  <span class="marker-label" for="bright_ti4">I-4 Brightness temperature</span>
-                  <span class="marker-info d-flex" id="bright_ti4"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="bright_ti5">
-                  <span class="marker-label" for="bright_ti5">I-5 Brightness temperature</span>
-                  <span class="marker-info d-flex" id="bright_ti5"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="bright_ti31">
-                  <span class="marker-label" for="bright_ti31">I-31 Brightness temperature</span>
-                  <span class="marker-info d-flex" id="bright_ti31"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="brightness">
-                  <span class="marker-label" for="brightness">I-21/22 Brightness temperature</span>
-                  <span class="marker-info d-flex" id="brightness"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="frp">
-                  <span class="marker-label" for="frp">Fire Radiative Power</span>
-                  <span class="marker-info d-flex" id="frp"></span>
-                </div>
-              </div>
-              <div class="window-item item-5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search window-item-icon selector box-shad-strong" viewBox="0 0 17 17"
-                data-title-2="Pixel size and track path of the heat spot.">
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                </svg>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="scan">
-                  <span class="marker-label" for="scan">Along Scan pixel size</span>
-                  <span class="marker-info d-flex" id="scan"></span>
-                </div>
-                <div class="window-sub-item d-grid marker-property" aria-hidden="true" data-content="track">
-                  <span class="marker-label" for="track">Along Track pixel size</span>
-                  <span class="marker-info d-flex" id="track"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container container-earth-label d-grid" aria-hidden="true" data-content="Marker-Label">
-          <div class="earth-label-window-content d-flex">            
-            <div class="earth-label-content d-grid">
-              <span class="d-flex" for="spot-id-label">Spot ID</span>
-              <span class="d-flex" id="spot-id-label"></span>
-            </div>
-            <button class="earth-label-button selector ux-event" data-action="hide-element" data-section = "Marker-Label">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 17 17">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="container container-sphere d-grid">
-          <div class="camera-tools d-grid" id="camera-tools" aria-hidden="true">
-            <div class="camera-tools-section d-grid centered">
-              <button class="button-3 d-flex centered camera-button" id="north-default">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-compass-fill" viewBox="0 0 17 17">
-                  <path d="M15.5 8.516a7.5 7.5 0 1 1-9.462-7.24A1 1 0 0 1 7 0h2a1 1 0 0 1 .962 1.276 7.5 7.5 0 0 1 5.538 7.24m-3.61-3.905L6.94 7.439 4.11 12.39l4.95-2.828 2.828-4.95z"/>
-                </svg> Orientation
-              </button>  
-              <span class="main-title-3 explanation-text d-flex centered">Reset North Earth</span>  
-            </div>   
-            <div class="camera-tools-section d-grid centered">
-              <button class="button-3 d-flex centered camera-button" id="camera-default">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-crosshair2" viewBox="0 0 17 17">
-                  <path d="M8 0a.5.5 0 0 1 .5.5v.518A7 7 0 0 1 14.982 7.5h.518a.5.5 0 0 1 0 1h-.518A7 7 0 0 1 8.5 14.982v.518a.5.5 0 0 1-1 0v-.518A7 7 0 0 1 1.018 8.5H.5a.5.5 0 0 1 0-1h.518A7 7 0 0 1 7.5 1.018V.5A.5.5 0 0 1 8 0m-.5 2.02A6 6 0 0 0 2.02 7.5h1.005A5 5 0 0 1 7.5 3.025zm1 1.005A5 5 0 0 1 12.975 7.5h1.005A6 6 0 0 0 8.5 2.02zM12.975 8.5A5 5 0 0 1 8.5 12.975v1.005a6 6 0 0 0 5.48-5.48zM7.5 12.975A5 5 0 0 1 3.025 8.5H2.02a6 6 0 0 0 5.48 5.48zM10 8a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
-                </svg> Position
-              </button>
-              <span class="main-title-3 explanation-text d-flex centered">Reset camera position</span>
-            </div>     
-          </div>
-          <div class="earth-tools d-flex">
-            <div class="earth-compass" id="compass" data-content="Camera" data-title="Toogle camera tools">
-              <div id="arrow">
-                <div id="arrow-North"></div>
-                <div id="arrow-South"></div>
-              </div>
-            </div>
-            <div class="earth-zoom d-flex">
-              <button class="zoom-button d-flex" id="zoom-out" data-title="Zoom Out" style="border-radius: 18px 0px 0px 18px;border-right: 0.25px solid #9b9b9b82;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 17 17">
-                  <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
-                </svg>
-              </button>
-              <button class="zoom-button d-flex" id="zoom-in" data-title="Zoom In" style="border-radius: 0px 18px 18px 0px;border-left: 0.25px solid #9b9b9b82;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 17 17">
-                  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </main>
+    <footer class="doc-footer">
+        <p>©Copyright 2050 by nobody. All rights reversed.</p>
+    </footer>
     <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+          }
         }
-      }
     </script>
     <script id="data"> 
-      var user_data = {{ user_data | tojson }};
-      var firms_data = {{ firms_data | tojson }};
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/23.1.2/tween.umd.js" integrity="sha512-tVgTGDCgmeSNyNQn+QS+htn5AvnZc3tnER7GFo3ylfohYZKlottjyG2ryA4z2c1HV2Q7+MM3aN2A9abItyPpuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        var user_data = {{ user_data | tojson }};
+        var firms_data = {{ firms_data | tojson }};
+      </script>
     <script type="module" src="/static/js/main.js"></script>
-	</body>
+  </body>
 </html>
