@@ -19,9 +19,9 @@
                     <input class="header-input searcher"></input>
                 </div>
                 <div class="header-buttons">
-                    <button sidebar-section="Explore">Explore</button>
-                    <button sidebar-section="Layers">Layers</button>
-                    <button sidebar-section="Draw">Draw</button>
+                    <button display-element="explore">Explore</button>
+                    <button display-element="layers">Layers</button>
+                    <button display-element="draw">Draw</button>
                 </div>
             </div>
             <div class="header-subcontent head-right">
@@ -33,20 +33,28 @@
     <main class="doc-main">
         <div class="scene-canvas"></div>
         <div class="spot-label">spoty</div>
-        <div class="main-subcontent sidebar" data-expanded="true" expand-content="Sidebar">
-            <div class="main-button"><button expand-section="Sidebar" style="color: red;">close</button></div>
-            <div class="main-content explore" sidebar-content="Explore" data-hidden="false">Explore</div>
-            <div class="main-content layers" sidebar-content="Layers" data-hidden="true">Layers</div>
-            <div class="main-content draw" sidebar-content="Draw" data-hidden="true">Draw</div>
+        <div class="main-subcontent sidebar" data-expanded="true">
+            <div class="main-button"><button expand-element="sidebar" style="color: red;">close</button></div>
+            <div class="main-content display explore" data-hidden="false">Explore</div>
+            <div class="main-content display layers" data-hidden="true">Layers</div>
+            <div class="main-content display draw" data-hidden="true">Draw</div>
         </div>
-        <div class="main-subcontent heatspots" data-visible="true" navbar-content="Heatspots">
+        <div class="main-subcontent heatspots" navbar-content="Heatspots" data-visible="true">
             <div class="navbar-button"><button navbar-section="Heatspots">close</button></div>
             <div class="main-content spot-info">Spot info</div>
         </div>
-        <div class="main-subcontent compass">
-            <div class="main-content compass-info">
-                <div class="camera-position"></div>
-                <div class="cursor-coordinates"></div>
+        <div class="main-subcontent scene-info">
+            <div class="main-content tools">
+                <div class="camera-position">
+                    <div class="compass">
+                        <div class="arrow-north"></div>
+                        <div class="arrow-south"></div>
+                    </div>
+                </div>
+                <div class="cursor-coordinates">
+                    <span class="latitude"></span>
+                    <span class="longitude"></span>
+                </div>
             </div>
         </div>
     </main>

@@ -40,8 +40,8 @@
     position: inherit;
     min-width: var(--sub-content-min-width);
 }
-.compass{
-    grid-area: compass;
+.scene-info{
+    grid-area: scene-info;
     position: inherit;
     min-width: var(--sub-content-min-width);
 }
@@ -52,5 +52,5 @@
     "sidebar canvas heatspots" 
     "sidebar canvas heatspots" 
     "sidebar canvas heatspots"
-    "sidebar canvas compass";
+    "sidebar canvas scene-info";
 }

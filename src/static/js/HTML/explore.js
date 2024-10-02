@@ -1,6 +1,6 @@
 import * as HTML from "./functions.js"
 
-function createRequestAPI() {
+const createRequestAPI = () => {
     const element = document.querySelector(".explore");
     const elementContent = document.createElement("div");
     let orderedElements = [null,null,null,null,null];
@@ -38,9 +38,9 @@ function createRequestAPI() {
     element.appendChild(HTML.createDetailsElement("Request API", elementContent));
 }
 
-function enableAutoMode(){
+const enableAutoMode = () =>{
     const element = document.querySelector(".explore");
-    const elementContent = HTML.createDivWithSpanAndCheckbox("Enable", true);
+    const elementContent = HTML.createDivWithSpanAndCheckbox("auto-mode", "Enable", true);
     const options = [
         { value: 60, text: '60 minutes' },
         { value: 30, text: '30 minutes' },
@@ -56,7 +56,7 @@ function enableAutoMode(){
 }
 
 
-export function populateHTML(){
+export function setExploreContent(){
     enableAutoMode();
     createRequestAPI();
 }

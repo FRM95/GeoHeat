@@ -266,9 +266,24 @@ export const createMarkers = (dataObject, nameMesh) => {
     return markMesh
 }
 
+/* ---------------------------- CAMERA TOOLS ---------------------------- */
+const northPosition = (camera, compass, vectorUp) =>{
+    const mE = camera.matrixWorld.elements;
+    const dY = new THREE.Vector2(mE[1], mE[5]);
+    const angleYAxis = THREE.MathUtils.radToDeg(vectorUp.angleTo(dY)) * Math.sign(mE[1]);
+    compass.style.transform = `rotate(${angleYAxis}deg)`;
+}
+
+const cursorIntersection = (raycast, object, callback) => {
+    const intersectionPoint = raycast.intersectObject(object);
+    if(intersectionPoint.length > 0){
+        return callback(intersectionPoint[0]);
+    };
+}
+
 
 /* ---------------------------- MAIN ---------------------------- */
-export function setThreeJS() {
+export function createScene() {
 
     /* HTML Renders */
     const yOffset = document.querySelector("header").offsetHeight + document.querySelector("footer").offsetHeight;
@@ -307,13 +322,28 @@ export function setThreeJS() {
     /* Set controls for Scene */
     const controls = createControls(camera, rendersObject.labelRenderer.domElement, sceneObjects.earth);
 
+    /* Rotate compass based on Earth position */
+    const compassElement = document.querySelector(".compass");
+    const yAxisVector = new THREE.Vector2(sceneObjects.earth.position.x, sceneObjects.earth.position.y + 1);
+
+    /* Pointer and raycaster to track user cursor */
+    const pointer = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+    const cursorPosition = (event) => {
+        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = - (event.clientY / (window.innerHeight - yOffset)) * 2 + 1;
+    }
+    rendersObject.labelRenderer.domElement.addEventListener("pointermove", cursorPosition);
+    
     /* Animation loop */
     const animate = () => { 
         requestAnimationFrame(animate);
+        northPosition(camera, compassElement, yAxisVector);
+        raycaster.setFromCamera(pointer, camera);
         heatSpotLabel.userData.trackVisibility();
         rendersObject.renderer.render(scene, camera);
         rendersObject.labelRenderer.render(scene, camera);
-        controls.update();
+        // controls.update();
     }
 
     animate();

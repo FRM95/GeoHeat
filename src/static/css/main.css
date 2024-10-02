@@ -87,17 +87,39 @@ header{
     display: grid;
     grid-template-rows: 30px auto;
 }
-.compass{
+.scene-info{
     background-color: pink;
 }
-.compass-info{
+.tools{
     grid-template-rows: 70% auto;
 }
 
 
 
 
-
+.compass{
+    height: 100%;
+    width: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: grid;
+    justify-content: center;
+}
+.arrow-north{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 18px solid #FB1C1F;
+}
+.arrow-south{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 18px solid #2a77ca;
+    transform: rotate(180deg);
+}
 
 
 
