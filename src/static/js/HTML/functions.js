@@ -35,7 +35,7 @@ export const createDivWithSpanAndCheckbox = (checkBoxName, spanText, isChecked =
     checkbox.type = "checkbox";
     checkbox.checked = isChecked;
     const label = document.createElement('label');
-    let spanValue = spanText.charAt(0).toUpperCase() + checkBoxName.slice(1);
+    let spanValue = spanText.charAt(0).toUpperCase() + spanText.slice(1);
     label.textContent = spanValue.replace(/_/g, " ");
     label.setAttribute("for", name);
     div.appendChild(checkbox);

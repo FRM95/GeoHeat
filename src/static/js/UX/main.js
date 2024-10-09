@@ -17,4 +17,11 @@ export function setButtonsUX() {
             Events.displayEvent(button);
         });
     });
+
+    const visibleButtons = document.querySelectorAll("[visible-element]");
+    visibleButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            Events.visibleEvent(button);
+        });
+    });
 }

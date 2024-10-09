@@ -22,3 +22,10 @@ export const displayEvent = (node) => {
         }
     })
 }
+
+/* Visible elements functionality event */
+export const visibleEvent = (node) => {
+    const className = node.getAttribute("visible-element");
+    const element = document.querySelector(`.${className}`)
+    element.dataset.visible = element.dataset.visible !== "true";
+}
