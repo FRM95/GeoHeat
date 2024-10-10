@@ -26,18 +26,19 @@ export const createDivWithSpanAndSelect = (spanText, optionsArray) => {
     return div;
 }
 
-export const createDivWithSpanAndCheckbox = (checkBoxName, spanText, isChecked = false) => {
+export const createDivWithSpanAndCheckbox = (checkBoxClass, checkBoxName, spanText, isChecked = false) => {
     const div = document.createElement('div');
     const checkbox = document.createElement('input');
-    let name = checkBoxName.charAt(0).toUpperCase() + checkBoxName.slice(1);
-    name = name.replace(/_/g, " "); 
-    checkbox.name = name;
+    // let name = checkBoxName.charAt(0).toUpperCase() + checkBoxName.slice(1);
+    // name = name.replace(/_/g, " "); 
+    checkbox.name = checkBoxName;
     checkbox.type = "checkbox";
     checkbox.checked = isChecked;
+    checkbox.className = checkBoxClass;
     const label = document.createElement('label');
     let spanValue = spanText.charAt(0).toUpperCase() + spanText.slice(1);
     label.textContent = spanValue.replace(/_/g, " ");
-    label.setAttribute("for", name);
+    label.setAttribute("for", checkBoxName);
     div.appendChild(checkbox);
     div.appendChild(label);
     return div;

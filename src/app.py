@@ -78,61 +78,61 @@ def home(key):
         return redirect(url_for('login'))
 
 
-@app.route("/updateUserData/<key>/", methods = ['PUT'])
-def updateUserData(key):
-    if request.method == "PUT":
-        if key in session:
-            try:
-                query_string = request.args
-                dataToUpdate = request.json
-            except:
-                return "unable to read data"
-            else:
-                updateData = mongodb.updateUserData(key, query_string, dataToUpdate)
-                return updateData
-        else:
-            # TODO: add message -> need to login first
-            flash('You need to login first') 
-            return redirect(url_for('login'))
+# @app.route("/updateUserData/<key>/", methods = ['PUT'])
+# def updateUserData(key):
+#     if request.method == "PUT":
+#         if key in session:
+#             try:
+#                 query_string = request.args
+#                 dataToUpdate = request.json
+#             except:
+#                 return "unable to read data"
+#             else:
+#                 updateData = mongodb.updateUserData(key, query_string, dataToUpdate)
+#                 return updateData
+#         else:
+#             # TODO: add message -> need to login first
+#             flash('You need to login first') 
+#             return redirect(url_for('login'))
 
 
-@app.route("/addUserData/<key>/", methods = ['POST'])
-def addUserData(key):
-    if request.method == "POST":
-        if key in session:
-            try:
-                query_string = request.args
-                dataToUpdate = request.json
-            except:
-                return "unable to read data"
-            else:
-                updateData = mongodb.updateUserData(key, query_string, dataToUpdate)
-                return updateData
-        else:
-            # TODO: add message -> need to login first
-            flash('You need to login first') 
-            return redirect(url_for('login'))
+# @app.route("/addUserData/<key>/", methods = ['POST'])
+# def addUserData(key):
+#     if request.method == "POST":
+#         if key in session:
+#             try:
+#                 query_string = request.args
+#                 dataToUpdate = request.json
+#             except:
+#                 return "unable to read data"
+#             else:
+#                 updateData = mongodb.updateUserData(key, query_string, dataToUpdate)
+#                 return updateData
+#         else:
+#             # TODO: add message -> need to login first
+#             flash('You need to login first') 
+#             return redirect(url_for('login'))
 
 
-@app.route("/getFirmsData/<key>/", methods = ['GET'])     
-def getFirmsData(key):
-    if request.method == 'GET':
-        if key in session:
-            try:
-                query_parameters = request.args
-            except:
-                return "unable to read data"
-            else:
-                validated_data = api.isvalidRequest(query_parameters)
-                if isinstance(validated_data, str):
-                    return {'error': f'Unable to request new data, {validated_data}'}
-                else:
-                    api_result = api.getFires(key, **validated_data)
-                    if isinstance(api_result, str):
-                        return {'error': f'Unable to request new data, {api_result}'}
-                    else:
-                        return api_result
-        else:
-            # TODO: add message -> need to login first
-            flash('You need to login first') 
-            return redirect(url_for('login'))
+# @app.route("/getFirmsData/<key>/", methods = ['GET'])     
+# def getFirmsData(key):
+#     if request.method == 'GET':
+#         if key in session:
+#             try:
+#                 query_parameters = request.args
+#             except:
+#                 return "unable to read data"
+#             else:
+#                 validated_data = api.isvalidRequest(query_parameters)
+#                 if isinstance(validated_data, str):
+#                     return {'error': f'Unable to request new data, {validated_data}'}
+#                 else:
+#                     api_result = api.getFires(key, **validated_data)
+#                     if isinstance(api_result, str):
+#                         return {'error': f'Unable to request new data, {api_result}'}
+#                     else:
+#                         return api_result
+#         else:
+#             # TODO: add message -> need to login first
+#             flash('You need to login first') 
+#             return redirect(url_for('login'))

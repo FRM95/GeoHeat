@@ -216,6 +216,30 @@ const SceneObjects = (texturesObject, texturesQuality) => {
     return {earth: EarthGroup, stars: textures["starfield_map"]}
 }
 
+/* Returns scene object based on name */
+export function searchTexture(sceneChildren, textureValue){
+    for(let i = 0; i < sceneChildren.length; i++){
+        const stack = [sceneChildren[i]];
+        let textureObject = null;
+        while(stack.length > 0){
+            const texture = stack.pop();
+            if(texture.name === textureValue){
+                textureObject = texture
+            } else {
+                const childs = texture.children;
+                if(childs.length > 0){
+                    childs.forEach(element => {
+                        stack.push(element);
+                    });
+                }
+            }
+        } if (textureObject != null){
+            return textureObject
+        }
+    }
+    return null
+}
+
 /* ---------------------------- LIGHTS ---------------------------- */
 /* Creates lights based on lights data */
 const buildLights = (lightArray) => {
@@ -308,6 +332,8 @@ export function createScene() {
     scene.add(sceneObjects.earth);
     scene.add(sceneObjects.stars);
     scene.add(lightObjects.ambient_light);
+
+    console.log(scene);
 
     /* Adding Sunlight */
     camera.add(lightObjects.directional_light);

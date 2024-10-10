@@ -35,12 +35,12 @@ const createRequestAPI = () => {
     const button = document.createElement("button");
     button.textContent = "Request";
     elementContent.appendChild(button);
-    element.appendChild(HTML.createDetailsElement("Request API", elementContent));
+    element.appendChild(HTML.createDetailsElement("FIRMS API", elementContent));
 }
 
 const enableAutoMode = () =>{
     const element = document.querySelector(".explore");
-    const elementContent = HTML.createDivWithSpanAndCheckbox("auto-mode", "Enable", true);
+    const elementContent = HTML.createDivWithSpanAndCheckbox("auto-mode", "auto-mode", "Enable", true);
     const options = [
         { value: 60, text: '60 minutes' },
         { value: 30, text: '30 minutes' },
