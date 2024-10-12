@@ -77,7 +77,7 @@ header{
     left: var(--main-button-left);
     align-content: center;
 }
-.main-content{
+.main-subcontent{
     margin: var(--main-content-margin);
     height: calc(100% - var(--main-content-margin) * 2);
     background-color: cornflowerblue;
@@ -95,7 +95,9 @@ header{
 }
 
 
-
+.select:has([data-hidden = "true"]), .input:has([data-hidden = "true"]){
+    display: none;
+}
 
 .compass{
     height: 100%;
@@ -136,7 +138,6 @@ header{
 [data-expanded="false"]:has([data-hidden = "false"]) > [data-hidden = "false"]{
     display: none;
 }
-
 [data-hidden = "true"]{
     display: none;
 }

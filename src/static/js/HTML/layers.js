@@ -10,7 +10,7 @@ export function setLayersContent(){
             const isVisible = element["visible"];
             const divCheckbox = HTML.createDivWithSpanAndCheckbox("enable-texture", name, name, isVisible);
             const selectOptions = [{value: "high", name:"High"} , {value: "ultrahigh", name:"Ultra-high"}];
-            const divSelect = HTML.createDivWithSpanAndSelect("Quality", selectOptions);
+            const divSelect = HTML.createDivWithSpanAndSelect("quality", "Quality", selectOptions);
             layers.append(divCheckbox, divSelect);
         }
     });

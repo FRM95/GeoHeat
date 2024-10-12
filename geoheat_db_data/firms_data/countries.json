@@ -1,0 +1,1472 @@
+[
+    {
+        "value": "AFG",
+        "name": "Afghanistan",
+        "coordinates": "33.9340384,67.7034313",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "ALA",
+        "name": "Aland Islands",
+        "coordinates": "60.1995487,20.3711715",
+        "area-name": "Europe"
+    },
+    {
+        "value": "ALB",
+        "name": "Albania",
+        "coordinates": "41.1529058,20.1605717",
+        "area-name": "Europe"
+    },
+    {
+        "value": "DZA",
+        "name": "Algeria",
+        "coordinates": "28.0289837,1.6666663",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "ASM",
+        "name": "American Samoa",
+        "coordinates": "-14.3064071,-170.6950175",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "AND",
+        "name": "Andorra",
+        "coordinates": "42.5422699,1.5976721",
+        "area-name": "Europe"
+    },
+    {
+        "value": "AGO",
+        "name": "Angola",
+        "coordinates": "-11.2135241,17.8770032",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "AIA",
+        "name": "Anguilla",
+        "coordinates": "18.2232706,-63.0566336",
+        "area-name": "Central America"
+    },
+    {
+        "value": "ATA",
+        "name": "Antarctica",
+        "coordinates": "-69.6354154,0.0",
+        "area-name": "Unknown"
+    },
+    {
+        "value": "ATG",
+        "name": "Antigua and Barbuda",
+        "coordinates": "17.0869391,-61.783491",
+        "area-name": "Central America"
+    },
+    {
+        "value": "ARG",
+        "name": "Argentina",
+        "coordinates": "-38.4192641,-63.5989206",
+        "area-name": "South America"
+    },
+    {
+        "value": "ARM",
+        "name": "Armenia",
+        "coordinates": "40.0706185,45.0407411",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "ABW",
+        "name": "Aruba",
+        "coordinates": "12.517572,-69.9649462",
+        "area-name": "Central America"
+    },
+    {
+        "value": "AUS",
+        "name": "Australia",
+        "coordinates": "-26.4390917,133.281323",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "AUT",
+        "name": "Austria",
+        "coordinates": "47.6964719,13.3457347",
+        "area-name": "Europe"
+    },
+    {
+        "value": "AZE",
+        "name": "Azerbaijan",
+        "coordinates": "40.1521651,47.615563",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "BHS",
+        "name": "Bahamas",
+        "coordinates": "24.0877465,-76.5935076",
+        "area-name": "Central America"
+    },
+    {
+        "value": "BHR",
+        "name": "Bahrain",
+        "coordinates": "25.9434256,50.6014985",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "BGD",
+        "name": "Bangladesh",
+        "coordinates": "23.6943117,90.344352",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "BRB",
+        "name": "Barbados",
+        "coordinates": "13.1901325,-59.5355639",
+        "area-name": "Central America"
+    },
+    {
+        "value": "BLR",
+        "name": "Belarus",
+        "coordinates": "53.7169415,27.9775789",
+        "area-name": "Europe"
+    },
+    {
+        "value": "BEL",
+        "name": "Belgium",
+        "coordinates": "50.5010789,4.4764595",
+        "area-name": "Europe"
+    },
+    {
+        "value": "BLZ",
+        "name": "Belize",
+        "coordinates": "17.1907805,-88.3596575",
+        "area-name": "Central America"
+    },
+    {
+        "value": "BEN",
+        "name": "Benin",
+        "coordinates": "9.3217214,2.3100051",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "BMU",
+        "name": "Bermuda",
+        "coordinates": "32.3191775,-64.7670827",
+        "area-name": "USA (Conterminous) and Hawaii"
+    },
+    {
+        "value": "BTN",
+        "name": "Bhutan",
+        "coordinates": "7.5314205,90.4358528",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "BOL",
+        "name": "Bolivia",
+        "coordinates": "-16.2837065,-63.5493965",
+        "area-name": "South America"
+    },
+    {
+        "value": "BIH",
+        "name": "Bosnia and Herzegovina",
+        "coordinates": "43.9165389,17.6721508",
+        "area-name": "Europe"
+    },
+    {
+        "value": "BWA",
+        "name": "Botswana",
+        "coordinates": "-22.342841,24.6871044",
+        "area-name": "Southern Africa"
+    },
+    {
+        "value": "BRA",
+        "name": "Brazil",
+        "coordinates": "-14.2400732,-53.1805017",
+        "area-name": "South America"
+    },
+    {
+        "value": "IOT",
+        "name": "British Indian Ocean Territory",
+        "coordinates": "-7.3346232,72.4242508",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "VGB",
+        "name": "British Virgin Islands",
+        "coordinates": "18.4180894,-64.5854311",
+        "area-name": "Central America"
+    },
+    {
+        "value": "BRN",
+        "name": "Brunei Darussalam",
+        "coordinates": "4.5242486,114.7196266",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "BGR",
+        "name": "Bulgaria",
+        "coordinates": "42.7249925,25.4833039",
+        "area-name": "Europe"
+    },
+    {
+        "value": "BFA",
+        "name": "Burkina Faso",
+        "coordinates": "12.2395,-1.5584094",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "BDI",
+        "name": "Burundi",
+        "coordinates": "-3.3896077,29.9255829",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "KHM",
+        "name": "Cambodia",
+        "coordinates": "11.9879665,104.9806145",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "CMR",
+        "name": "Cameroon",
+        "coordinates": "7.3696495,12.3445856",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "CAN",
+        "name": "Canada",
+        "coordinates": "56.0,-96.0",
+        "area-name": "USA (Conterminous) and Hawaii"
+    },
+    {
+        "value": "CPV",
+        "name": "Cape Verde",
+        "coordinates": "15.120142,-23.6051721",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "CYM",
+        "name": "Cayman Islands",
+        "coordinates": "19.3298586,-81.2523601",
+        "area-name": "Central America"
+    },
+    {
+        "value": "CAF",
+        "name": "Central African Republic",
+        "coordinates": "6.6194073,20.9367017",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "TCD",
+        "name": "Chad",
+        "coordinates": "15.446105,18.7350005",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "CHL",
+        "name": "Chile",
+        "coordinates": "-36.739055,-71.0574941",
+        "area-name": "South America"
+    },
+    {
+        "value": "CHN",
+        "name": "China",
+        "coordinates": "35.8592948,104.1361118",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "COL",
+        "name": "Colombia",
+        "coordinates": "4.1156735,-72.9301367",
+        "area-name": "South America"
+    },
+    {
+        "value": "COM",
+        "name": "Comoros",
+        "coordinates": "-11.6519809,43.3725967",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "COG",
+        "name": "Congo",
+        "coordinates": "-0.6605788,14.8965794",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "COK",
+        "name": "Cook Islands",
+        "coordinates": "-21.2357745,-159.7777595",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "CRI",
+        "name": "Costa Rica",
+        "coordinates": "1892,-84.2541844",
+        "area-name": "Central America"
+    },
+    {
+        "value": "HRV",
+        "name": "Croatia",
+        "coordinates": "44.4737849,16.4688717",
+        "area-name": "Europe"
+    },
+    {
+        "value": "CUB",
+        "name": "Cuba",
+        "coordinates": "21.5513258,-79.6017351",
+        "area-name": "Central America"
+    },
+    {
+        "value": "CUW",
+        "name": "Curacao",
+        "coordinates": "12.2135221,-68.9495816",
+        "area-name": "Central America"
+    },
+    {
+        "value": "CYP",
+        "name": "Cyprus",
+        "coordinates": "35.1697515,33.4366038",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "CZE",
+        "name": "Czech Republic",
+        "coordinates": "49.8037633,15.4749126",
+        "area-name": "Europe"
+    },
+    {
+        "value": "COD",
+        "name": "Democratic Republic of the Congo",
+        "coordinates": "-4.0335162,21.7500603",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "DNK",
+        "name": "Denmark",
+        "coordinates": "55.9396761,9.5155848",
+        "area-name": "Europe"
+    },
+    {
+        "value": "DJI",
+        "name": "Djibouti",
+        "coordinates": "11.8226699,42.5883476",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "DMA",
+        "name": "Dominica",
+        "coordinates": "15.4238729,-61.3600668",
+        "area-name": "Central America"
+    },
+    {
+        "value": "DOM",
+        "name": "Dominican Republic",
+        "coordinates": "18.7009047,-70.1654584",
+        "area-name": "Central America"
+    },
+    {
+        "value": "ECU",
+        "name": "Ecuador",
+        "coordinates": "-1.7929665,-78.1368875",
+        "area-name": "South America"
+    },
+    {
+        "value": "EGY",
+        "name": "Egypt",
+        "coordinates": "26.8357675,30.7956597",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SLV",
+        "name": "El Salvador",
+        "coordinates": "13.8029939,-88.9053364",
+        "area-name": "Central America"
+    },
+    {
+        "value": "GNQ",
+        "name": "Equatorial Guinea",
+        "coordinates": "1.6195138,10.317782",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "ERI",
+        "name": "Eritrea",
+        "coordinates": "15.1879664,39.7881626",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "EST",
+        "name": "Estonia",
+        "coordinates": "58.5974875,24.9872555",
+        "area-name": "Europe"
+    },
+    {
+        "value": "ETH",
+        "name": "Ethiopia",
+        "coordinates": "9.149175,40.498867",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "FLK",
+        "name": "Falkland Islands",
+        "coordinates": "-51.8142779,-59.5318429",
+        "area-name": "South America"
+    },
+    {
+        "value": "FRO",
+        "name": "Faroe Islands",
+        "coordinates": "61.8925022,-6.9729703",
+        "area-name": "Europe"
+    },
+    {
+        "value": "FSM",
+        "name": "Federated States of Micronesia",
+        "coordinates": "6.8874813,158.2150717",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "FJI",
+        "name": "Fiji",
+        "coordinates": "-17.4624892,179.2583049",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "FIN",
+        "name": "Finland",
+        "coordinates": "64.9146659,26.0672554",
+        "area-name": "Europe"
+    },
+    {
+        "value": "FRA",
+        "name": "France",
+        "coordinates": "46.71109,1.7191036",
+        "area-name": "Europe"
+    },
+    {
+        "value": "GUF",
+        "name": "French Guiana",
+        "coordinates": "3.9332383,-53.0875742",
+        "area-name": "South America"
+    },
+    {
+        "value": "PYF",
+        "name": "French Polynesia",
+        "coordinates": "-17.6874094,-149.3729275",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "ATF",
+        "name": "French Southern and Antarctic Lands",
+        "coordinates": "-49.1306765,69.5828104",
+        "area-name": "Unknown"
+    },
+    {
+        "value": "GAB",
+        "name": "Gabon",
+        "coordinates": "-0.8201314,11.6098045",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "GMB",
+        "name": "Gambia",
+        "coordinates": "13.4457859,-15.3061209",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "GEO",
+        "name": "Georgia",
+        "coordinates": "42.3207845,43.3713615",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "DEU",
+        "name": "Germany",
+        "coordinates": "51.1642292,10.4541194",
+        "area-name": "Europe"
+    },
+    {
+        "value": "GHA",
+        "name": "Ghana",
+        "coordinates": "7.9527706,-1.0307118",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "GIB",
+        "name": "Gibraltar",
+        "coordinates": "36.1319767,-5.3529174",
+        "area-name": "Europe"
+    },
+    {
+        "value": "GRC",
+        "name": "Greece",
+        "coordinates": "38.2749497,23.8102717",
+        "area-name": "Europe"
+    },
+    {
+        "value": "GRL",
+        "name": "Greenland",
+        "coordinates": "69.6354163,-42.1736914",
+        "area-name": "USA (Conterminous) and Hawaii"
+    },
+    {
+        "value": "GRD",
+        "name": "Grenada",
+        "coordinates": "12.1099685,-61.6935167",
+        "area-name": "Central America"
+    },
+    {
+        "value": "GLP",
+        "name": "Guadeloupe",
+        "coordinates": "16.1730949,-61.4054001",
+        "area-name": "Central America"
+    },
+    {
+        "value": "GUM",
+        "name": "Guam",
+        "coordinates": "13.4502076,144.7874584",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "GTM",
+        "name": "Guatemala",
+        "coordinates": "15.7778664,-90.2299096",
+        "area-name": "Central America"
+    },
+    {
+        "value": "GGY",
+        "name": "Guernsey",
+        "coordinates": "49.4630653,-2.5881123",
+        "area-name": "Europe"
+    },
+    {
+        "value": "GIN",
+        "name": "Guinea",
+        "coordinates": "9.9327629,-11.3580296",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "GNB",
+        "name": "Guinea-Bissau",
+        "coordinates": "11.7723463,-15.16962",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "GUY",
+        "name": "Guyana",
+        "coordinates": "4.8556759,-58.9530125",
+        "area-name": "South America"
+    },
+    {
+        "value": "HTI",
+        "name": "Haiti",
+        "coordinates": "19.0558462,-73.0513321",
+        "area-name": "Central America"
+    },
+    {
+        "value": "HMD",
+        "name": "Heard Island and McDonald Islands",
+        "coordinates": "-53.0765818,73.5136616",
+        "area-name": "Unknown"
+    },
+    {
+        "value": "HND",
+        "name": "Honduras",
+        "coordinates": "14.7503821,-86.241341",
+        "area-name": "Central America"
+    },
+    {
+        "value": "HKG",
+        "name": "Hong Kong",
+        "coordinates": "22.3700556,114.1535941",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "HUN",
+        "name": "Hungary",
+        "coordinates": "47.1611615,19.5057541",
+        "area-name": "Europe"
+    },
+    {
+        "value": "ISL",
+        "name": "Iceland",
+        "coordinates": "64.9312762,-19.0211697",
+        "area-name": "Europe"
+    },
+    {
+        "value": "IND",
+        "name": "India",
+        "coordinates": "21.1289956,82.7792201",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "IDN",
+        "name": "Indonesia",
+        "coordinates": "-2.548926,118.0148634",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "IRN",
+        "name": "Iran",
+        "coordinates": "32.4207423,53.6830157",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "IRQ",
+        "name": "Iraq",
+        "coordinates": "33.2209265,43.6847595",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "IRL",
+        "name": "Ireland",
+        "coordinates": "53.428665,-8.3320801",
+        "area-name": "Europe"
+    },
+    {
+        "value": "IMN",
+        "name": "Isle of Man",
+        "coordinates": "54.2312716,-4.569504",
+        "area-name": "Europe"
+    },
+    {
+        "value": "ISR",
+        "name": "Israel",
+        "coordinates": "31.4117257,35.0818155",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "ITA",
+        "name": "Italy",
+        "coordinates": "41.29246,12.5736108",
+        "area-name": "Europe"
+    },
+    {
+        "value": "CIV",
+        "name": "Ivory Coast",
+        "coordinates": "7.5455112,-5.547545",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "JAM",
+        "name": "Jamaica",
+        "coordinates": "18.1155174,-77.2760026",
+        "area-name": "Central America"
+    },
+    {
+        "value": "JPN",
+        "name": "Japan",
+        "coordinates": "37.4900318,136.4664008",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "JEY",
+        "name": "Jersey",
+        "coordinates": "49.2111266,-2.1326328",
+        "area-name": "Europe"
+    },
+    {
+        "value": "JOR",
+        "name": "Jordan",
+        "coordinates": "31.279862,37.1297454",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "KAZ",
+        "name": "Kazakhstan",
+        "coordinates": "48.005284,66.9045434",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "KEN",
+        "name": "Kenya",
+        "coordinates": "0.1768696,37.9083264",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "KIR",
+        "name": "Kiribati",
+        "coordinates": "1.8709185,-157.3626011",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "KOS",
+        "name": "Kosovo",
+        "coordinates": "42.5833,21.0001",
+        "area-name": "Europe"
+    },
+    {
+        "value": "KWT",
+        "name": "Kuwait",
+        "coordinates": "29.3140762,47.491749",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "KGZ",
+        "name": "Kyrgyzstan",
+        "coordinates": "41.2228055,74.7387787",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "LAO",
+        "name": "Laos",
+        "coordinates": "18.206296,103.889022",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "LVA",
+        "name": "Latvia",
+        "coordinates": "56.8801729,24.6057484",
+        "area-name": "Europe"
+    },
+    {
+        "value": "LBN",
+        "name": "Lebanon",
+        "coordinates": "33.8735578,35.863749",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "LSO",
+        "name": "Lesotho",
+        "coordinates": "-29.62319,28.2334698",
+        "area-name": "Southern Africa"
+    },
+    {
+        "value": "LBR",
+        "name": "Liberia",
+        "coordinates": "6.4336999,-9.4217515",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "LBY",
+        "name": "Libya",
+        "coordinates": "26.3347113,17.2692101",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "LIE",
+        "name": "Liechtenstein",
+        "coordinates": "47.1594184,9.553635",
+        "area-name": "Europe"
+    },
+    {
+        "value": "LTU",
+        "name": "Lithuania",
+        "coordinates": "55.1735998,23.8948016",
+        "area-name": "Europe"
+    },
+    {
+        "value": "LUX",
+        "name": "Luxembourg",
+        "coordinates": "49.8152995,6.13332",
+        "area-name": "Europe"
+    },
+    {
+        "value": "MAC",
+        "name": "Macau",
+        "coordinates": "22.1634178,113.5629425",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "MDG",
+        "name": "Madagascar",
+        "coordinates": "-18.7792678,46.8344597",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MWI",
+        "name": "Malawi",
+        "coordinates": "-13.2512161,34.3015278",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MYS",
+        "name": "Malaysia",
+        "coordinates": "4.140634,109.6181485",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "MDV",
+        "name": "Maldives",
+        "coordinates": "1.9772469,73.5361034",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "MLI",
+        "name": "Mali",
+        "coordinates": "17.5739347,-3.9861092",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MLT",
+        "name": "Malta",
+        "coordinates": "35.9440174,14.3795242",
+        "area-name": "Europe"
+    },
+    {
+        "value": "MHL",
+        "name": "Marshall Islands",
+        "coordinates": "11.6040209,165.3133111",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "MTQ",
+        "name": "Martinique",
+        "coordinates": "14.6336817,-61.0198104",
+        "area-name": "Central America"
+    },
+    {
+        "value": "MRT",
+        "name": "Mauritania",
+        "coordinates": "21.0078589,-10.951734",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MUS",
+        "name": "Mauritius",
+        "coordinates": "-20.20665,57.6755",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MYT",
+        "name": "Mayotte",
+        "coordinates": "-12.8210325,45.1590997",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MEX",
+        "name": "Mexico",
+        "coordinates": "23.6260333,-102.5375005",
+        "area-name": "Central America"
+    },
+    {
+        "value": "MDA",
+        "name": "Moldova",
+        "coordinates": "46.9803875,28.3896969",
+        "area-name": "Europe"
+    },
+    {
+        "value": "MCO",
+        "name": "Monaco",
+        "coordinates": "43.7383229,7.4244581",
+        "area-name": "Europe"
+    },
+    {
+        "value": "MNG",
+        "name": "Mongolia",
+        "coordinates": "46.8651082,103.8347844",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "MNE",
+        "name": "Montenegro",
+        "coordinates": "42.7044223,19.3957785",
+        "area-name": "Europe"
+    },
+    {
+        "value": "MSR",
+        "name": "Montserrat",
+        "coordinates": "16.7494365,-62.1927489",
+        "area-name": "Central America"
+    },
+    {
+        "value": "MAR",
+        "name": "Morocco",
+        "coordinates": "31.794525,-7.0849336",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MOZ",
+        "name": "Mozambique",
+        "coordinates": "-18.6696553,35.5273354",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "MMR",
+        "name": "Myanmar",
+        "coordinates": "19.0734647,96.6710399",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "NAM",
+        "name": "Namibia",
+        "coordinates": "-22.967062,18.4929993",
+        "area-name": "Southern Africa"
+    },
+    {
+        "value": "NRU",
+        "name": "Nauru",
+        "coordinates": "-0.5284144,166.9342384",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "NPL",
+        "name": "Nepal",
+        "coordinates": "28.3973623,84.12576",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "NLD",
+        "name": "Netherlands",
+        "coordinates": "52.2129919,5.2793703",
+        "area-name": "Europe"
+    },
+    {
+        "value": "NCL",
+        "name": "New Caledonia",
+        "coordinates": "-21.2107283,165.8517014",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "NZL",
+        "name": "New Zealand",
+        "coordinates": "-43.3744881,172.4662705",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "NIC",
+        "name": "Nicaragua",
+        "coordinates": "12.8533324,,-85.0263935",
+        "area-name": "Central America"
+    },
+    {
+        "value": "NER",
+        "name": "Niger",
+        "coordinates": "17.5968801,8.0828506",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "NGA",
+        "name": "Nigeria",
+        "coordinates": "9.1695252,,7.4909005",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "NIU",
+        "name": "Niue",
+        "coordinates": "-19.0542682,-169.8620867",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "NFK",
+        "name": "Norfolk Island",
+        "coordinates": "-29.0328267,167.9543925",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "PRK",
+        "name": "North Korea",
+        "coordinates": "40.3424611,127.4310054",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "MKD",
+        "name": "North Macedonia",
+        "coordinates": "41.6137143,21.743258",
+        "area-name": "Europe"
+    },
+    {
+        "value": "MNP",
+        "name": "Northern Mariana Islands",
+        "coordinates": "15.1063896,145.7065244",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "NOR",
+        "name": "Norway",
+        "coordinates": "64.5783089,17.888237",
+        "area-name": "Europe"
+    },
+    {
+        "value": "OMN",
+        "name": "Oman",
+        "coordinates": "21.5278654,55.9196996",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "PAK",
+        "name": "Pakistan",
+        "coordinates": "30.3894007,69.3532207",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "PLW",
+        "name": "Palau",
+        "coordinates": "7.3663307,134.4340941",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "PAN",
+        "name": "Panama",
+        "coordinates": "8.4255193,-80.1053645",
+        "area-name": "Central America"
+    },
+    {
+        "value": "PNG",
+        "name": "Papua New Guinea",
+        "coordinates": "-6.2645902,148.9638467",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "PRY",
+        "name": "Paraguay",
+        "coordinates": "-23.4380203,-58.4483065",
+        "area-name": "South America"
+    },
+    {
+        "value": "PER",
+        "name": "Peru",
+        "coordinates": "-9.1951786,-74.9904165",
+        "area-name": "South America"
+    },
+    {
+        "value": "PHL",
+        "name": "Philippines",
+        "coordinates": "11.6978352,122.6217542",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "PCN",
+        "name": "Pitcairn Islands",
+        "coordinates": "-24.3767451,-128.3242353",
+        "area-name": "Unknown"
+    },
+    {
+        "value": "POL",
+        "name": "Poland",
+        "coordinates": "51.9189046,19.1343786",
+        "area-name": "Europe"
+    },
+    {
+        "value": "PRT",
+        "name": "Portugal",
+        "coordinates": "39.557191,-7.8536599",
+        "area-name": "Europe"
+    },
+    {
+        "value": "PRT",
+        "name": "Portugal",
+        "coordinates": "39.557191,-7.8536599",
+        "area-name": "Europe"
+    },
+    {
+        "value": "PRI",
+        "name": "Puerto Rico",
+        "coordinates": "18.1987192,-66.3526747",
+        "area-name": "Central America"
+    },
+    {
+        "value": "QAT",
+        "name": "Qatar",
+        "coordinates": "25.3271054,51.1966577",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "REU",
+        "name": "Reunion",
+        "coordinates": "-21.1306889,55.5264794",
+        "area-name": "Southern Africa"
+    },
+    {
+        "value": "ROU",
+        "name": "Romania",
+        "coordinates": "45.9442858,25.0094303",
+        "area-name": "Europe"
+    },
+    {
+        "value": "RUS",
+        "name": "Russian Federation",
+        "coordinates": "55.0,103.0",
+        "area-name": "Europe"
+    },
+    {
+        "value": "RWA",
+        "name": "Rwanda",
+        "coordinates": "-1.9437057,29.8805778",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SHN",
+        "name": "Saint Helena, Ascension and Tristan da Cunha",
+        "coordinates": "-15.9655282,-5.7114846",
+        "area-name": "Unknown"
+    },
+    {
+        "value": "KNA",
+        "name": "Saint Kitts and Nevis",
+        "coordinates": "17.2561791,-62.7019638",
+        "area-name": "Central America"
+    },
+    {
+        "value": "LCA",
+        "name": "Saint Lucia",
+        "coordinates": "13.9095248,-60.9763851",
+        "area-name": "Central America"
+    },
+    {
+        "value": "MAF",
+        "name": "Saint Martin",
+        "coordinates": "18.0858547,-63.0618597",
+        "area-name": "Central America"
+    },
+    {
+        "value": "SPM",
+        "name": "Saint Pierre and Miquelon",
+        "coordinates": "46.9466881,-56.2622848",
+        "area-name": "Canada"
+    },
+    {
+        "value": "VCT",
+        "name": "Saint Vincent and the Grenadines",
+        "coordinates": "13.252818,-61.197096",
+        "area-name": "Central America"
+    },
+    {
+        "value": "BLM",
+        "name": "Saint-Barthelemy",
+        "coordinates": "17.9139222,-62.8338521",
+        "area-name": "Central America"
+    },
+    {
+        "value": "WSM",
+        "name": "Samoa",
+        "coordinates": "-13.7583109,-172.1047677",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "SMR",
+        "name": "San Marino",
+        "coordinates": "43.9428779,12.4600933",
+        "area-name": "Europe"
+    },
+    {
+        "value": "STP",
+        "name": "Sao Tome and Principe",
+        "coordinates": "0.1996951,6.6105643",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SAU",
+        "name": "Saudi Arabia",
+        "coordinates": "24.266906,45.107849",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "SEN",
+        "name": "Senegal",
+        "coordinates": "14.5001717,-14.4392276",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SRB",
+        "name": "Serbia",
+        "coordinates": "44.2107675,20.9224158",
+        "area-name": "Europe"
+    },
+    {
+        "value": "SYC",
+        "name": "Seychelles",
+        "coordinates": "-4.6838871,55.4494781",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SLE",
+        "name": "Sierra Leone",
+        "coordinates": "8.4494988,-11.7868289",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SGP",
+        "name": "Singapore",
+        "coordinates": "1.3146631,103.8454093",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "SXM",
+        "name": "Sint Maarten",
+        "coordinates": "18.0347188,-63.0681114",
+        "area-name": "Central America"
+    },
+    {
+        "value": "SVK",
+        "name": "Slovakia",
+        "coordinates": "48.6737532,19.696058",
+        "area-name": "Europe"
+    },
+    {
+        "value": "SVN",
+        "name": "Slovenia",
+        "coordinates": "46.1491664,14.9860106",
+        "area-name": "Europe"
+    },
+    {
+        "value": "SLB",
+        "name": "Solomon Islands",
+        "coordinates": "-9.2263493,159.1873907",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "SOM",
+        "name": "Somalia",
+        "coordinates": "5.1632866,46.2037008",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "ZAF",
+        "name": "South Africa",
+        "coordinates": "-28.4792625,24.6727135",
+        "area-name": "Southern Africa"
+    },
+    {
+        "value": "SGS",
+        "name": "South Georgia and the South Sandwich Islands",
+        "coordinates": "-54.4306908,-36.9869112",
+        "area-name": "South America"
+    },
+    {
+        "value": "KOR",
+        "name": "South Korea",
+        "coordinates": "35.8615124,127.096405",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "SSD",
+        "name": "South Sudan",
+        "coordinates": "7.8626845,29.6949232",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "ESP",
+        "name": "Spain",
+        "coordinates": "40.2085,-3.713",
+        "area-name": "Europe"
+    },
+    {
+        "value": "LKA",
+        "name": "Sri Lanka",
+        "coordinates": "7.8774222,80.7003428",
+        "area-name": "South Asia"
+    },
+    {
+        "value": "PSE",
+        "name": "State of Palestine",
+        "coordinates": "31.947351,35.227163",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "SDN",
+        "name": "Sudan",
+        "coordinates": "15.7860696,30.1995791",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "SUR",
+        "name": "Suriname",
+        "coordinates": "3.9232946,-56.0246345",
+        "area-name": "South America"
+    },
+    {
+        "value": "SJM",
+        "name": "Svalbard and Jan Mayen",
+        "coordinates": "77.6147579,,18.9463073",
+        "area-name": "Europe"
+    },
+    {
+        "value": "SWZ",
+        "name": "Swaziland",
+        "coordinates": "-26.5179414,31.4629694",
+        "area-name": "Southern Africa"
+    },
+    {
+        "value": "SWE",
+        "name": "Sweden",
+        "coordinates": "62.1983366,17.5671981",
+        "area-name": "Europe"
+    },
+    {
+        "value": "CHE",
+        "name": "Switzerland",
+        "coordinates": "46.8131873,8.22421",
+        "area-name": "Europe"
+    },
+    {
+        "value": "SYR",
+        "name": "Syria",
+        "coordinates": "34.8149145,39.0464523",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "TWN",
+        "name": "Taiwan",
+        "coordinates": "23.553118,121.0211024",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "TJK",
+        "name": "Tajikistan",
+        "coordinates": "38.8581784,71.2479841",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "TZA",
+        "name": "Tanzania",
+        "coordinates": "-6.3728253,34.8924826",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "THA",
+        "name": "Thailand",
+        "coordinates": "13.03887,101.490104",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "TLS",
+        "name": "Timor-Leste",
+        "coordinates": "-8.794744,126.1369154",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "TGO",
+        "name": "Togo",
+        "coordinates": "8.6259267,0.8325041",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "TON",
+        "name": "Tonga",
+        "coordinates": "-21.2417886,-175.1285432",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "TTO",
+        "name": "Trinidad and Tobago",
+        "coordinates": "10.4437128,-61.4191414",
+        "area-name": "Central America"
+    },
+    {
+        "value": "TUN",
+        "name": "Tunisia",
+        "coordinates": "33.7931605,9.5607653",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "TUR",
+        "name": "Turkey",
+        "coordinates": "38.9573415,35.240741",
+        "area-name": "Europe"
+    },
+    {
+        "value": "TKM",
+        "name": "Turkmenistan",
+        "coordinates": "38.963802,59.5775989",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "TCA",
+        "name": "Turks and Caicos Islands",
+        "coordinates": "21.7081886,-71.9721177",
+        "area-name": "Central America"
+    },
+    {
+        "value": "TUV",
+        "name": "Tuvalu",
+        "coordinates": "-7.4784418,178.6799214",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "UGA",
+        "name": "Uganda",
+        "coordinates": "1.3707295,32.3032414",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "UKR",
+        "name": "Ukraine",
+        "coordinates": "48.383022,31.1828699",
+        "area-name": "Europe"
+    },
+    {
+        "value": "ARE",
+        "name": "United Arab Emirates",
+        "coordinates": "24.3505839,53.9396418",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "GBR",
+        "name": "United Kingdom",
+        "coordinates": "55.3617609,-3.4433238",
+        "area-name": "Europe"
+    },
+    {
+        "value": "USA",
+        "name": "United States",
+        "coordinates": "37.6,-95.665",
+        "area-name": "USA (Conterminous) and Hawaii"
+    },
+    {
+        "value": "UMI",
+        "name": "United States Minor Outlying Islands",
+        "coordinates": "19.295374,166.6280441",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "VIR",
+        "name": "United States Virgin Islands",
+        "coordinates": "18.3434415,-64.8671634",
+        "area-name": "Central America"
+    },
+    {
+        "value": "URY",
+        "name": "Uruguay",
+        "coordinates": "-32.5583168,-55.811697",
+        "area-name": "South America"
+    },
+    {
+        "value": "UZB",
+        "name": "Uzbekistan",
+        "coordinates": "41.381166,64.5735819",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "VUT",
+        "name": "Vanuatu",
+        "coordinates": "-15.4492793,167.595411",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "VAT",
+        "name": "Vatican",
+        "coordinates": "41.9038795,12.4520834",
+        "area-name": "Europe"
+    },
+    {
+        "value": "VEN",
+        "name": "Venezuela",
+        "coordinates": "5.1632955,-69.4146705",
+        "area-name": "South America"
+    },
+    {
+        "value": "VNM",
+        "name": "Vietnam",
+        "coordinates": "15.9030623,105.8066925",
+        "area-name": "South East Asia"
+    },
+    {
+        "value": "WLF",
+        "name": "Wallis and Futuna",
+        "coordinates": "-14.3013291,-178.0908626",
+        "area-name": "Australia and New Zealand"
+    },
+    {
+        "value": "YEM",
+        "name": "Yemen",
+        "coordinates": "15.5539046,48.1748476",
+        "area-name": "Russia and Asia"
+    },
+    {
+        "value": "ZMB",
+        "name": "Zambia",
+        "coordinates": "-13.1403507,27.8493049",
+        "area-name": "North and Central Africa"
+    },
+    {
+        "value": "ZWE",
+        "name": "Zimbabwe",
+        "coordinates": "-19.0169211,29.1528018",
+        "area-name": "North and Central Africa"
+    }
+]

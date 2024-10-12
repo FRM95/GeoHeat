@@ -1,0 +1,42 @@
+[
+    {
+        "name": "earth_map",
+        "visible": true,
+        "quality": "high",
+        "scale": 1,
+        "properties": {
+            "color": "#ffffff",
+            "emissive": "#000000"
+        }
+    },
+    {
+        "name": "clouds_map",
+        "visible": true,
+        "quality": "high",
+        "scale": 1.0035,
+        "properties": {
+            "color": "#ffffff",
+            "emissive": "#000000",
+            "opacity": 1,
+            "transparent": true
+        }
+    },
+    {
+        "name": "exosphere_map",
+        "visible": true,
+        "quality": "high",
+        "scale": 1.003,
+        "properties": null
+    },
+    {
+        "name": "starfield_map",
+        "visible": true,
+        "quality": "high",
+        "scale": 1,
+        "properties": {
+            "color": "#ffffff",
+            "transparent": true,
+            "size": 0.1
+        }
+    }
+]

@@ -2,6 +2,7 @@ import { CSS2DRenderer, CSS2DObject} from "three/addons/renderers/CSS2DRenderer.
 import { ArcballControls } from "three/addons/controls/ArcballControls.js";
 import { texturesQualityPath } from "./config.js";
 import * as THREE from "three";
+import { meshPointers } from "../main.js";
 
 /* ---------------------------- RENDERS ---------------------------- */
 /* Creates WebGL and Label renderer based on width and height parameters */
@@ -196,10 +197,10 @@ const buildTextures = (sphereGeometry, texturesArray, texturesQuality) => {
     return returnObject
 }
 
-/* Creates Textures Three group for Earth */
-const createGroup = (texturesObject, earthGroupName) =>{
+/* Creates Textures group */
+const createGroup = (texturesObject, groupName) =>{
     const group = new THREE.Group();
-    group.name = earthGroupName;
+    group.name = groupName;
     for(const [key, value] of Object.entries(texturesObject)){
         if(key != "starfield_map"){
             group.add(value);
@@ -305,6 +306,32 @@ const cursorIntersection = (raycast, object, callback) => {
     };
 }
 
+/* ---------------------------- SCENE OBJECTS ---------------------------- */
+/* Remove object from scene */
+export const removeObject = (sceneObject, object, multiple = false) => {
+    if(multiple){
+        Object.values(object).forEach(objectToRemove => {
+            objectToRemove.dispose();
+            sceneObject.remove(objectToRemove);
+        });
+    } else {
+        object.dispose();
+        sceneObject.remove(object);
+    }
+}
+
+/* Add object to scene */
+export const addObject = (sceneObject, object, multiple = false) => {
+    if(multiple){
+        Object.values(object).forEach(objectToAdd => {
+            sceneObject.add(objectToAdd);
+        });
+    } else {
+        sceneObject.add(object);
+    }
+}
+
+
 
 /* ---------------------------- MAIN ---------------------------- */
 export function createScene() {
@@ -326,24 +353,25 @@ export function createScene() {
     const userLights = user_data["threejs"]["lights"];
     const sceneObjects = SceneObjects(userTextures, texturesQualityPath);
     const lightObjects = buildLights(userLights);
-
-    /* Adding Objects to scene */
     const scene = new THREE.Scene();
-    scene.add(sceneObjects.earth);
-    scene.add(sceneObjects.stars);
-    scene.add(lightObjects.ambient_light);
-
-    console.log(scene);
 
     /* Adding Sunlight */
     camera.add(lightObjects.directional_light);
     scene.add(camera);
+
+    /* Adding Objects to scene */
+    scene.add(lightObjects.ambient_light);
+    scene.add(sceneObjects.earth);
+    scene.add(sceneObjects.stars);
 
     /* Adding label for heat spots */
     const markerElement = document.querySelector(".spot-label");
     const earthMesh = sceneObjects.earth.children[0];
     const heatSpotLabel = setHeatSpotLabel(markerElement, earthMesh, camera);
     scene.add(heatSpotLabel);
+
+    const meshSpots = createMarkers([{"cartesian_points" : [0.7597583264569793, 0.6483428356921297, 0.04918183390214443], "name" : "Madrid" }],"Puntitos");
+    scene.add(meshSpots);
 
     /* Set controls for Scene */
     const controls = createControls(camera, rendersObject.labelRenderer.domElement, sceneObjects.earth);
@@ -355,17 +383,45 @@ export function createScene() {
     /* Pointer and raycaster to track user cursor */
     const pointer = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
-    const cursorPosition = (event) => {
+    let meshPointers = [meshSpots];
+
+    rendersObject.labelRenderer.domElement.addEventListener("pointerdown", (event) => {
         pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
         pointer.y = - (event.clientY / (window.innerHeight - yOffset)) * 2 + 1;
-    }
-    rendersObject.labelRenderer.domElement.addEventListener("pointermove", cursorPosition);
+        raycaster.setFromCamera(pointer, camera);
+        const intersection = raycaster.intersectObjects(scene.children, true);
+        console.log(intersection);
+        console.log(scene);
+
+        // if(raycaster.intersectObject(sceneObjects.earth).length > 0){ 
+        //     for(let i = 0; i < meshPointers.length; i++){
+        //         let intersections = raycaster.intersectObject(meshPointers[i]);
+        //         if(intersections.length > 0){ 
+        //             let currIntersection = intersections[0];
+        //             console.log(currIntersection)
+        //         }
+        //     }
+        // }
+    });
+
+    // const cursorPosition = (event) => {
+    //     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    //     pointer.y = - (event.clientY / (window.innerHeight)) * 2 + 1;
+    //     if(raycaster.intersectObject(sceneObjects.earth).length > 0){ 
+    //         const intersection = raycaster.intersectObject(meshSpots);
+    //         if(intersection.length > 0){
+    //             console.log(intersection);
+    //         }
+    //     }
+    // }
+
+    // rendersObject.labelRenderer.domElement.addEventListener("pointerdown", cursorPosition);
     
     /* Animation loop */
     const animate = () => { 
+        // raycaster.setFromCamera(pointer, camera);
         requestAnimationFrame(animate);
         northPosition(camera, compassElement, yAxisVector);
-        raycaster.setFromCamera(pointer, camera);
         heatSpotLabel.userData.trackVisibility();
         rendersObject.renderer.render(scene, camera);
         rendersObject.labelRenderer.render(scene, camera);

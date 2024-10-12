@@ -122,7 +122,6 @@ class APIOperations():
         if isinstance(area_data, DataFrame):
             try:
                 geodataframe = GeoDataFrame(area_data, geometry=points_from_xy(area_data.longitude, area_data.latitude), crs="EPSG:4326")
-                # world_data = read_file('./data/world_data.geojson', driver='GeoJSON')
                 geodataframe = sjoin(geodataframe, world_data, how='left')
                 geodataframe = geodataframe.drop(columns=['index_right', 'geometry'], errors = 'ignore')
                 geodataframe['cartesian_points'] = geodataframe.apply(lambda x: self.setCartesianPoints(x.latitude, x.longitude), axis=1)
@@ -197,5 +196,3 @@ class APIOperations():
                     result_data[key] = value
 
         return result_data
-
-    

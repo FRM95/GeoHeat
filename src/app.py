@@ -114,25 +114,25 @@ def home(key):
 #             return redirect(url_for('login'))
 
 
-# @app.route("/getFirmsData/<key>/", methods = ['GET'])     
-# def getFirmsData(key):
-#     if request.method == 'GET':
-#         if key in session:
-#             try:
-#                 query_parameters = request.args
-#             except:
-#                 return "unable to read data"
-#             else:
-#                 validated_data = api.isvalidRequest(query_parameters)
-#                 if isinstance(validated_data, str):
-#                     return {'error': f'Unable to request new data, {validated_data}'}
-#                 else:
-#                     api_result = api.getFires(key, **validated_data)
-#                     if isinstance(api_result, str):
-#                         return {'error': f'Unable to request new data, {api_result}'}
-#                     else:
-#                         return api_result
-#         else:
-#             # TODO: add message -> need to login first
-#             flash('You need to login first') 
-#             return redirect(url_for('login'))
+@app.route("/getFirmsData/<key>/", methods = ['GET'])     
+def getFirmsData(key):
+    if request.method == 'GET':
+        if key in session:
+            try:
+                query_parameters = request.args
+            except:
+                return "unable to read data"
+            else:
+                validated_data = api.isvalidRequest(query_parameters)
+                if isinstance(validated_data, str):
+                    return {'error': f'Unable to request new data, {validated_data}'}
+                else:
+                    api_result = api.getFires(key, **validated_data)
+                    if isinstance(api_result, str):
+                        return {'error': f'Unable to request new data, {api_result}'}
+                    else:
+                        return api_result
+        else:
+            # TODO: add message -> need to login first
+            flash('You need to login first') 
+            return redirect(url_for('login'))
