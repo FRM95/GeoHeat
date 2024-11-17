@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br/>
 <div align="center">
-  <h3 align="center">GeoHeat</h3>
+  <h3 align="center">GeoHeat (Paused Project)</h3>
   <p align="center">
     A web platform to visualize NRT active fires across the Earth
     <br/>
